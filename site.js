@@ -150,14 +150,14 @@
   function openCart() {
     var d = $('#cart-drawer'), b = $('#cart-backdrop');
     if (!d || !b) return;
-    d.classList.add('open'); d.setAttribute('aria-hidden', 'false');
+    d.classList.add('open'); d.removeAttribute('inert');
     b.hidden = false; document.body.classList.add('no-scroll');
     setTimeout(function () { var f = $('#cart-name'); if (f) f.focus(); }, 220);
   }
   function closeCart() {
     var d = $('#cart-drawer'), b = $('#cart-backdrop');
     if (!d || !b) return;
-    d.classList.remove('open'); d.setAttribute('aria-hidden', 'true');
+    d.classList.remove('open'); d.setAttribute('inert', '');
     b.hidden = true; document.body.classList.remove('no-scroll');
   }
   function checkout() {
