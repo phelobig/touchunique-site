@@ -66,7 +66,7 @@ button { cursor: pointer; }
 .wrap { width: min(100% - 40px, var(--max)); margin-inline: auto; }
 
 /* ---------- Background ---------- */
-.site-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: radial-gradient(120% 90% at 50% -20%, #15101c 0%, var(--bg) 55%); }
+.site-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--bg); }
 .bg-grid {
   position: absolute; inset: -10%;
   background-image: linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
@@ -542,7 +542,9 @@ button { cursor: pointer; }
 .sync-state[data-state="ok"]::before { background: #0b7444; box-shadow: 0 0 8px rgba(11,116,68,.5); }
 
 .hero-copy h1 em, .section-head h2 em, .academy-copy h2 em, .ai-head h2 em, .contact-copy h2 em, .faq-grid h2 em {
-  background: linear-gradient(100deg, #9c0b22 5%, #d4142f 48%, #0b5bd3 96%);
+  background: none;
+  color: #a31127;
+  -webkit-text-fill-color: #a31127;
 }
 .hero-accent { color: #7a1f2c; }
 .hero-video { opacity: .08; }
@@ -613,8 +615,7 @@ button { cursor: pointer; }
   .main-nav { background: rgba(255,255,255,.98); }
 }
 
-/* Le texte du bandeau reste toujours au-dessus des décorations vectorielles. */
-.site-bg, .bg-grid, .bg-vignette, .orb, .hero-video, .hero-ring, .float-chip { pointer-events: none; }
+/* Suppression définitive des formes décoratives : aucun calque ne recouvre le texte. */
+.bg-grid, .bg-vignette, .orb, .hero-video, .hero-ring, .float-chip,
+.pulse-dot, .caption-dot, .expertise-card::after, .process-card::after { display: none !important; }
 .hero-copy { position: relative; z-index: 5; }
-.hero-visual { z-index: 1; }
-.hero-ring, .float-chip { max-width: 100%; }
