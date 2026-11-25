@@ -1,0 +1,16 @@
+{
+  "name": "Touch Unique Studio",
+  "short_name": "Touch Unique",
+  "description": "Identité, vidéo, contenus, académie et automatisation IA.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fff8f6",
+  "theme_color": "#c8102e",
+  "lang": "fr",
+  "icons": [
+    { "src": "ic_launcher_192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "ic_launcher_512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
