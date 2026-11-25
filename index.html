@@ -12,7 +12,7 @@
   <title>Touch Unique Studio — Identité, vidéo, contenus & IA</title>
   <link rel="icon" href="ic_launcher_192.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=13">
+  <link rel="stylesheet" href="styles.css?v=14">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -43,9 +43,12 @@
       <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
         <a href="#expertises">Expertises</a>
         <a href="#offres">Offres</a>
+        <a href="#outils">Outils</a>
+        <a href="#actualites">Actualités</a>
         <a href="#portfolio">Réalisations</a>
         <a href="#academie">Académie</a>
         <a href="#assistant">Assistant IA</a>
+        <a href="#compte">Mon compte</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -61,6 +64,10 @@
       </div>
     </div>
   </header>
+
+  <div class="news-ticker" aria-label="Actualités du jour">
+    <div class="news-ticker-track" id="news-ticker" aria-live="off"></div>
+  </div>
 
   <main id="main">
     <!-- HERO -->
@@ -146,6 +153,34 @@
       </div>
     </section>
 
+    <!-- OUTILS & LOGICIELS -->
+    <section class="section section-alt" id="outils">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Boutique d’outils</div>
+            <h2>Les outils qui font <em>avancer le travail.</em></h2>
+          </div>
+          <p class="lead">Logiciels, modèles et services d’automatisation à ajouter à votre sélection. Aucun paiement n’est demandé ici : la commande est préparée avec vous sur WhatsApp.</p>
+        </div>
+        <div class="tools-grid" id="tools-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ACTUALITÉS QUOTIDIENNES -->
+    <section class="section" id="actualites">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Veille du jour</div>
+            <h2>L’info utile, <em>sans bruit.</em></h2>
+          </div>
+          <p class="lead">Une sélection quotidienne techno, design, vidéo, outils et réseaux. Choisissez les sujets qui vous concernent : le fil s’adapte à vos préférences.</p>
+        </div>
+        <div id="news-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
     <!-- PORTFOLIO -->
     <section class="section section-alt" id="portfolio">
       <div class="wrap">
@@ -210,6 +245,25 @@
           <p><span aria-hidden="true">🔒</span> Moteur local sans clé API obligatoire. Connecteurs optionnels pour la publication directe selon les permissions de chaque plateforme.</p>
           <a class="btn btn-ghost" href="https://phelobig.github.io/touchunique-app/" target="_blank" rel="noopener">Ouvrir l’application →</a>
         </div>
+      </div>
+    </section>
+
+    <!-- COMPTE VISITEUR -->
+    <section class="section section-alt" id="compte">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Espace visiteur</div>
+            <h2>Un compte pour <em>garder le fil.</em></h2>
+          </div>
+          <p class="lead">Créez un compte local sécurisé : vos préférences d’actualités et vos essais IA restent sur votre appareil. L’accès aux modèles temps réel est payant après deux essais gratuits.</p>
+        </div>
+        <div class="account-card reveal" id="account-box"></div>
+        <details class="connection-details reveal">
+          <summary>Connexions IA & réseaux (serveur sécurisé)</summary>
+          <div id="connection-box"></div>
+          <p class="subtle small">Les clés API et les tokens sociaux restent sur votre serveur : elles ne sont jamais placées dans cette page. <a href="https://github.com/phelobig/touchunique-site" target="_blank" rel="noopener">Documentation du serveur</a></p>
+        </details>
       </div>
     </section>
 
@@ -282,7 +336,7 @@
       </div>
       <div>
         <b>Navigation</b>
-        <a href="#offres">Offres</a><a href="#portfolio">Réalisations</a><a href="#academie">Académie</a><a href="#assistant">Assistant IA</a>
+        <a href="#offres">Offres</a><a href="#outils">Outils</a><a href="#actualites">Actualités</a><a href="#portfolio">Réalisations</a><a href="#academie">Académie</a><a href="#assistant">Assistant IA</a><a href="#compte">Mon compte</a>
       </div>
       <div>
         <b>Contact</b>
@@ -327,10 +381,30 @@
     <figure><img id="lightbox-img" src="" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ASSISTANT PUBLIC -->
+  <button class="site-ai-fab" id="site-ai-fab" aria-label="Ouvrir l’assistant IA" aria-expanded="false">✺</button>
+  <aside class="site-ai-panel" id="site-ai-panel" aria-label="Assistant Touch Unique" inert>
+    <div class="site-ai-head">
+      <div><b>Assistant Touch Unique</b><small id="site-ai-mode">Moteur local inclus</small></div>
+      <button class="icon-btn" id="site-ai-close" aria-label="Fermer l’assistant">✕</button>
+    </div>
+    <div class="site-ai-messages" id="site-ai-messages" role="log" aria-live="polite"></div>
+    <div class="site-ai-suggestions" id="site-ai-suggestions"></div>
+    <form class="site-ai-form" id="site-ai-form">
+      <input id="site-ai-text" placeholder="Chercher un service, un outil, une idée…" autocomplete="off">
+      <button class="btn btn-primary btn-sm" type="submit">Envoyer</button>
+    </form>
+  </aside>
+
   <a class="mobile-cta" href="#contact">Parlons projet →</a>
 
-  <script src="sync.js?v=13"></script>
-  <script src="data.js?v=13"></script>
-  <script src="site.js?v=13"></script>
+  <script src="sync.js?v=14"></script>
+  <script src="data.js?v=14"></script>
+  <script src="site.js?v=14"></script>
+  <script src="tus-ai.js?v=14"></script>
+  <script src="tus-accounts.js?v=14"></script>
+  <script src="news.js?v=14"></script>
+  <script src="extras.js?v=14"></script>
 </body>
 </html>

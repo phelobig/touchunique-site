@@ -7,12 +7,48 @@
     "note": "Les prix sont des prix de départ. Le montant final est confirmé par devis gratuit."
   },
   "categories": [
-    { "id": "identite", "label": "Identité & branding", "icon": "◆", "accent": "red" },
-    { "id": "contenu", "label": "Contenus & réseaux", "icon": "✦", "accent": "blue" },
-    { "id": "video", "label": "Vidéo & motion", "icon": "▶", "accent": "red" },
-    { "id": "print", "label": "Print & packaging", "icon": "▣", "accent": "blue" },
-    { "id": "academie", "label": "Académie", "icon": "◎", "accent": "red" },
-    { "id": "ia", "label": "Automatisation IA", "icon": "✺", "accent": "blue" }
+    {
+      "id": "identite",
+      "label": "Identité & branding",
+      "icon": "◆",
+      "accent": "red"
+    },
+    {
+      "id": "contenu",
+      "label": "Contenus & réseaux",
+      "icon": "✦",
+      "accent": "blue"
+    },
+    {
+      "id": "video",
+      "label": "Vidéo & motion",
+      "icon": "▶",
+      "accent": "red"
+    },
+    {
+      "id": "print",
+      "label": "Print & packaging",
+      "icon": "▣",
+      "accent": "blue"
+    },
+    {
+      "id": "academie",
+      "label": "Académie",
+      "icon": "◎",
+      "accent": "red"
+    },
+    {
+      "id": "ia",
+      "label": "Automatisation IA",
+      "icon": "✺",
+      "accent": "blue"
+    },
+    {
+      "id": "outils",
+      "label": "Outils & logiciels",
+      "icon": "▣",
+      "accent": "blue"
+    }
   ],
   "products": [
     {
@@ -28,8 +64,17 @@
       "img": "identite-01.webp",
       "short": "Un logo mémorable et une mini-charte pour démarrer proprement.",
       "desc": "Deux propositions de logo, une version finale retouchée, une palette noir / rouge / bleu et un mini-guide d’utilisation. Idéal pour une petite entreprise, un créateur ou un projet qui démarre.",
-      "deliverables": ["2 propositions de logo", "3 déclinaisons", "Mini-charte PDF", "Fichiers PNG / JPG / PDF"],
-      "ai": ["brief client structuré", "variantes de noms et slogans", "texte de présentation de marque"]
+      "deliverables": [
+        "2 propositions de logo",
+        "3 déclinaisons",
+        "Mini-charte PDF",
+        "Fichiers PNG / JPG / PDF"
+      ],
+      "ai": [
+        "brief client structuré",
+        "variantes de noms et slogans",
+        "texte de présentation de marque"
+      ]
     },
     {
       "id": "identite-signature",
@@ -44,8 +89,18 @@
       "img": "identite-02.webp",
       "short": "Une identité complète, pensée pour être reconnue et vendre.",
       "desc": "Logo principal, variantes, charte graphique complète, pictogrammes, modèles de publications et déclinaisons print. Une système visuel cohérent du écran au papier.",
-      "deliverables": ["Logo principal + variantes", "Charte graphique 12 pages", "10 modèles réseaux", "Papeterie de base", "Guide d’usage IA"],
-      "ai": ["analyse de positionnement", "génération de déclinaisons", "plan de contenu 30 jours"]
+      "deliverables": [
+        "Logo principal + variantes",
+        "Charte graphique 12 pages",
+        "10 modèles réseaux",
+        "Papeterie de base",
+        "Guide d’usage IA"
+      ],
+      "ai": [
+        "analyse de positionnement",
+        "génération de déclinaisons",
+        "plan de contenu 30 jours"
+      ]
     },
     {
       "id": "pack-visibility-pro",
@@ -60,8 +115,18 @@
       "img": "conception-01.webp",
       "short": "Tout ce qu’il faut pour apparaître avec un univers professionnel.",
       "desc": "Identité express, kit de 12 visuels pour réseaux sociaux, bannière professionnelle et une courte vidéo de présentation. Pensé pour les artisans, commerçants et créateurs qui veulent passer à la vitesse supérieure.",
-      "deliverables": ["Identité express", "12 visuels réseaux", "Bannière pro", "Vidéo 30 s", "Calendrier 2 semaines"],
-      "ai": ["script vidéo", "légendes réseaux", "planning de publication"]
+      "deliverables": [
+        "Identité express",
+        "12 visuels réseaux",
+        "Bannière pro",
+        "Vidéo 30 s",
+        "Calendrier 2 semaines"
+      ],
+      "ai": [
+        "script vidéo",
+        "légendes réseaux",
+        "planning de publication"
+      ]
     },
     {
       "id": "pack-marque-complete",
@@ -75,8 +140,19 @@
       "img": "evenement-04.webp",
       "short": "De l’idée au système de marque complet, prêt à produire.",
       "desc": "Identité complète, charte avancée, site vitrine une page, 25 visuels réseaux, 2 vidéos courtes et modèles print. Un accompagnement stratégique pour une présence qui tient dans le temps.",
-      "deliverables": ["Identité Signature", "Site vitrine 1 page", "25 visuels réseaux", "2 vidéos 30–60 s", "Modèles print", "Formation de reprise 1 h"],
-      "ai": ["audit de marque", "génération de campagne", "assistant de contenus 30 jours"]
+      "deliverables": [
+        "Identité Signature",
+        "Site vitrine 1 page",
+        "25 visuels réseaux",
+        "2 vidéos 30–60 s",
+        "Modèles print",
+        "Formation de reprise 1 h"
+      ],
+      "ai": [
+        "audit de marque",
+        "génération de campagne",
+        "assistant de contenus 30 jours"
+      ]
     },
     {
       "id": "video-impact",
@@ -89,8 +165,18 @@
       "img": "evenement-03.webp",
       "short": "Filmez, montez, captez l’attention en moins d’une minute.",
       "desc": "Captation courte, montage dynamique, sous-titres, habillage sonore et déclinaisons carré / vertical pour les réseaux. Idéal pour une promo, un événement ou une présentation.",
-      "deliverables": ["1 vidéo 60 s", "2 formats réseaux", "Sous-titres", "Habillage sonore", "Miniature"],
-      "ai": ["script 60 s", "découpage plan par plan", "titres accrocheurs"]
+      "deliverables": [
+        "1 vidéo 60 s",
+        "2 formats réseaux",
+        "Sous-titres",
+        "Habillage sonore",
+        "Miniature"
+      ],
+      "ai": [
+        "script 60 s",
+        "découpage plan par plan",
+        "titres accrocheurs"
+      ]
     },
     {
       "id": "motion-logo",
@@ -103,8 +189,17 @@
       "img": "evenement-01.webp",
       "short": "Votre logo prend vie dans une animation courte et propre.",
       "desc": "Animation de logo 3 à 6 secondes en boucle, avec version claire et sombre. Parfait pour l’ouverture d’une vidéo ou la signature de vos contenus.",
-      "deliverables": ["Animation 3–6 s", "Version claire", "Version sombre", "MP4 + GIF"],
-      "ai": ["suggestions de transitions", "rendu par lot des variantes", "histoire de marque en 3 phrases"]
+      "deliverables": [
+        "Animation 3–6 s",
+        "Version claire",
+        "Version sombre",
+        "MP4 + GIF"
+      ],
+      "ai": [
+        "suggestions de transitions",
+        "rendu par lot des variantes",
+        "histoire de marque en 3 phrases"
+      ]
     },
     {
       "id": "kit-visuels-20",
@@ -118,8 +213,17 @@
       "img": "conception-02.webp",
       "short": "20 publications editables pour occuper vos réseaux sans y penser.",
       "desc": "Pack de modèles Canva / PSD avec palette noir, rouge et bleu. Vous changez le texte et la photo, puis vous publiez. Livré avec un calendrier d’usage.",
-      "deliverables": ["20 modèles", "Palette & polices", "Calendrier 20 jours", "Tutoriel 10 min"],
-      "ai": ["génération des légendes", "hashtags ciblés", "variantes A/B de textes"]
+      "deliverables": [
+        "20 modèles",
+        "Palette & polices",
+        "Calendrier 20 jours",
+        "Tutoriel 10 min"
+      ],
+      "ai": [
+        "génération des légendes",
+        "hashtags ciblés",
+        "variantes A/B de textes"
+      ]
     },
     {
       "id": "banniere-pro",
@@ -132,8 +236,16 @@
       "img": "identite-01.webp",
       "short": "Une bannière techno et nette pour vos profils et vos pages.",
       "desc": "Bannière au format réseau ou site, inspirée de l’univers Touch Unique Académie : fond sombre, lumière rouge, accents bleus, lecture immédiate.",
-      "deliverables": ["1 bannière 16:9", "1 version carrée", "Fichiers source"],
-      "ai": ["titres alternatifs", "accroches", "description de profil"]
+      "deliverables": [
+        "1 bannière 16:9",
+        "1 version carrée",
+        "Fichiers source"
+      ],
+      "ai": [
+        "titres alternatifs",
+        "accroches",
+        "description de profil"
+      ]
     },
     {
       "id": "affiche-evenement",
@@ -146,8 +258,17 @@
       "img": "evenement-02.webp",
       "short": "Une affiche qui annonce clairement l’essentiel et donne envie.",
       "desc": "Conception d’affiche A3 ou format réseau avec hiérarchie forte, informations essentielles et version prête à imprimer.",
-      "deliverables": ["Affiche A3", "Version réseau", "PDF impression", "Version sociale"],
-      "ai": ["titre accrocheur", "texte court", "checklist d’impression"]
+      "deliverables": [
+        "Affiche A3",
+        "Version réseau",
+        "PDF impression",
+        "Version sociale"
+      ],
+      "ai": [
+        "titre accrocheur",
+        "texte court",
+        "checklist d’impression"
+      ]
     },
     {
       "id": "packaging-produit",
@@ -160,8 +281,17 @@
       "img": "packaging-01.webp",
       "short": "Un packaging qui protège, raconte et valorise votre produit.",
       "desc": "Étiquette ou boîte personnalisée, système de couleurs, informations produits et maquette de présentation. Adapté à la cosmétique, l’alimentaire et les gadgets.",
-      "deliverables": ["Maquette recto", "Déclinaison verso", "PDF imprimable", "Visuel 3D"],
-      "ai": ["argumentaire produit", "noms de variantes", "texte réglementaire simplifié"]
+      "deliverables": [
+        "Maquette recto",
+        "Déclinaison verso",
+        "PDF imprimable",
+        "Visuel 3D"
+      ],
+      "ai": [
+        "argumentaire produit",
+        "noms de variantes",
+        "texte réglementaire simplifié"
+      ]
     },
     {
       "id": "plaquette-entreprise",
@@ -174,8 +304,17 @@
       "img": "packaging-02.webp",
       "short": "Un support qui résume votre activité et rassure vos prospects.",
       "desc": "Plaquette 4 à 8 pages avec structure claire, textes professionnels et mise en page prête à imprimer. Idéale pour salons, rendez-vous et dossiers de présentation.",
-      "deliverables": ["Mise en page 4–8 pages", "Textes révisés", "PDF impression", "Version numérique"],
-      "ai": ["plan de plaquette", "réécriture des textes", "appels à l’action"]
+      "deliverables": [
+        "Mise en page 4–8 pages",
+        "Textes révisés",
+        "PDF impression",
+        "Version numérique"
+      ],
+      "ai": [
+        "plan de plaquette",
+        "réécriture des textes",
+        "appels à l’action"
+      ]
     },
     {
       "id": "site-vitrine-one-page",
@@ -189,8 +328,18 @@
       "img": "projet-personnel-01.webp",
       "short": "Un site rapide, net et pensé pour transformer la visite en contact.",
       "desc": "Page unique responsive avec section offre, portfolio, preuve, appel à l’action et formulaire WhatsApp. Hébergement statique, animations légères et SEO de base.",
-      "deliverables": ["Site responsive", "Formulaire WhatsApp", "SEO de base", "Analytics prêt à brancher", "Formation de reprise"],
-      "ai": ["rédaction des sections", "suggestions d’offres", "plan de contenu post-lancement"]
+      "deliverables": [
+        "Site responsive",
+        "Formulaire WhatsApp",
+        "SEO de base",
+        "Analytics prêt à brancher",
+        "Formation de reprise"
+      ],
+      "ai": [
+        "rédaction des sections",
+        "suggestions d’offres",
+        "plan de contenu post-lancement"
+      ]
     },
     {
       "id": "mini-site-portfolio",
@@ -203,8 +352,17 @@
       "img": "logo-arrahma.webp",
       "short": "Votre travail, présenté comme une vraie marque.",
       "desc": "Mini-site d’une page avec galerie filtrable, biographie, services et bouton WhatsApp. Livré clé en main avec vos visuels.",
-      "deliverables": ["Site responsive", "Galerie filtrable", "Fiche contact", "Fichiers sources"],
-      "ai": ["bio professionnelle", "titres de projets", "mots-clés SEO"]
+      "deliverables": [
+        "Site responsive",
+        "Galerie filtrable",
+        "Fiche contact",
+        "Fichiers sources"
+      ],
+      "ai": [
+        "bio professionnelle",
+        "titres de projets",
+        "mots-clés SEO"
+      ]
     },
     {
       "id": "formation-graphisme",
@@ -218,8 +376,17 @@
       "img": "identite-02.webp",
       "short": "Photoshop, Illustrator et les bases d’un vrai œil créatif.",
       "desc": "Module guidé avec exercices, projets corrigés et méthode pour construire un portefeuille. Format hybride, en présentiel ou en ligne selon disponibilité.",
-      "deliverables": ["8 leçons", "12 exercices", "2 projets corrigés", "Certificat de suivi"],
-      "ai": ["correction de briefs", "idées d’exercices", "feedback structuré"]
+      "deliverables": [
+        "8 leçons",
+        "12 exercices",
+        "2 projets corrigés",
+        "Certificat de suivi"
+      ],
+      "ai": [
+        "correction de briefs",
+        "idées d’exercices",
+        "feedback structuré"
+      ]
     },
     {
       "id": "formation-video-capcut",
@@ -233,8 +400,17 @@
       "img": "evenement-03.webp",
       "short": "Montez des vidéos qui se regardent jusqu’au bout.",
       "desc": "Du tournage au montage mobile : rythme, sous-titres, transitions, son et export réseaux. Conçu pour créateurs et petites entreprises.",
-      "deliverables": ["6 leçons", "10 exercices", "3 vidéos corrigées", "Modèles de projet"],
-      "ai": ["scripts courts", "découpages", "tests de titres"]
+      "deliverables": [
+        "6 leçons",
+        "10 exercices",
+        "3 vidéos corrigées",
+        "Modèles de projet"
+      ],
+      "ai": [
+        "scripts courts",
+        "découpages",
+        "tests de titres"
+      ]
     },
     {
       "id": "formation-ai-contenus",
@@ -248,8 +424,17 @@
       "img": "conception-01.webp",
       "short": "Apprenez à produire plus vite sans perdre votre style.",
       "desc": "Méthode complète pour utiliser l’IA dans un flux de création : briefs, textes, scripts, calendriers et automatisation de boutique. Approche pratique et encadrée.",
-      "deliverables": ["8 leçons", "Prompts prêts à l’emploi", "Automation studio", "Projet final encadré"],
-      "ai": ["prompts", "plan éditorial", "audit de contenu"]
+      "deliverables": [
+        "8 leçons",
+        "Prompts prêts à l’emploi",
+        "Automation studio",
+        "Projet final encadré"
+      ],
+      "ai": [
+        "prompts",
+        "plan éditorial",
+        "audit de contenu"
+      ]
     },
     {
       "id": "abonnement-ai-content",
@@ -264,8 +449,17 @@
       "img": "conception-02.webp",
       "short": "Un flux de contenus généré, organisé et prêt à publier.",
       "desc": "Chaque mois : 30 légendes, 8 scripts courts, 1 calendrier éditorial et 1 audit de visibilité. Vous validez, l’assistant prépare le reste.",
-      "deliverables": ["30 légendes", "8 scripts", "1 calendrier", "1 audit mensuel"],
-      "ai": ["génération quotidienne", "planification", "suggestions de relance"]
+      "deliverables": [
+        "30 légendes",
+        "8 scripts",
+        "1 calendrier",
+        "1 audit mensuel"
+      ],
+      "ai": [
+        "génération quotidienne",
+        "planification",
+        "suggestions de relance"
+      ]
     },
     {
       "id": "autopilot-shop",
@@ -279,8 +473,17 @@
       "img": "identite-01.webp",
       "short": "Votre catalogue, vos devis et vos relances avancent seuls.",
       "desc": "L’assistant prépare les réponses aux demandes, range les commandes, propose de nouvelles offres et génère les contenus de mise en avant. Vous gardez toujours la validation finale.",
-      "deliverables": ["Réponses types", "Tri des commandes", "Suggestions d’offres", "Rapport hebdo"],
-      "ai": ["traitement des lead", "mise à jour catalogue", "relances clients"]
+      "deliverables": [
+        "Réponses types",
+        "Tri des commandes",
+        "Suggestions d’offres",
+        "Rapport hebdo"
+      ],
+      "ai": [
+        "traitement des lead",
+        "mise à jour catalogue",
+        "relances clients"
+      ]
     },
     {
       "id": "audit-visibility",
@@ -293,8 +496,17 @@
       "img": "conception-01.webp",
       "short": "Un diagnostic clair : ce qui bloque, ce qui marche, quoi faire.",
       "desc": "Analyse de vos réseaux, de votre site et de vos offres. Livrée sous forme d’un plan d’action priorisé en 3 niveaux d’effort.",
-      "deliverables": ["Audit 6 pages", "Plan 30 jours", "Matrice impact / effort", "Session de restitution 30 min"],
-      "ai": ["lecture des contenus", "détection des angles morts", "génération du plan"]
+      "deliverables": [
+        "Audit 6 pages",
+        "Plan 30 jours",
+        "Matrice impact / effort",
+        "Session de restitution 30 min"
+      ],
+      "ai": [
+        "lecture des contenus",
+        "détection des angles morts",
+        "génération du plan"
+      ]
     },
     {
       "id": "pack-cadeau-pro",
@@ -307,8 +519,17 @@
       "img": "packaging-02.webp",
       "short": "Un cadeau utile et personnalisé pour marquer les esprits.",
       "desc": "Assortiment personnalisé de 20 articles : carnets, stylos, tasses ou goodies selon stock. Packaging inclus avec votre identité.",
-      "deliverables": ["20 articles personnalisés", "Packaging", "Visuel de présentation", "Livraison locale"],
-      "ai": ["message personnalisé", "sélection d’articles", "texte de carte"]
+      "deliverables": [
+        "20 articles personnalisés",
+        "Packaging",
+        "Visuel de présentation",
+        "Livraison locale"
+      ],
+      "ai": [
+        "message personnalisé",
+        "sélection d’articles",
+        "texte de carte"
+      ]
     },
     {
       "id": "carte-visite-premium",
@@ -321,8 +542,17 @@
       "img": "identite-02.webp",
       "short": "Une carte propre, nette et alignée avec votre marque.",
       "desc": "Recto verso, papier premium, finition mat ou brillante. Inclut la mise en page et le contrôle avant impression.",
-      "deliverables": ["200 cartes", "Recto verso", "Finition au choix", "PDF de contrôle"],
-      "ai": ["hiérarchie des informations", "variantes de mise en page", "QR code vCard"]
+      "deliverables": [
+        "200 cartes",
+        "Recto verso",
+        "Finition au choix",
+        "PDF de contrôle"
+      ],
+      "ai": [
+        "hiérarchie des informations",
+        "variantes de mise en page",
+        "QR code vCard"
+      ]
     },
     {
       "id": "session-strategie",
@@ -336,8 +566,196 @@
       "img": "identite-01.webp",
       "short": "Une heure pour mettre de l’ordre dans vos idées et vos priorités.",
       "desc": "Session guidée en visio ou WhatsApp pour clarifier votre offre, votre cible et les 3 actions à lancer en premier. Compte-rendu envoyé ensuite.",
-      "deliverables": ["Session 1 h", "Compte-rendu", "Plan 3 actions", "Accès à l’assistant"],
-      "ai": ["questions de diagnostic", "synthèse", "plan d’action"]
+      "deliverables": [
+        "Session 1 h",
+        "Compte-rendu",
+        "Plan 3 actions",
+        "Accès à l’assistant"
+      ],
+      "ai": [
+        "questions de diagnostic",
+        "synthèse",
+        "plan d’action"
+      ]
+    },
+    {
+      "id": "outil-assistant-ia",
+      "name": "Assistant IA Pro",
+      "category": "outils",
+      "type": "subscription",
+      "price": 15000,
+      "unit": "mois",
+      "badge": "2 essais offerts",
+      "popular": true,
+      "delay": "Immédiat",
+      "icon": "✺",
+      "img": "outils.svg",
+      "short": "ChatGPT, Gemini et Claude dans votre espace Touch Unique, avec 2 essais gratuits par jour.",
+      "desc": "Accès mensuel à l’assistant temps réel intégré au site et à l’application : recherche de services et de produits, rédaction de publications, briefs de conception et prospection. Les clés restent sur un serveur sécurisé.",
+      "deliverables": [
+        "IA temps réel (ChatGPT / Gemini / Claude)",
+        "Recherche services & produits",
+        "2 essais gratuits par jour",
+        "Génération de contenus et de briefs"
+      ],
+      "ai": [
+        "recherche intelligente",
+        "publications automatiques",
+        "briefs de conception"
+      ]
+    },
+    {
+      "id": "outil-kit-publications",
+      "name": "Kit 30 publications",
+      "category": "outils",
+      "type": "digital",
+      "price": 12000,
+      "unit": "kit",
+      "badge": "Prêt à publier",
+      "popular": false,
+      "delay": "24 h",
+      "icon": "✦",
+      "img": "outils.svg",
+      "short": "Trente modèles de publications adaptés à votre marque, prêts à être personnalisés.",
+      "desc": "Un pack de modèles carrés et stories pour garder une présence régulière sans repartir de zéro. Livré avec un calendrier de publication et des textes d’accompagnement.",
+      "deliverables": [
+        "30 modèles réseaux",
+        "Calendrier 30 jours",
+        "Légendes incluses",
+        "Formats carré et story"
+      ],
+      "ai": [
+        "génération de variations",
+        "suggestions de hashtags"
+      ]
+    },
+    {
+      "id": "outil-charte-modele",
+      "name": "Modèle de charte graphique",
+      "category": "outils",
+      "type": "digital",
+      "price": 8000,
+      "unit": "fichier",
+      "badge": "À compléter",
+      "popular": false,
+      "delay": "Immédiat",
+      "icon": "◆",
+      "img": "outils.svg",
+      "short": "Un modèle clair pour documenter vos couleurs, typographies et règles d’usage.",
+      "desc": "Gabarit modifiable avec exemples concrets : palette, typographies, espacement, usage du logo et check-list de contrôle avant publication.",
+      "deliverables": [
+        "Gabarit PDF / Figma",
+        "Page de palette",
+        "Règles d’usage du logo",
+        "Check-list de contrôle"
+      ],
+      "ai": [
+        "suggestions de palette",
+        "vérification de cohérence"
+      ]
+    },
+    {
+      "id": "outil-automatisation-reseaux",
+      "name": "Automatiser mes réseaux",
+      "category": "outils",
+      "type": "service",
+      "price": 25000,
+      "unit": "forfait",
+      "badge": "Robots inclus",
+      "popular": true,
+      "delay": "3 jours",
+      "icon": "▶",
+      "img": "outils.svg",
+      "short": "Publication quotidienne, veille et prospection pilotées par vos robots Touch Unique.",
+      "desc": "Mise en place des robots dans l’application et le serveur : publication automatique sur vos comptes connectés, veille techno quotidienne, briefs de conception et recherche de prospects. Vous gardez la possibilité de désactiver chaque tâche.",
+      "deliverables": [
+        "Robot publication quotidienne",
+        "Robot veille & actualités",
+        "Robot conception",
+        "Robot prospection",
+        "Accompagnement de configuration"
+      ],
+      "ai": [
+        "génération quotidienne",
+        "publication via tokens sécurisés",
+        "score de prospects"
+      ]
+    },
+    {
+      "id": "outil-site-express",
+      "name": "Site vitrine express",
+      "category": "outils",
+      "type": "service",
+      "price": 45000,
+      "unit": "forfait",
+      "badge": "En 5 jours",
+      "popular": false,
+      "delay": "5 jours",
+      "icon": "▣",
+      "img": "outils.svg",
+      "short": "Un site clair, rapide et lisible, avec boutique et assistant IA intégrés.",
+      "desc": "Création d’un site public sur votre domaine ou sur GitHub Pages : présentation, offres, actualités, boutique, compte visiteur et assistant IA. Optimisé mobile et accessibilité.",
+      "deliverables": [
+        "Site responsive 5 pages",
+        "Rubrique actualités",
+        "Boutique & panier",
+        "Assistant IA",
+        "Formation à la prise en main"
+      ],
+      "ai": [
+        "textes optimisés",
+        "suggestions de contenu"
+      ]
+    },
+    {
+      "id": "outil-formation-ia",
+      "name": "Formation IA pratique",
+      "category": "outils",
+      "type": "formation",
+      "price": 18000,
+      "unit": "par personne",
+      "badge": "Académie",
+      "popular": false,
+      "delay": "Sur rendez-vous",
+      "icon": "◈",
+      "img": "outils.svg",
+      "short": "Apprenez à utiliser l’IA pour créer, chercher et automatiser sans perdre le contrôle.",
+      "desc": "Session pratique en visio ou en présentiel : poser les bonnes questions, générer des contenus, connecter les outils et superviser les robots.",
+      "deliverables": [
+        "2 h de formation",
+        "Support PDF",
+        "3 exercices pratiques",
+        "Suivi pendant 7 jours"
+      ],
+      "ai": [
+        "prompts guidés",
+        "mise en situation réelle"
+      ]
+    },
+    {
+      "id": "outil-audit-digital",
+      "name": "Audit digital & outils",
+      "category": "outils",
+      "type": "service",
+      "price": 10000,
+      "unit": "session",
+      "badge": "Départ",
+      "popular": false,
+      "delay": "48 h",
+      "icon": "⌕",
+      "img": "outils.svg",
+      "short": "Un diagnostic simple de votre présence en ligne et de vos outils de travail.",
+      "desc": "Examen de votre site, de vos réseaux et de vos outils actuels, avec une liste de priorités et un plan d’action réalisable en 30 jours.",
+      "deliverables": [
+        "Rapport d’audit",
+        "Score de lisibilité",
+        "Plan 30 jours",
+        "Recommandations d’outils"
+      ],
+      "ai": [
+        "analyse des points faibles",
+        "priorisation des actions"
+      ]
     }
   ]
 }

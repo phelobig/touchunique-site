@@ -541,4 +541,6 @@
     initActiveNav();
     setTimeout(animateCounters, 240);
   });
+
+  window.TUSiteCart = { add: addToCart, open: openCart, close: closeCart, details: cartDetails };
 })();
