@@ -126,7 +126,7 @@ button { cursor: pointer; }
   background: linear-gradient(140deg, var(--red), #7d1024 48%, var(--blue));
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 8px 24px rgba(255,45,66,.22);
 }
-.brand-mark span { font-weight: 900; font-size: 15px; letter-spacing: -.05em; }
+.brand-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
 .brand-text b { font-size: .92rem; letter-spacing: .09em; }
 .brand-text small { color: var(--dim); font-size: .58rem; letter-spacing: .15em; margin-top: 4px; }
