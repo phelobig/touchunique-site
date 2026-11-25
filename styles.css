@@ -612,3 +612,9 @@ button { cursor: pointer; }
 @media (max-width: 860px) {
   .main-nav { background: rgba(255,255,255,.98); }
 }
+
+/* Le texte du bandeau reste toujours au-dessus des décorations vectorielles. */
+.site-bg, .bg-grid, .bg-vignette, .orb, .hero-video, .hero-ring, .float-chip { pointer-events: none; }
+.hero-copy { position: relative; z-index: 5; }
+.hero-visual { z-index: 1; }
+.hero-ring, .float-chip { max-width: 100%; }
