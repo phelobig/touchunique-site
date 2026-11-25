@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Outils et logiciels">
+  <rect width="120" height="120" rx="24" fill="#fff8f6"/>
+  <rect x="18" y="24" width="84" height="58" rx="8" fill="#a31127"/>
+  <rect x="25" y="31" width="70" height="44" rx="4" fill="#fff"/>
+  <path d="M20 94h80l-6-9H26z" fill="#1c1013"/>
+  <path d="M35 43h30v5H35zm0 11h44v5H35zm0 11h32v5H35z" fill="#d4142f"/>
+</svg>
