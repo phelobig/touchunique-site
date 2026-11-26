@@ -3,6 +3,7 @@
   'use strict';
 
   var M = root.TUSMessages;
+  var PUBLIC_SERVER = 'https://touchunique-serveur.onrender.com';
   var fab, panel, list, status, text, file, record, rec = null, reg = null, timer = null;
 
   function $(s) { return document.querySelector(s); }
@@ -18,6 +19,15 @@
     if (!status) return;
     status.hidden = false;
     status.textContent = message;
+  }
+  /* Le serveur public est fourni avec le site : aucun visiteur ne doit voir
+     « serveur sécurisé non configuré ». La clé administrative reste saisie
+     uniquement dans l’application ; l’envoi public n’en a pas besoin. */
+  function ensureServer() {
+    if (!M) return false;
+    if (M.server()) return true;
+    try { M.setServer(PUBLIC_SERVER); } catch (e) { return false; }
+    return !!M.server();
   }
   function open() {
     panel.classList.add('open');
@@ -95,6 +105,12 @@
         toast('Type de fichier non autorisé.');
         return Promise.reject(new Error('Type de fichier non autorisé.'));
       }
+    }
+    if (!ensureServer()) {
+      var err = new Error('Serveur sécurisé indisponible.');
+      setStatus('Envoi impossible : ' + err.message);
+      toast(err.message);
+      return Promise.reject(err);
     }
     var id = identityFromForm();
     setStatus('Envoi en cours…');
@@ -196,6 +212,7 @@
   }
 
   function boot() {
+    ensureServer();
     if (!M.server()) return initServerPrompt();
     refresh();
     M.overview().then(function (o) {
