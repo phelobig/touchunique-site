@@ -748,3 +748,84 @@ button { cursor: pointer; }
   .news-ticker-track { padding-left: 108px; }
   .news-ticker::before { font-size: .58rem; padding: 0 9px; }
 }
+
+/* ── Densité mobile et grilles alignées par 3 ──
+   Les cartes restent lisibles : on réduit les vides plutôt que l’information. */
+.process-grid, .news-grid, .tools-grid, .account-grid, .footer-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 1060px) {
+  .expertise-grid, .portfolio-grid, .ai-modules, .process-grid,
+  .news-grid, .tools-grid, .account-grid, .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .process-grid, .news-grid, .tools-grid { gap: 12px; }
+  .footer-grid { gap: 20px; }
+}
+@media (max-width: 860px) {
+  .hero { padding-top: 30px; }
+  .hero-grid { gap: 18px; }
+  .hero-visual { min-height: 300px; }
+  .hero-portrait-frame { width: min(62%, 280px); }
+  .section, .section-tight { padding: 48px 0; }
+  .section-head { margin-bottom: 22px; gap: 12px; }
+  .offer-grid, .expertise-grid, .portfolio-grid, .ai-modules, .process-grid,
+  .news-grid, .tools-grid, .proof-grid, .account-grid, .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+@media (max-width: 620px) {
+  .wrap { width: min(100% - 22px, var(--max)); }
+  .hero { padding-top: 18px; }
+  .hero-copy h1 { margin: 10px 0 6px; }
+  .hero-accent { margin-bottom: 8px; }
+  .hero-cta { margin-top: 14px; }
+  .trust-row { margin-top: 12px; gap: 6px 12px; }
+  .proof-grid { margin-top: 16px; }
+  .hero-visual { min-height: 220px; }
+  .hero-portrait-frame { width: min(58%, 220px); border-radius: 120px 120px 22px 22px; }
+  .marquee-wrap { margin-top: 26px; }
+  .section, .section-tight { padding: 34px 0; }
+  .section-head { margin-bottom: 16px; }
+  .section-head h2, .academy-copy h2, .ai-head h2, .contact-copy h2, .faq-grid h2 {
+    font-size: clamp(1.55rem, 6.4vw, 2.1rem);
+  }
+  .lead { font-size: .9rem; }
+  .toolbar { margin-bottom: 12px; gap: 8px; }
+  .offer-grid, .expertise-grid, .portfolio-grid, .ai-modules, .process-grid,
+  .news-grid, .tools-grid, .proof-grid, .account-grid, .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .offer-cat-head { grid-column: 1 / -1; margin-top: 8px; padding: 8px 10px; }
+  .offer-cat-head .subtle { white-space: normal; }
+  .offer-media { aspect-ratio: 4 / 3; padding: 6px; border-radius: 10px; }
+  .offer-body { padding: 9px; }
+  .offer-body h3 { margin: 5px 0; font-size: .84rem; line-height: 1.22; }
+  .offer-body > p, .offer-list { font-size: .76rem; line-height: 1.35; }
+  .offer-meta { margin: 7px 0; gap: 4px; }
+  .offer-meta span { padding: 3px 5px; font-size: .66rem; }
+  .offer-foot { flex-direction: column; align-items: stretch; gap: 4px; padding-top: 8px; }
+  .offer-price b { font-size: .95rem; }
+  .square-btn { width: 32px; height: 32px; }
+  .expertise-card, .news-card, .tool-card, .ai-module, .process-card { padding: 10px; border-radius: 12px; }
+  .expertise-card .ico { width: 30px; height: 30px; border-radius: 9px; font-size: .85rem; }
+  .expertise-card h3, .news-card h3, .tool-card h3 { margin: 8px 0 5px; font-size: .84rem; }
+  .expertise-card p, .news-card p, .tool-card p { font-size: .76rem; line-height: 1.35; }
+  .tool-card { flex-direction: column; gap: 8px; }
+  .tool-ico { flex: 0 0 30px; width: 30px; height: 30px; }
+  .tool-body ul { font-size: .74rem; padding-left: 14px; }
+  .news-meta { font-size: .66rem; gap: 4px; }
+  .proof-item { padding: 9px 6px; }
+  .proof-item b { font-size: .95rem; }
+  .proof-item span { font-size: .64rem; }
+  .portfolio-card figcaption { left: 8px; right: 8px; bottom: 8px; }
+  .footer-grid { gap: 10px; }
+  .footer-grid p, .footer-grid a, .footer-grid span { font-size: .74rem; }
+  .news-toolbar { margin-bottom: 10px; }
+}
+@media (max-width: 400px) {
+  .hero-portrait-frame { width: min(54%, 190px); }
+  .offer-body > p, .offer-list, .expertise-card p, .news-card p, .tool-card p { font-size: .72rem; }
+}

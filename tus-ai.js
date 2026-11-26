@@ -7,6 +7,7 @@
   var KEY_KEY = 'tus_proxy_key_v1';
   var TRIAL_KEY = 'tus_ai_trials_v1';
   var LIMIT = 2;
+  var PUBLIC_SERVER = 'https://touchunique-serveur.onrender.com';
 
   function owner() {
     try {
@@ -30,6 +31,14 @@
   }
   function networkOff() {
     return !!(root.TUSNetwork && !root.TUSNetwork.enabled());
+  }
+  /* Le site public est préconnecté au serveur officiel. Aucune clé n’est exposée :
+     l’assistant local fonctionne toujours, et l’IA distante sera utilisée dès que
+     le serveur aura des fournisseurs configurés. */
+  function ensureServer() {
+    if (getURL()) return true;
+    try { connect(PUBLIC_SERVER); } catch (e) { return false; }
+    return !!getURL();
   }
   function connect(url) {
     var clean = sec().serverURL ? sec().serverURL(url) : String(url || '').trim().replace(/\/$/, '');
@@ -79,6 +88,7 @@
   }
 
   function status() {
+    ensureServer();
     var url = getURL();
     if (networkOff()) return Promise.resolve({ ok: false, configured: false, offline: true, error: 'Connexion réseau désactivée', ai: {}, social: {} });
     if (!url) return Promise.resolve({ ok: false, configured: false, ai: { openai: false, gemini: false, anthropic: false }, social: { facebook: false, instagram: false, linkedin: false } });
@@ -95,6 +105,7 @@
   }
 
   function proxyAsk(prompt, system, maxTokens) {
+    ensureServer();
     var url = getURL();
     if (networkOff()) return Promise.reject(new Error('Connexion réseau désactivée dans l’application'));
     if (!url) return Promise.reject(new Error('Proxy non configuré'));

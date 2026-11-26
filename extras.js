@@ -129,8 +129,8 @@
       var box = $('#proxy-status', root);
       AI.status().then(function (s) {
         if (!box) return;
-        if (!s.configured) { box.innerHTML = ' IA locale active. Aucun serveur connecté.'; return; }
-        if (!s.ok) { box.innerHTML = '<span class="dot bad"></span> Serveur injoignable : ' + esc(s.error || 'erreur'); return; }
+        if (!s.configured) { box.innerHTML = ' Assistant local actif. Serveur non connecté.'; return; }
+        if (!s.ok) { box.innerHTML = '<span class="dot bad"></span> Serveur injoignable : ' + esc(s.error || 'erreur') + ' — assistant local actif.'; return; }
         var chips = [];
         (['openai', 'gemini', 'anthropic']).forEach(function (k) {
           chips.push('<span class="chip ' + (s.ai && s.ai[k] ? 'green' : 'gray') + '">' + ({ openai: 'ChatGPT', gemini: 'Gemini', anthropic: 'Claude' })[k] + '</span>');
@@ -180,7 +180,9 @@
       AI.status().then(function (s) {
         var t = AI.trials();
         var ready = s.ok && Object.keys(s.ai || {}).some(function (k) { return s.ai[k]; });
-        badge.textContent = ready ? 'IA temps réel · ' + t.remaining + '/' + t.limit + ' essais' : 'Moteur local inclus';
+        badge.textContent = ready
+          ? 'IA temps réel · ' + t.remaining + '/' + t.limit + ' essais'
+          : (s.ok && s.configured ? 'Assistant connecté · moteur local' : 'Assistant local inclus');
       });
     }
     push(box, 'bot', 'Bonjour, je suis l’assistant Touch Unique Studio. Je peux vous aider à trouver un service, un outil ou à préparer une publication, un visuel ou une prospection.');
