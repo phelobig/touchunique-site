@@ -180,9 +180,11 @@
       AI.status().then(function (s) {
         var t = AI.trials();
         var ready = s.ok && Object.keys(s.ai || {}).some(function (k) { return s.ai[k]; });
-        badge.textContent = ready
-          ? 'IA temps réel · ' + t.remaining + '/' + t.limit + ' essais'
-          : (s.ok && s.configured ? 'Assistant connecté · moteur local' : 'Assistant local inclus');
+        badge.textContent = (ready && s.ai && s.ai.web)
+          ? 'IA temps réel · Internet illimité'
+          : ready
+            ? 'IA temps réel · ' + t.remaining + '/' + t.limit + ' essais'
+            : (s.ok && s.configured ? 'Assistant connecté · moteur local' : 'Assistant local inclus');
       });
     }
     push(box, 'bot', 'Bonjour, je suis l’assistant Touch Unique Studio. Je peux vous aider à trouver un service, un outil ou à préparer une publication, un visuel ou une prospection.');

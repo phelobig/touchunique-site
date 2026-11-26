@@ -83,6 +83,7 @@
       email: ($('#site-msg-email') || {}).value || ''
     };
     M.saveIdentity(patch);
+    if (window.TUSVisits && window.TUSVisits.setContact) window.TUSVisits.setContact(patch);
     return patch;
   }
 

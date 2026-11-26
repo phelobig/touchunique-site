@@ -122,7 +122,8 @@
       .then(function (res) {
         if (timer) clearTimeout(timer);
         if (!res.body || !res.body.ok) throw new Error((res.body && res.body.error) || 'Erreur IA (' + res.statusCode + ')');
-        return { text: res.body.text, provider: res.body.provider, model: res.body.model, live: true };
+        return { text: res.body.text, provider: res.body.provider, model: res.body.model,
+          sources: res.body.sources || [], live: true };
       })
       .catch(function (e) { if (timer) clearTimeout(timer); throw e; });
   }
@@ -194,9 +195,9 @@
   function liveReady(s) {
     return !!(s && s.ok && s.configured && Object.keys(s.ai || {}).some(function (k) { return s.ai[k]; }));
   }
-
-  /* Le moteur local est inclus gratuitement. Les modèles distants (ChatGPT, Gemini,
-     Claude) sont payants : 2 essais gratuits par jour, puis demande d’accès. */
+  /* Le fournisseur Web est public et sans clé : accès Internet illimité.
+     Les autres modèles restent limités à LIMIT essais/jour pour le visiteur. */
+  function openWeb(s) { return !!(s && s.ai && s.ai.web); }
   function ask(prompt, options) {
     options = options || {};
     var text = String(prompt || '').trim();
@@ -207,17 +208,19 @@
 
     return status().then(function (s) {
       if (!liveReady(s)) return { text: local, live: false, trials: trials() };
-      if (options.countTrial !== false && !consume()) {
+      var free = openWeb(s);
+      if (!free && options.countTrial !== false && !consume()) {
         return {
-          text: 'Vos 2 essais gratuits du jour sont utilisés. Créez un compte ou demandez un accès complet (IA temps réel) sur WhatsApp : https://wa.me/22655041530',
+          text: 'L’accès Internet illimité est momentanément indisponible. Vos ' + LIMIT +
+            ' essais locaux du jour sont utilisés. Réessayez dans un instant ou écrivez-nous sur WhatsApp : https://wa.me/22655041530',
           live: false, limit: true, trials: trials()
         };
       }
       return proxyAsk(text, SYSTEM, 900).then(function (r) {
-        return Object.assign(r, { trials: trials() });
+        return Object.assign(r, { trials: trials(), unlimited: free });
       }).catch(function (e) {
-        if (options.countTrial !== false) refund();
-        return { text: local + '\n\n(IA distante indisponible : ' + e.message + ')', live: false, trials: trials() };
+        if (!free && options.countTrial !== false) refund();
+        return { text: local + '\n\n(IA distante indisponible : ' + e.message + ')', live: false, trials: trials(), unlimited: free };
       });
     });
   }
@@ -257,6 +260,7 @@
     setKey: setKey,
     disconnect: disconnect,
     status: status,
+    openWeb: openWeb,
     ask: ask,
     generate: generate,
     trials: trials,

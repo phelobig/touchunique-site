@@ -477,20 +477,47 @@
     var type = String(fd.get('type') || 'Projet');
     var message = String(fd.get('message') || '').trim();
     if (!client.name || !client.phone || !message) return toast('Nom, téléphone et message sont requis');
+    var M = window.TUSMessages;
+    var PUBLIC_SERVER = 'https://touchunique-serveur.onrender.com';
+    if (M && !M.server()) {
+      try { M.setServer(PUBLIC_SERVER); } catch (e) { /* origine refusée */ }
+    }
+    if (!M || !M.server()) return toast('Serveur indisponible : réessayez dans un instant.');
+    var file = fd.get('attachment');
+    if (file && (!file.size || !file.name)) file = null;
+    var btn = form.querySelector('[type="submit"]');
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Envoi en cours…'; }
+    try {
+      M.saveIdentity(client);
+      if (window.TUSVisits && window.TUSVisits.setContact) window.TUSVisits.setContact(client);
+    } catch (e) { /* identité locale facultative */ }
     var code = ref();
+    var thread = M.identity().thread;
     var text = 'Bonjour Touch Unique, voici mon projet.\n\nType : ' + type +
       '\nNom : ' + client.name + '\nTéléphone : ' + client.phone +
       (client.email ? '\nE-mail : ' + client.email : '') +
-      '\nRéférence : ' + code + '\n\nBesoins :\n' + message;
-    pushLead({
-      id: 'TL-' + Date.now() + '-' + rand(4), ref: code, at: new Date().toISOString(),
-      source: 'Site web Touch Unique', type: 'Demande de projet — ' + type, seen: false,
-      client: client, items: [], total: 0,
-      details: [['Type de projet', type], ['Besoin', message]], message: text
+      '\nRéférence : ' + code + '\n\nBesoins :\n' + message +
+      (file ? '\n\nPièce jointe : ' + file.name : '');
+    M.send({
+      thread: thread, name: client.name, email: client.email, phone: client.phone,
+      text: text, file: file, kind: file ? 'file' : 'text'
+    }).then(function (res) {
+      pushLead({
+        id: 'TL-' + Date.now() + '-' + rand(4), ref: code, at: new Date().toISOString(),
+        source: 'Site web Touch Unique', type: 'Demande de projet — ' + type, seen: false,
+        client: client, items: [], total: 0,
+        details: [['Type de projet', type], ['Besoin', message]],
+        message: text, server: true, thread: thread,
+        messageId: res && res.message ? res.message.id : ''
+      });
+      form.reset();
+      toast(file ? 'Demande et fichier reçus sur le serveur, visibles dans l’application.'
+        : 'Demande reçue sur le serveur, visible dans l’application.');
+    }).catch(function (e) {
+      toast('Envoi impossible : ' + (e && e.message ? e.message : 'serveur indisponible'));
+    }).then(function () {
+      if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || 'Envoyer mon projet →'; }
     });
-    openWa(text);
-    form.reset();
-    toast('Demande transmise à l’application et prête dans WhatsApp');
   }
 
   /* ---------- Init ---------- */
