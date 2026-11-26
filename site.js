@@ -7,7 +7,8 @@
 
   var CART_KEY = 'tus_site_cart_v1';
   var LEADS_KEY = 'tus_site_leads_v1';
-  var DATA = window.TU_CATALOGUE || { products: [], categories: [], meta: {} };
+  var CAT = window.TUSCatalog || null;
+  var DATA = CAT ? CAT.catalogue() : (window.TU_CATALOGUE || { products: [], categories: [], meta: {} });
   var CONTENT = window.TU_CONTENT || {};
   var BRAND = CONTENT.brand || {};
   var WA = BRAND.whatsapp || 'https://wa.me/22655041530';
@@ -311,8 +312,14 @@
     var p = product(id);
     if (!p) return;
     var root = $('#modal-root');
+    var gallery = CAT ? CAT.images(p) : (p.img ? [p.img] : []);
+    var main = gallery[0] || '';
     root.innerHTML = '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">' +
-      '<div class="modal-media"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '"></div>' +
+      '<div class="modal-media"><img id="modal-main-img" src="' + esc(main) + '" alt="' + esc(p.name) + '">' +
+      (gallery.length > 1 ? '<div class="modal-gallery">' + gallery.map(function (src, i) {
+        return '<button type="button" class="gallery-thumb' + (i === 0 ? ' active' : '') + '" data-gallery="' + esc(src) + '" aria-label="Image ' + (i + 1) + '">' +
+          '<img src="' + esc(src) + '" alt=""></button>';
+      }).join('') + '</div>' : '') + '</div>' +
       '<div class="modal-body"><div class="offer-cat">' + esc(catLabel(p.category)) + '</div>' +
       '<h3 id="modal-title">' + esc(p.name) + '</h3><p>' + esc(p.desc) + '</p>' +
       '<div class="offer-meta"><span>⏱ ' + esc(p.delay) + '</span><span>' + esc(p.unit) + '</span><span>' + money(p.price) + '</span></div>' +
@@ -452,8 +459,9 @@
       if (res.ok) {
         var fresh = await res.json();
         if (fresh && Array.isArray(fresh.products) && fresh.products.length) {
-          DATA = fresh;
           window.TU_CATALOGUE = fresh;
+          DATA = CAT ? CAT.catalogue() : fresh;
+          renderOfferFilters(); renderOffers();
         }
       }
     } catch (e) { /* data.js local reste la source de repli */ }
@@ -491,6 +499,13 @@
     $('#cart-checkout').addEventListener('click', checkout);
     $('#modal-root').addEventListener('click', function (e) {
       if (e.target === e.currentTarget || e.target.closest('[data-modal-close]')) return closeModal();
+      var thumb = e.target.closest('[data-gallery]');
+      if (thumb) {
+        var main = $('#modal-main-img');
+        if (main) main.src = thumb.dataset.gallery;
+        $$('#modal-root .gallery-thumb').forEach(function (t) { t.classList.toggle('active', t === thumb); });
+        return;
+      }
       var a = e.target.closest('[data-modal-add]');
       if (a) { addToCart(a.dataset.modalAdd); closeModal(); openCart(); }
     });
@@ -520,7 +535,24 @@
     var year = $('#year'); if (year) year.textContent = String(new Date().getFullYear());
   }
 
+  /* Synchronisation instantanée depuis l'application (même origine). */
+  window.addEventListener('storage', function (e) {
+    if (e.key === (window.TUSCatalog && window.TUSCatalog.KEY)) {
+      DATA = window.TUSCatalog.catalogue();
+      renderOfferFilters(); renderOffers(); renderCart();
+    }
+  });
+  if (window.TUSCatalog) {
+    window.TUSCatalog.subscribe(function () {
+      DATA = window.TUSCatalog.catalogue();
+      renderOfferFilters(); renderOffers(); renderCart();
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', async function () {
+    if (window.TUSCloud && window.TUSCloud.configured() && window.TUSCatalog) {
+      await window.TUSCatalog.syncFromServer().catch(function () { return false; });
+    }
     await syncCatalogue();
     renderProof();
     renderExpertises();
