@@ -43,6 +43,7 @@
   ];
 
   function sec() { return root.TUSSecure || {}; }
+  function http() { return sec().fetch || root.fetch; }
   function url() {
     var raw = sec().storedServerURL ? sec().storedServerURL() : '';
     if (!raw) return '';
@@ -77,7 +78,7 @@
     }
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, timeout || (method === 'GET' ? 8000 : 120000)) : null;
-    return fetch(url() + path, {
+    return http()(url() + path, {
       method: method || (body ? 'POST' : 'GET'), headers: headers, body: body,
       signal: ctl ? ctl.signal : undefined
     }).then(function (r) {

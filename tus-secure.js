@@ -96,9 +96,48 @@
     });
   }
 
+  /* Les applications natives chargent la page depuis une origine non autorisée
+     par le CORS du serveur (https://app.touchunique.local ou file://). Le pont
+     natif effectue la requête côté processus principal, sans assouplir le CORS
+     public. Dans le navigateur, le fetch standard reste utilisé. */
+  function normalizeNative(res) {
+    if (!res || typeof res !== 'object') throw new Error('Réponse native invalide.');
+    var headers = {};
+    Object.keys(res.headers || {}).forEach(function (k) { headers[k.toLowerCase()] = String(res.headers[k]); });
+    var body = res.body == null ? '' : (typeof res.body === 'string' ? res.body : JSON.stringify(res.body));
+    return {
+      ok: !!res.ok,
+      status: Number(res.status) || 0,
+      headers: { get: function (name) { return headers[String(name || '').toLowerCase()] || ''; } },
+      json: function () { return Promise.resolve().then(function () { return JSON.parse(body); }); },
+      text: function () { return Promise.resolve(body); },
+      arrayBuffer: function () {
+        var len = Math.min(Number(res.bytes) || body.length, 65536);
+        return Promise.resolve(new Uint8Array(len).buffer);
+      }
+    };
+  }
+  function fetchSafe(url, options) {
+    options = options || {};
+    var api = root.TUSNative && root.TUSNative.api;
+    if (typeof api !== 'function') return root.fetch(url, options);
+    var headers = {};
+    if (options.headers) {
+      if (typeof options.headers.forEach === 'function') {
+        options.headers.forEach(function (v, k) { headers[k] = v; });
+      } else {
+        Object.keys(options.headers).forEach(function (k) { headers[k] = options.headers[k]; });
+      }
+    }
+    var body = options.body == null ? '' : (typeof options.body === 'string' ? options.body : String(options.body));
+    return Promise.resolve()
+      .then(function () { return api(String(url), options.method || (body ? 'POST' : 'GET'), headers, body); })
+      .then(normalizeNative);
+  }
+
   root.TUSSecure = {
     serverURL: serverURL, storedServerURL: storedServerURL, isAllowedServer: isAllowedServer,
     safeHref: safeHref, getSecret: getSecret, setSecret: setSecret, clearSecrets: clearSecrets,
-    trustedMessage: trustedMessage, esc: esc
+    trustedMessage: trustedMessage, esc: esc, fetch: fetchSafe
   };
 })(window);

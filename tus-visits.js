@@ -44,25 +44,34 @@
       at: new Date().toISOString()
     };
   }
-  function beacon() {
-    var url = server() + '/api/visits';
-    var body = JSON.stringify(payload());
+  function http() { return (root.TUSSecure && root.TUSSecure.fetch) || root.fetch; }
+  function post(base, body) {
+    var url = base + '/api/visits';
+    if (!(root.TUSNative && typeof root.TUSNative.api === 'function')) {
+      try {
+        if (root.navigator && typeof root.navigator.sendBeacon === 'function') {
+          var blob = new Blob([body], { type: 'text/plain;charset=utf-8' });
+          if (root.navigator.sendBeacon(url, blob)) return Promise.resolve(true);
+        }
+      } catch (e) { /* repli ci-dessous */ }
+    }
     try {
-      if (root.navigator && typeof root.navigator.sendBeacon === 'function') {
-        var blob = new Blob([body], { type: 'text/plain;charset=utf-8' });
-        if (root.navigator.sendBeacon(url, blob)) return Promise.resolve(true);
-      }
-    } catch (e) { /* repli ci-dessous */ }
-    try {
-      return fetch(url, {
+      return http()(url, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: body,
-        keepalive: true,
         credentials: 'omit',
         cache: 'no-store'
-      }).then(function () { return true; }).catch(function () { return false; });
+      }).then(function (r) { return !!r.ok; }).catch(function () { return false; });
     } catch (e) { return Promise.resolve(false); }
+  }
+  function beacon() {
+    var body = JSON.stringify(payload());
+    var chosen = server();
+    return post(chosen, body).then(function (ok) {
+      if (ok || chosen === PUBLIC_SERVER) return ok;
+      return post(PUBLIC_SERVER, body);
+    });
   }
   function cached(value) {
     if (value && value.ok) {
@@ -76,15 +85,24 @@
       return v && v.ok ? v : null;
     } catch (e) { return null; }
   }
-  function stats() {
-    return fetch(server() + '/api/visits', { credentials: 'omit', cache: 'no-store' })
+  function readStats(base) {
+    return http()(base + '/api/visits', { credentials: 'omit', cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error('Statut ' + r.status); return r.json(); })
-      .then(function (j) { return cached({ ok: true, total: +j.total || 0, today: +j.today || 0,
-        views: +j.views || 0, online: +j.online || 0, day: j.day || '', synced: true }); })
-      .catch(function () {
-        var last = saved();
-        return last || { ok: false, total: 0, today: 0, views: 0, online: 0, synced: false };
+      .then(function (j) {
+        if (!j || j.ok === false) throw new Error('Réponse invalide');
+        return cached({ ok: true, total: +j.total || 0, today: +j.today || 0,
+          views: +j.views || 0, online: +j.online || 0, day: j.day || '', synced: true });
       });
+  }
+  function stats() {
+    var chosen = server();
+    return readStats(chosen).catch(function () {
+      if (chosen === PUBLIC_SERVER) throw new Error('Serveur public indisponible');
+      return readStats(PUBLIC_SERVER);
+    }).catch(function () {
+      var last = saved();
+      return last || { ok: false, total: 0, today: 0, views: 0, online: 0, synced: false };
+    });
   }
   function watch(callback, interval) {
     if (typeof callback !== 'function') return function () {};

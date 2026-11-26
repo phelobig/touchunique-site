@@ -17,6 +17,7 @@
   }
 
   function sec() { return root.TUSSecure || {}; }
+  function http() { return sec().fetch || root.fetch; }
   function getURL() {
     var raw = sec().storedServerURL ? sec().storedServerURL() : (function () {
       try { return root.localStorage.getItem(URL_KEY) || ''; } catch (e) { return ''; }
@@ -97,7 +98,7 @@
     var headers = {};
     var k = getKey();
     if (k) headers['X-Tus-Key'] = k;
-    return fetch(url + '/api/status', { headers: headers, signal: ctl ? ctl.signal : undefined })
+    return http()(url + '/api/status', { headers: headers, signal: ctl ? ctl.signal : undefined })
       .then(function (r) { if (!r.ok) throw new Error('Statut ' + r.status); return r.json(); })
       .then(function (j) { return Object.assign({ ok: true, configured: true }, j); })
       .catch(function () { return { ok: false, configured: true, error: 'Proxy injoignable' }; })
@@ -114,7 +115,7 @@
     if (key) headers['X-Tus-Key'] = key;
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, 60000) : null;
-    return fetch(url + '/api/ai', {
+    return http()(url + '/api/ai', {
       method: 'POST', headers: headers,
       body: JSON.stringify({ provider: 'auto', prompt: prompt, system: system, maxTokens: maxTokens || 900 })
     }).then(function (r) { return r.json().then(function (j) { return { statusCode: r.status, body: j }; }); })
@@ -268,7 +269,7 @@
       var headers = { 'Content-Type': 'application/json' };
       var key = getKey();
       if (key) headers['X-Tus-Key'] = key;
-      return fetch(url + '/api/publish', {
+      return http()(url + '/api/publish', {
         method: 'POST', headers: headers,
         body: JSON.stringify({ network: network, text: text, imageUrl: imageUrl || '' })
       }).then(function (r) { return r.json(); });

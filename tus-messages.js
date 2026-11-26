@@ -11,6 +11,7 @@
   var LAST_KEY = 'tus_msg_last_v1';
 
   function sec() { return root.TUSSecure || {}; }
+  function http() { return sec().fetch || root.fetch; }
   function server() {
     var raw = sec().storedServerURL ? sec().storedServerURL() : (function () {
       try { return root.localStorage.getItem(SERVER_KEY) || ''; } catch (e) { return ''; }
@@ -70,7 +71,7 @@
     }
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, timeout || 15000) : null;
-    return fetch(base + path, {
+    return http()(base + path, {
       method: method || (body ? 'POST' : 'GET'), headers: headers, body: body,
       signal: ctl ? ctl.signal : undefined
     }).then(function (r) {
