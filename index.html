@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#c8102e">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https:; font-src 'self' data:; connect-src 'self' https: http://127.0.0.1:8102 http://localhost:8102; object-src 'none'; base-uri 'none'">
   <meta name="description" content="Touch Unique Studio — identité visuelle, vidéo, réseaux sociaux, print, académie et automatisation IA. Des visuels qui captent, un système qui vend.">
   <meta property="og:title" content="Touch Unique Studio — Des visuels qui captent. Un système qui vend.">
   <meta property="og:description" content="Studio créatif, académie et assistant IA pour transformer vos idées en marque, en vidéo et en contenus prêts à publier.">
@@ -12,7 +13,7 @@
   <title>Touch Unique Studio — Identité, vidéo, contenus & IA</title>
   <link rel="icon" href="ic_launcher_192.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=15">
+  <link rel="stylesheet" href="styles.css?v=16">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -243,7 +244,7 @@
         <div class="ai-modules" id="ai-modules"></div>
         <div class="ai-foot">
           <p><span aria-hidden="true">🔒</span> Moteur local sans clé API obligatoire. Connecteurs optionnels pour la publication directe selon les permissions de chaque plateforme.</p>
-          <a class="btn btn-ghost" href="https://phelobig.github.io/touchunique-app/" target="_blank" rel="noopener">Ouvrir l’application →</a>
+          <a class="btn btn-ghost" href="https://wa.me/22655041530?text=Je%20souhaite%20recevoir%20l%27application%20Touch%20Unique%20Studio%20(Android%20ou%20Windows)" target="_blank" rel="noopener">Recevoir l’application →</a>
         </div>
       </div>
     </section>
@@ -345,8 +346,8 @@
       </div>
       <div>
         <b>Application</b>
-        <a href="https://phelobig.github.io/touchunique-app/" target="_blank" rel="noopener">Touch Unique Gestion →</a>
-        <span>Portfolio source : Jason Sary</span>
+        <a href="https://wa.me/22655041530?text=Je%20souhaite%20installer%20Touch%20Unique%20Studio" target="_blank" rel="noopener">Android &amp; Windows sur demande →</a>
+        <span>Mises à jour en ligne · sans réinstallation</span>
       </div>
     </div>
     <div class="wrap footer-bottom"><span>© <span id="year"></span> Touch Unique Studio.</span><span>Conçu avec mouvement, clarté et intention.</span></div>
@@ -397,16 +398,54 @@
     </form>
   </aside>
 
+  <!-- MESSAGERIE CLIENTS → APPLICATION -->
+  <button class="site-msg-fab" id="site-msg-fab" aria-label="Ouvrir la messagerie Touch Unique" aria-expanded="false">✉</button>
+  <aside class="site-msg-panel" id="site-msg-panel" aria-label="Messagerie Touch Unique" inert>
+    <div class="site-ai-head">
+      <div><b>Messagerie Touch Unique</b><small id="site-msg-mode">Connexion au serveur…</small></div>
+      <button class="icon-btn" id="site-msg-close" aria-label="Fermer la messagerie">✕</button>
+    </div>
+    <div class="site-msg-status" id="site-msg-status" hidden></div>
+    <details class="site-msg-identity">
+      <summary>Vos coordonnées (facultatif)</summary>
+      <label class="field"><span>Nom</span><input id="site-msg-name" autocomplete="name" placeholder="Votre nom"></label>
+      <label class="field"><span>Téléphone WhatsApp</span><input id="site-msg-phone" autocomplete="tel" placeholder="+226 …"></label>
+      <label class="field"><span>E-mail</span><input id="site-msg-email" type="email" autocomplete="email" placeholder="vous@exemple.com"></label>
+    </details>
+    <div class="site-msg-perms">
+      <button class="btn btn-ghost btn-sm" type="button" data-msg-perm="camera">Autoriser la caméra</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-msg-perm="micro">Autoriser le micro</button>
+      <button class="btn btn-ghost btn-sm" type="button" id="site-msg-push">Activer les notifications</button>
+    </div>
+    <div class="site-msg-list" id="site-msg-list" role="log" aria-live="polite"></div>
+    <form class="site-msg-form" id="site-msg-form">
+      <textarea id="site-msg-text" rows="2" placeholder="Écrivez votre message…"></textarea>
+      <div class="site-msg-actions">
+        <label class="btn btn-ghost btn-sm" title="Importer un fichier">📎
+          <input id="site-msg-file" type="file" accept="image/*,audio/*,application/pdf,.doc,.docx,.txt" hidden>
+        </label>
+        <label class="btn btn-ghost btn-sm" title="Prendre une photo">📷
+          <input id="site-msg-camera" type="file" accept="image/*" capture="environment" hidden>
+        </label>
+        <button class="btn btn-ghost btn-sm" type="button" id="site-msg-record">● Enregistrer</button>
+        <button class="btn btn-primary btn-sm" type="submit">Envoyer</button>
+      </div>
+    </form>
+  </aside>
+
   <a class="mobile-cta" href="#contact">Parlons projet →</a>
 
-  <script src="sync.js?v=15"></script>
-  <script src="data.js?v=15"></script>
-  <script src="tus-cloud.js?v=15"></script>
-  <script src="tus-catalog.js?v=15"></script>
-  <script src="site.js?v=15"></script>
-  <script src="tus-ai.js?v=15"></script>
-  <script src="tus-accounts.js?v=15"></script>
-  <script src="news.js?v=15"></script>
-  <script src="extras.js?v=15"></script>
+  <script src="sync.js?v=16"></script>
+  <script src="data.js?v=16"></script>
+  <script src="tus-secure.js?v=16"></script>
+  <script src="tus-cloud.js?v=16"></script>
+  <script src="tus-catalog.js?v=16"></script>
+  <script src="site.js?v=16"></script>
+  <script src="tus-ai.js?v=16"></script>
+  <script src="tus-accounts.js?v=16"></script>
+  <script src="news.js?v=16"></script>
+  <script src="extras.js?v=16"></script>
+  <script src="tus-messages.js?v=16"></script>
+  <script src="messages.js?v=16"></script>
 </body>
 </html>

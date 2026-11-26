@@ -10,6 +10,102 @@
   var KEY = 'tus_catalog_v1';
   var state = null;
   var listeners = [];
+  var MAX_STATE_BYTES = 3 * 1024 * 1024;
+  var MAX_ADDED = 200;
+  var MAX_IMAGES = 16;
+  var ID_RE = /^[A-Za-z0-9_-]{1,80}$/;
+  var REL_IMG_RE = /^(?:\.\/|\/)?[A-Za-z0-9_-]+(?:[A-Za-z0-9_\/-]*[A-Za-z0-9_-])?\.(?:webp|png|jpe?g|gif)$/i;
+  var DATA_IMG_RE = /^data:image\/(?:jpeg|png|webp|gif);base64,[A-Za-z0-9+/=\s]+$/i;
+  var PRODUCT_TEXT = ['name', 'title', 'description', 'category', 'type', 'short', 'badge', 'unit', 'level', 'duration', 'subtitle', 'tag'];
+  var PRODUCT_NUM = ['price', 'oldPrice', 'stock', 'qty', 'durationMin'];
+
+  function plain(v) {
+    if (!v || typeof v !== 'object' || Array.isArray(v)) return false;
+    try { return Object.getPrototypeOf(v) === Object.prototype; } catch (e) { return false; }
+  }
+  function text(v, max) { return String(v == null ? '' : v).slice(0, max || 600); }
+
+  /* Seules les images sûres sont conservées : pas de SVG data, ni de javascript:. */
+  function safeImage(value) {
+    var s = String(value == null ? '' : value);
+    if (!s || s.length > 400000) return '';
+    if (REL_IMG_RE.test(s) && s.indexOf('\\') < 0 && s.indexOf('://') < 0) return s;
+    if (DATA_IMG_RE.test(s)) return s;
+    if (/^https:\/\//i.test(s)) {
+      try {
+        var sec = root.TUSSecure || {};
+        var href = sec.safeHref ? sec.safeHref(s) : s;
+        var u = new URL(href);
+        if (u.protocol === 'https:' && u.hostname && !u.username && !u.password) return href;
+      } catch (e) { /* image refusée */ }
+    }
+    return '';
+  }
+  function sanitizeProduct(p, partial) {
+    if (!plain(p)) return null;
+    var out = {};
+    if (p.id != null) {
+      if (!ID_RE.test(String(p.id))) return null;
+      out.id = String(p.id);
+    } else if (!partial) return null;
+    PRODUCT_TEXT.forEach(function (k) { if (p[k] != null) out[k] = text(p[k]); });
+    PRODUCT_NUM.forEach(function (k) {
+      if (p[k] == null) return;
+      var n = Number(p[k]);
+      if (!isFinite(n) || n < 0 || n > 1000000000) return;
+      out[k] = n;
+    });
+    if (p.img != null) {
+      var img = safeImage(p.img);
+      if (!img) return null;
+      out.img = img;
+    }
+    if (p.images != null) {
+      if (!Array.isArray(p.images) || p.images.length > MAX_IMAGES) return null;
+      out.images = p.images.map(safeImage);
+      if (out.images.some(function (x) { return !x; })) return null;
+    }
+    if (p.features != null) {
+      if (!Array.isArray(p.features) || p.features.length > 30) return null;
+      out.features = p.features.slice(0, 30).map(function (x) { return text(x, 200); });
+    }
+    return out;
+  }
+  /* Le catalogue distant ne remplace jamais le catalogue local s'il est invalide. */
+  function sanitizeState(remote) {
+    if (!plain(remote)) return null;
+    if (Object.keys(remote).some(function (k) {
+      return ['overrides', 'added', 'removed', 'updatedAt'].indexOf(k) < 0;
+    })) return null;
+    var out = empty();
+    if (remote.updatedAt != null) {
+      if (typeof remote.updatedAt !== 'string' || !/^\d{4}-\d\d-\d\dT[\d:.+-]+Z?$/.test(remote.updatedAt)) return null;
+      out.updatedAt = remote.updatedAt;
+    }
+    if (remote.overrides != null) {
+      if (!plain(remote.overrides) || Object.keys(remote.overrides).length > 500) return null;
+      var ids = Object.keys(remote.overrides);
+      for (var i = 0; i < ids.length; i++) {
+        if (!ID_RE.test(ids[i])) return null;
+        var patch = sanitizeProduct(remote.overrides[ids[i]], true);
+        if (!patch) return null;
+        delete patch.id;
+        out.overrides[ids[i]] = patch;
+      }
+    }
+    if (remote.added != null) {
+      if (!Array.isArray(remote.added) || remote.added.length > MAX_ADDED) return null;
+      out.added = remote.added.map(function (p) { return sanitizeProduct(p, false); });
+      if (out.added.some(function (p) { return !p; })) return null;
+    }
+    if (remote.removed != null) {
+      if (!Array.isArray(remote.removed) || remote.removed.length > 500) return null;
+      out.removed = remote.removed.map(function (id) { return String(id || ''); });
+      if (out.removed.some(function (id) { return !ID_RE.test(id); })) return null;
+    }
+    if (JSON.stringify(out).length > MAX_STATE_BYTES) return null;
+    return out;
+  }
 
   function empty() {
     return { overrides: {}, added: [], removed: [], updatedAt: '' };
@@ -19,15 +115,11 @@
   }
   function load() {
     if (state) return state;
-    try {
-      var raw = root.localStorage.getItem(KEY);
-      state = raw ? JSON.parse(raw) : null;
-    } catch (e) { state = null; }
-    if (!state || typeof state !== 'object') state = empty();
-    state.overrides = (state.overrides && typeof state.overrides === 'object') ? state.overrides : {};
-    state.added = Array.isArray(state.added) ? state.added : [];
-    state.removed = Array.isArray(state.removed) ? state.removed : [];
-    state.updatedAt = String(state.updatedAt || '');
+    var raw = null;
+    try { raw = root.localStorage.getItem(KEY); } catch (e) { raw = null; }
+    var parsed = null;
+    if (raw) { try { parsed = JSON.parse(raw); } catch (e) { parsed = null; } }
+    state = sanitizeState(parsed) || empty();
     return state;
   }
 
@@ -66,8 +158,8 @@
 
   function saveProduct(product, options) {
     var s = load();
-    var p = Object.assign({}, product || {});
-    if (!p.id) throw new Error('Identifiant produit requis');
+    var p = sanitizeProduct(product || {}, false);
+    if (!p) throw new Error('Produit invalide (images ou champs non autorisés)');
     var isBase = (base().products || []).some(function (x) { return x.id === p.id; });
     s.removed = s.removed.filter(function (id) { return id !== p.id; });
     if (isBase) {
@@ -92,26 +184,25 @@
   }
 
   function importOverrides(map) {
-    if (!map || typeof map !== 'object') return;
+    if (!plain(map)) return;
     var s = load();
-    Object.keys(map).forEach(function (id) {
-      if (!id || !map[id]) return;
-      s.overrides[id] = Object.assign({}, s.overrides[id] || {}, map[id]);
+    Object.keys(map).slice(0, 500).forEach(function (id) {
+      if (!ID_RE.test(id)) return;
+      var patch = sanitizeProduct(map[id], true);
+      if (!patch) return;
+      delete patch.id;
+      s.overrides[id] = Object.assign({}, s.overrides[id] || {}, patch);
     });
     persist();
   }
 
-  /* Applique un état reçu du serveur (le plus récent gagne). */
+  /* Applique un état reçu du serveur (le plus récent gagne et doit être valide). */
   function applyRemote(remote) {
-    if (!remote || typeof remote !== 'object') return false;
+    var clean = sanitizeState(remote);
+    if (!clean) return false;
     var s = load();
-    if (remote.updatedAt && s.updatedAt && String(remote.updatedAt) < String(s.updatedAt)) return false;
-    state = {
-      overrides: (remote.overrides && typeof remote.overrides === 'object') ? remote.overrides : {},
-      added: Array.isArray(remote.added) ? remote.added : [],
-      removed: Array.isArray(remote.removed) ? remote.removed : [],
-      updatedAt: String(remote.updatedAt || '')
-    };
+    if (clean.updatedAt && s.updatedAt && clean.updatedAt < s.updatedAt) return false;
+    state = clean;
     try { root.localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* quota */ }
     emit();
     return true;
@@ -184,7 +275,7 @@
     categories: function () { return (base().categories || []).slice(); },
     meta: function () { return base().meta || {}; },
     saveProduct: saveProduct, removeProduct: removeProduct, importOverrides: importOverrides,
-    applyRemote: applyRemote, syncFromServer: syncFromServer,
+    applyRemote: applyRemote, sanitizeState: sanitizeState, syncFromServer: syncFromServer,
     subscribe: subscribe, prepareImage: prepareImage, images: images, normalize: normalizeProduct,
     state: function () { return load(); }
   };

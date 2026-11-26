@@ -16,7 +16,25 @@
   var NETWORKS = [
     { id: 'facebook', name: 'Facebook', fields: [{ id: 'facebook', label: 'Token de page' }, { id: 'facebook_page', label: 'Identifiant de page' }] },
     { id: 'instagram', name: 'Instagram', fields: [{ id: 'instagram', label: 'Token Graph API' }, { id: 'instagram_user', label: 'Identifiant utilisateur' }] },
-    { id: 'linkedin', name: 'LinkedIn', fields: [{ id: 'linkedin', label: 'Token d’accès' }, { id: 'linkedin_org', label: 'Identifiant organisation' }] }
+    { id: 'linkedin', name: 'LinkedIn', fields: [{ id: 'linkedin', label: 'Token d’accès' }, { id: 'linkedin_person', label: 'Identifiant personne' }] },
+    { id: 'x', name: 'X / Twitter', fields: [{ id: 'x', label: 'Jeton d’accès' }, { id: 'x_user', label: 'Identifiant utilisateur' }] }
+  ];
+  var OAUTH_PROVIDERS = [
+    { id: 'google', name: 'Google Drive', hint: 'Sauvegarde automatique des données', console: 'https://console.cloud.google.com/apis/credentials' },
+    { id: 'facebook', name: 'Facebook', hint: 'Publication sur une page', console: 'https://developers.facebook.com/apps/' },
+    { id: 'instagram', name: 'Instagram', hint: 'Publication sur un compte professionnel', console: 'https://developers.facebook.com/apps/' },
+    { id: 'linkedin', name: 'LinkedIn', hint: 'Publication avec votre profil', console: 'https://www.linkedin.com/developers/apps/' },
+    { id: 'x', name: 'X / Twitter', hint: 'Publication de tweets', console: 'https://developer.x.com/en/portal/dashboard' }
+  ];
+  var OAUTH_FIELDS = [
+    { id: 'facebook_app_id', label: 'Facebook App ID' },
+    { id: 'facebook_app_secret', label: 'Facebook App Secret' },
+    { id: 'instagram_app_id', label: 'Instagram App ID (repli Facebook)' },
+    { id: 'instagram_app_secret', label: 'Instagram App Secret (repli Facebook)' },
+    { id: 'linkedin_client_id', label: 'LinkedIn Client ID' },
+    { id: 'linkedin_client_secret', label: 'LinkedIn Client Secret' },
+    { id: 'x_client_id', label: 'X Client ID' },
+    { id: 'x_client_secret', label: 'X Client Secret' }
   ];
   var GOOGLE_FIELDS = [
     { id: 'google_client_id', label: 'Client ID Google' },
@@ -24,21 +42,30 @@
     { id: 'google_redirect_uri', label: 'URI de redirection OAuth' }
   ];
 
+  function sec() { return root.TUSSecure || {}; }
   function url() {
-    try { return (root.localStorage.getItem(URL_KEY) || '').replace(/\/$/, ''); } catch (e) { return ''; }
+    var raw = sec().storedServerURL ? sec().storedServerURL() : '';
+    if (!raw) return '';
+    return sec().isAllowedServer && !sec().isAllowedServer(raw) ? '' : raw.replace(/\/$/, '');
   }
   function configured() { return !!url(); }
   function connect(value) {
-    var clean = String(value || '').trim().replace(/\/$/, '');
-    if (!/^https?:\/\//i.test(clean)) throw new Error('URL invalide (http:// ou https:// attendu)');
+    var clean = sec().serverURL ? sec().serverURL(value)
+      : String(value || '').trim().replace(/\/$/, '');
     root.localStorage.setItem(URL_KEY, clean);
     return clean;
   }
-  function setKey(value) { root.localStorage.setItem(KEY_KEY, String(value || '').trim()); }
-  function key() { try { return root.localStorage.getItem(KEY_KEY) || ''; } catch (e) { return ''; } }
-  function disconnect() { root.localStorage.removeItem(URL_KEY); root.localStorage.removeItem(KEY_KEY); }
+  function setKey(value) { (sec().setSecret || function (v) { root.localStorage.setItem(KEY_KEY, v); })(value); }
+  function key() { return sec().getSecret ? sec().getSecret() : (function () { try { return root.localStorage.getItem(KEY_KEY) || ''; } catch (e) { return ''; } })(); }
+  function disconnect() {
+    try { root.localStorage.removeItem(URL_KEY); } catch (e) {}
+    if (sec().clearSecrets) sec().clearSecrets();
+  }
 
   function request(path, payload, method, timeout) {
+    if (root.TUSNetwork && !root.TUSNetwork.enabled()) {
+      return Promise.reject(new Error('Connexion réseau désactivée dans l’application'));
+    }
     if (!url()) return Promise.reject(new Error('Serveur sécurisé non configuré'));
     var headers = {};
     var k = key();
@@ -68,7 +95,7 @@
   }
 
   function status() {
-    if (!url()) return Promise.resolve({ ok: false, configured: false, ai: {}, social: {}, google: { connected: false, configured: false } });
+    if (!url()) return Promise.resolve({ ok: false, configured: false, ai: {}, social: {}, oauth: [], google: { connected: false, configured: false } });
     return request('/api/status', undefined, 'GET', 8000).catch(function (e) {
       return { ok: false, configured: true, error: e.message, ai: {}, social: {}, google: { connected: false } };
     });
@@ -121,37 +148,94 @@
   function analyzeMedia(payload) { return request('/api/media/analyze', payload); }
   function mediaMission(payload) { return request('/api/media/mission', payload); }
 
+  /* Connexions OAuth en un clic : le serveur garde les jetons chiffrés. */
+  var AUTH_HOSTS = {
+    google: ['accounts.google.com'],
+    facebook: ['www.facebook.com', 'facebook.com'],
+    instagram: ['www.facebook.com', 'facebook.com'],
+    linkedin: ['www.linkedin.com', 'linkedin.com'],
+    x: ['twitter.com', 'x.com']
+  };
+
+  function openAuth(res, provider, type) {
+    var u;
+    try { u = new URL(res.url); } catch (e) { throw new Error('URL de connexion invalide.'); }
+    var hosts = AUTH_HOSTS[provider] || [];
+    if (u.protocol !== 'https:' || !hosts.some(function (h) { return u.hostname === h || u.hostname.endsWith('.' + h); })) {
+      throw new Error('URL de connexion non autorisée pour ' + provider + '.');
+    }
+    var origin = res.origin || (root.location && root.location.origin) || ALLOWED_FALLBACK;
+    var S = root.TUSSecure || {};
+    if (S.safeHref) { try { origin = new URL(origin).origin; } catch (e) { origin = ALLOWED_FALLBACK; } }
+    var win = root.open(u.href, '_blank', 'width=620,height=720');
+    if (!win) throw new Error('Autorisez les fenêtres surgissantes pour connecter ' + (res.name || provider) + '.');
+    return { win: win, origin: origin, nonce: res.nonce || '', type: type };
+  }
+
+  var ALLOWED_FALLBACK = 'https://phelobig.github.io';
+
+  function authResult(ctx, provider, type) {
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var deadline = Date.now() + 5 * 60 * 1000;
+      function finish(ok, message) {
+        if (done) return;
+        done = true;
+        root.removeEventListener('message', onMessage);
+        clearInterval(timer);
+        if (ok) resolve(true);
+        else reject(new Error(message || 'Connexion interrompue.'));
+      }
+      function onMessage(e) {
+        var S = root.TUSSecure || {};
+        var expected = { type: type, origin: ctx.origin, source: ctx.win, nonce: ctx.nonce };
+        if (S.trustedMessage) {
+          if (!S.trustedMessage(e, expected.origin, expected.source, true, expected.nonce)) return;
+        } else if (e.origin !== ctx.origin || e.source !== ctx.win || e.data.nonce !== ctx.nonce) return;
+        var d = e.data;
+        if (d.type !== type || (provider && d.provider && d.provider !== provider)) return;
+        finish(!!d.ok, d.message);
+      }
+      var timer = setInterval(function () {
+        if (Date.now() > deadline) return finish(false, 'Délai de connexion dépassé.');
+        try { if (ctx.win.closed) finish(false, 'Fenêtre fermée avant la fin de l’autorisation.'); } catch (e) {}
+      }, 900);
+      root.addEventListener('message', onMessage);
+    });
+  }
+
+  function oauthProviders() { return request('/api/oauth/providers', undefined, 'GET', 8000); }
+  function oauthAuthUrl(provider) {
+    var origin = (root.location && root.location.origin) || ALLOWED_FALLBACK;
+    return request('/api/oauth/auth-url?provider=' + encodeURIComponent(provider) +
+      '&origin=' + encodeURIComponent(origin), undefined, 'GET', 8000);
+  }
+  function oauthDisconnect(provider) { return request('/api/oauth/disconnect', { provider: provider }); }
+  function oauthConnect(provider) {
+    return oauthAuthUrl(provider).then(function (res) {
+      var ctx = openAuth(res, provider, 'tus-oauth');
+      return authResult(ctx, provider, 'tus-oauth');
+    });
+  }
+
   function googleStatus() { return request('/api/google/status', undefined, 'GET'); }
-  function googleAuthUrl() { return request('/api/google/auth-url', undefined, 'GET'); }
+  function googleAuthUrl() {
+    var origin = (root.location && root.location.origin) || ALLOWED_FALLBACK;
+    return request('/api/google/auth-url?origin=' + encodeURIComponent(origin), undefined, 'GET');
+  }
   function googleSync(payload) { return request('/api/google/sync', payload); }
   function googleBackups() { return request('/api/google/backups', undefined, 'GET').then(function (j) { return j.files || []; }); }
   function googleRestore(id) { return request('/api/google/restore', { id: id }).then(function (j) { return j.data; }); }
   function googleConnect() {
     return googleAuthUrl().then(function (res) {
-      var win = root.open(res.url, '_blank', 'noopener,width=620,height=720');
-      if (!win) throw new Error('Autorisez les fenêtres surgissantes pour connecter Google.');
-      return new Promise(function (resolve, reject) {
-        var done = false;
-        function finish(ok) {
-          if (done) return;
-          done = true;
-          root.removeEventListener('message', onMessage);
-          clearInterval(timer);
-          resolve(ok);
-        }
-        function onMessage(e) {
-          if (e.data && e.data.type === 'tus-google') finish(!!e.data.ok);
-        }
-        var timer = setInterval(function () {
-          if (win.closed) finish(false);
-        }, 1000);
-        root.addEventListener('message', onMessage);
-      });
+      var ctx = openAuth(res, 'google', 'tus-google');
+      return authResult(ctx, '', 'tus-google');
     });
   }
 
   root.TUSCloud = {
     PROVIDERS: PROVIDERS, NETWORKS: NETWORKS, GOOGLE_FIELDS: GOOGLE_FIELDS,
+    OAUTH_PROVIDERS: OAUTH_PROVIDERS, OAUTH_FIELDS: OAUTH_FIELDS,
     url: url, configured: configured, connect: connect, setKey: setKey, key: key, disconnect: disconnect,
     request: request, status: status, credentials: credentials,
     saveProvider: saveProvider, saveNetworkField: saveNetworkField,
@@ -160,6 +244,7 @@
     agents: agents, saveAgents: saveAgents, runPipeline: runPipeline,
     files: files, uploadFile: uploadFile, deleteFile: deleteFile, downloadFile: downloadFile,
     saveTextFile: saveTextFile, analyzeMedia: analyzeMedia, mediaMission: mediaMission,
+    oauthProviders: oauthProviders, oauthAuthUrl: oauthAuthUrl, oauthConnect: oauthConnect, oauthDisconnect: oauthDisconnect,
     googleStatus: googleStatus, googleAuthUrl: googleAuthUrl, googleSync: googleSync,
     googleBackups: googleBackups, googleRestore: googleRestore, googleConnect: googleConnect
   };

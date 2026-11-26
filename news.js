@@ -4,7 +4,7 @@
 
   var KEY = 'tus_news_interests_v1';
 
-  var ITEMS = [
+  var FALLBACK = [
     { id: 'n01', date: '2026-11-25', cat: 'IA', tag: 'Automatisation', title: 'Les agents IA passent du texte à l’action', summary: 'Un agent ne se contente plus de répondre : il planifie, utilise des outils et rend un résultat vérifiable. Nous transformons cette logique en tâches simples pour votre studio.', min: 3 },
     { id: 'n02', date: '2026-11-24', cat: 'IA', tag: 'Contenus', title: 'Générer une semaine de publications en une matinée', summary: 'Un calendrier éditorial assisté par IA permet de garder un ton cohérent sur tous vos canaux sans publier à votre place.', min: 4 },
     { id: 'n03', date: '2026-11-23', cat: 'Design', tag: 'Identité', title: 'Pourquoi une charte graphique fait gagner du temps', summary: 'Couleurs, typographies et règles d’usage claires réduisent les allers-retours et accélèrent chaque nouvelle création.', min: 3 },
@@ -23,6 +23,18 @@
   ];
 
   var CATS = ['IA', 'Design', 'Vidéo', 'Outils', 'Réseaux', 'Sécurité', 'Web'];
+  function items() {
+    var list = (root.TU_CONTENT && Array.isArray(root.TU_CONTENT.news) && root.TU_CONTENT.news.length)
+      ? root.TU_CONTENT.news.filter(function (n) {
+          return n && typeof n.title === 'string' && typeof n.summary === 'string' && typeof n.cat === 'string';
+        }).map(function (n, i) {
+          return { id: String(n.id || 'n' + i), date: String(n.date || ''), cat: String(n.cat),
+                   tag: String(n.tag || ''), title: String(n.title), summary: String(n.summary),
+                   min: Math.max(1, Math.min(15, Number(n.min) || 3)) };
+        })
+      : [];
+    return list.length ? list : FALLBACK;
+  }
 
   function readInterests() {
     try {
@@ -41,7 +53,7 @@
   }
 
   function daily(list) {
-    var all = list && list.length ? list : ITEMS;
+    var all = list && list.length ? list : items();
     var offset = dayIndex() % all.length;
     var out = [];
     for (var i = 0; i < Math.min(6, all.length); i++) out.push(all[(offset + i) % all.length]);
@@ -56,7 +68,8 @@
 
   function filtered() {
     var interests = readInterests();
-    return !interests.length ? ITEMS : ITEMS.filter(function (n) { return interests.indexOf(n.cat) >= 0; });
+    var all = items();
+    return !interests.length ? all : all.filter(function (n) { return interests.indexOf(n.cat) >= 0; });
   }
 
   function render(rootEl) {
@@ -104,8 +117,13 @@
     el.innerHTML = html + html;
   }
 
+  root.addEventListener('tus:content-updated', function () {
+    render(root.document.querySelector('#news-grid'));
+    ticker(root.document.querySelector('#news-ticker'));
+  });
+
   root.TUSNews = {
-    items: ITEMS,
+    items: items,
     categories: CATS,
     render: render,
     ticker: ticker,

@@ -23,8 +23,21 @@
   function initTools() {
     var root = $('#tools-grid');
     if (!root) return;
-    var all = (window.TU_CATALOGUE && window.TU_CATALOGUE.products) || [];
-    var tools = all.filter(function (p) { return p.category === 'outils'; });
+    var cat = window.TUSCatalog && window.TUSCatalog.catalogue && window.TUSCatalog.catalogue();
+    var all = (cat && cat.products && cat.products.length ? cat.products :
+      (window.TU_CATALOGUE && window.TU_CATALOGUE.products)) || [];
+    var tools = all.filter(function (p) { return p && p.category === 'outils'; });
+    if (!root.dataset.bound) {
+      root.dataset.bound = '1';
+      root.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-tool]');
+        if (!b || !window.TUSiteCart) return;
+        window.TUSiteCart.add(b.dataset.tool);
+        window.TUSiteCart.open();
+      });
+      window.addEventListener('tus:catalog-updated', function () { initTools(); });
+      window.addEventListener('tus:content-updated', function () { initTools(); });
+    }
     if (!tools.length) { root.innerHTML = '<p class="subtle">Aucun outil disponible pour le moment.</p>'; return; }
     root.innerHTML = tools.map(function (p) {
       return '<article class="tool-card">' +
@@ -38,12 +51,6 @@
           '<button class="btn btn-primary btn-sm" data-tool="' + esc(p.id) + '">Ajouter au panier</button></div>' +
         '</div></article>';
     }).join('');
-    root.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-tool]');
-      if (!b || !window.TUSiteCart) return;
-      window.TUSiteCart.add(b.dataset.tool);
-      window.TUSiteCart.open();
-    });
   }
 
   /* ---------- Compte visiteur local sécurisé ---------- */
@@ -68,7 +75,7 @@
           '<label>Mot de passe<input name="password" type="password" required autocomplete="current-password"></label>' +
           '<button class="btn btn-ghost btn-sm" type="submit">Se connecter</button>' +
         '</form></div>' +
-        '<p class="account-status">Compte non connecté · <b>' + tr.remaining + ' essai(s) IA gratuit(s)</b> aujourd’hui.</p>';
+        '<p class="account-status">Compte non connecté · <b>Jusqu’à ' + tr.remaining + ' essai(s) IA gratuit(s)</b> aujourd’hui (limite aussi vérifiée sur le serveur).</p>';
     }
     return '<div class="account-ok"><div><b>' + esc(u.name) + '</b><span>' + esc(u.email) + '</span>' +
       '<small>Compte local sécurisé · sessions conservées sur cet appareil</small></div>' +
@@ -87,12 +94,15 @@
       e.preventDefault();
       var f = e.target, fd = new FormData(f), btn = $('button', f);
       if (btn) btn.disabled = true;
-      var p = f.id === 'account-register'
-        ? window.TUSAccounts.register({ name: fd.get('name'), email: fd.get('email'), password: fd.get('password') })
-        : window.TUSAccounts.login(fd.get('email'), fd.get('password'));
-      p.then(function () { paint(); initConnections(); }).catch(function (err) {
+      var p;
+      try {
+        p = f.id === 'account-register'
+          ? window.TUSAccounts.register({ name: fd.get('name'), email: fd.get('email'), password: fd.get('password') })
+          : window.TUSAccounts.login(fd.get('email'), fd.get('password'));
+      } catch (err) { p = Promise.reject(err); }
+      Promise.resolve(p).then(function () { paint(); initConnections(); }).catch(function (err) {
         var s = $('.account-status', root);
-        if (s) s.textContent = err.message;
+        if (s) s.textContent = err && err.message ? err.message : 'Opération impossible.';
       }).then(function () { if (btn) btn.disabled = false; });
     });
     root.addEventListener('click', function (e) {

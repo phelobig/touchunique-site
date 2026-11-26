@@ -15,24 +15,34 @@
     } catch (e) { return 'guest'; }
   }
 
+  function sec() { return root.TUSSecure || {}; }
   function getURL() {
-    try { return (root.localStorage.getItem(URL_KEY) || '').replace(/\/$/, ''); } catch (e) { return ''; }
+    var raw = sec().storedServerURL ? sec().storedServerURL() : (function () {
+      try { return root.localStorage.getItem(URL_KEY) || ''; } catch (e) { return ''; }
+    })();
+    if (!raw) return '';
+    return sec().isAllowedServer && !sec().isAllowedServer(raw) ? '' : raw.replace(/\/$/, '');
   }
   function getKey() {
-    try { return root.localStorage.getItem(KEY_KEY) || ''; } catch (e) { return ''; }
+    return sec().getSecret ? sec().getSecret() : (function () {
+      try { return root.localStorage.getItem(KEY_KEY) || ''; } catch (e) { return ''; }
+    })();
+  }
+  function networkOff() {
+    return !!(root.TUSNetwork && !root.TUSNetwork.enabled());
   }
   function connect(url) {
-    var clean = String(url || '').trim().replace(/\/$/, '');
-    if (!/^https?:\/\//i.test(clean)) throw new Error('URL invalide');
+    var clean = sec().serverURL ? sec().serverURL(url) : String(url || '').trim().replace(/\/$/, '');
     root.localStorage.setItem(URL_KEY, clean);
     return clean;
   }
   function setKey(key) {
-    root.localStorage.setItem(KEY_KEY, String(key || '').trim());
+    if (sec().setSecret) sec().setSecret(key);
+    else root.localStorage.setItem(KEY_KEY, String(key || '').trim());
   }
   function disconnect() {
-    root.localStorage.removeItem(URL_KEY);
-    root.localStorage.removeItem(KEY_KEY);
+    try { root.localStorage.removeItem(URL_KEY); } catch (e) {}
+    if (sec().clearSecrets) sec().clearSecrets();
   }
 
   function readTrials() {
@@ -70,11 +80,15 @@
 
   function status() {
     var url = getURL();
+    if (networkOff()) return Promise.resolve({ ok: false, configured: false, offline: true, error: 'Connexion réseau désactivée', ai: {}, social: {} });
     if (!url) return Promise.resolve({ ok: false, configured: false, ai: { openai: false, gemini: false, anthropic: false }, social: { facebook: false, instagram: false, linkedin: false } });
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, 6000) : null;
-    return fetch(url + '/api/status', { signal: ctl ? ctl.signal : undefined })
-      .then(function (r) { return r.json(); })
+    var headers = {};
+    var k = getKey();
+    if (k) headers['X-Tus-Key'] = k;
+    return fetch(url + '/api/status', { headers: headers, signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { if (!r.ok) throw new Error('Statut ' + r.status); return r.json(); })
       .then(function (j) { return Object.assign({ ok: true, configured: true }, j); })
       .catch(function () { return { ok: false, configured: true, error: 'Proxy injoignable' }; })
       .then(function (j) { if (timer) clearTimeout(timer); return j; });
@@ -82,6 +96,7 @@
 
   function proxyAsk(prompt, system, maxTokens) {
     var url = getURL();
+    if (networkOff()) return Promise.reject(new Error('Connexion réseau désactivée dans l’application'));
     if (!url) return Promise.reject(new Error('Proxy non configuré'));
     var headers = { 'Content-Type': 'application/json' };
     var key = getKey();
@@ -237,6 +252,7 @@
     localGenerate: localGenerate,
     publish: function (network, text, imageUrl) {
       var url = getURL();
+      if (networkOff()) return Promise.reject(new Error('Connexion réseau désactivée dans l’application'));
       if (!url) return Promise.reject(new Error('Proxy non configuré'));
       var headers = { 'Content-Type': 'application/json' };
       var key = getKey();
