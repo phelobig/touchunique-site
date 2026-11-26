@@ -100,8 +100,15 @@
      par le CORS du serveur (https://app.touchunique.local ou file://). Le pont
      natif effectue la requête côté processus principal, sans assouplir le CORS
      public. Dans le navigateur, le fetch standard reste utilisé. */
-  function normalizeNative(res) {
+  function normalizeNative(raw) {
+    /* Android renvoie une chaîne JSON (pont JavascriptInterface), Windows un
+       objet via IPC : les deux formes sont acceptées. */
+    var res = raw;
+    if (typeof res === 'string') {
+      try { res = JSON.parse(res); } catch (e) { throw new Error('Réponse native invalide.'); }
+    }
     if (!res || typeof res !== 'object') throw new Error('Réponse native invalide.');
+    if (res.error && !res.ok) throw new Error(String(res.error).slice(0, 200));
     var headers = {};
     Object.keys(res.headers || {}).forEach(function (k) { headers[k.toLowerCase()] = String(res.headers[k]); });
     var body = res.body == null ? '' : (typeof res.body === 'string' ? res.body : JSON.stringify(res.body));
@@ -119,8 +126,9 @@
   }
   function fetchSafe(url, options) {
     options = options || {};
-    var api = root.TUSNative && root.TUSNative.api;
-    if (typeof api !== 'function') return root.fetch(url, options);
+    /* Android interdit d'appeler une méthode de pont détachée de son objet :
+       l'appel doit toujours se faire sur window.TUSNative lui-même. */
+    if (!(root.TUSNative && typeof root.TUSNative.api === 'function')) return root.fetch(url, options);
     var headers = {};
     if (options.headers) {
       if (typeof options.headers.forEach === 'function') {
@@ -131,7 +139,11 @@
     }
     var body = options.body == null ? '' : (typeof options.body === 'string' ? options.body : String(options.body));
     return Promise.resolve()
-      .then(function () { return api(String(url), options.method || (body ? 'POST' : 'GET'), headers, body); })
+      .then(function () {
+        /* Le pont Android attend une chaîne JSON ; Windows sait aussi la lire. */
+        return root.TUSNative.api(String(url), options.method || (body ? 'POST' : 'GET'),
+          JSON.stringify(headers), body);
+      })
       .then(normalizeNative);
   }
 

@@ -168,9 +168,15 @@
     var origin = res.origin || (root.location && root.location.origin) || ALLOWED_FALLBACK;
     var S = root.TUSSecure || {};
     if (S.safeHref) { try { origin = new URL(origin).origin; } catch (e) { origin = ALLOWED_FALLBACK; } }
+    var native = root.TUSNative;
+    if (native && typeof native.openExternal === 'function' && native.openExternal(u.href)) {
+      /* Android et Windows ouvrent le navigateur système : il n'y a pas de
+         fenêtre JavaScript à surveiller, seul le message de retour compte. */
+      return { win: null, native: true, origin: origin, nonce: res.nonce || '', type: type };
+    }
     var win = root.open(u.href, '_blank', 'width=620,height=720');
     if (!win) throw new Error('Autorisez les fenêtres surgissantes pour connecter ' + (res.name || provider) + '.');
-    return { win: win, origin: origin, nonce: res.nonce || '', type: type };
+    return { win: win, native: false, origin: origin, nonce: res.nonce || '', type: type };
   }
 
   var ALLOWED_FALLBACK = 'https://phelobig.github.io';
@@ -191,7 +197,7 @@
         var S = root.TUSSecure || {};
         var expected = { type: type, origin: ctx.origin, source: ctx.win, nonce: ctx.nonce };
         if (S.trustedMessage) {
-          if (!S.trustedMessage(e, expected.origin, expected.source, true, expected.nonce)) return;
+          if (!S.trustedMessage(e, expected.origin, ctx.native ? null : expected.source, true, expected.nonce)) return;
         } else if (e.origin !== ctx.origin || e.source !== ctx.win || e.data.nonce !== ctx.nonce) return;
         var d = e.data;
         if (d.type !== type || (provider && d.provider && d.provider !== provider)) return;
@@ -199,7 +205,9 @@
       }
       var timer = setInterval(function () {
         if (Date.now() > deadline) return finish(false, 'Délai de connexion dépassé.');
-        try { if (ctx.win.closed) finish(false, 'Fenêtre fermée avant la fin de l’autorisation.'); } catch (e) {}
+        try {
+          if (!ctx.native && ctx.win && ctx.win.closed) finish(false, 'Fenêtre fermée avant la fin de l’autorisation.');
+        } catch (e) {}
       }, 900);
       root.addEventListener('message', onMessage);
     });
