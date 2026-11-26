@@ -215,6 +215,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    if (window.TUSVisits) window.TUSVisits.startTracking();
     initNews();
     initTools();
     initAccount();
