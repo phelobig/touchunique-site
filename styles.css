@@ -749,18 +749,15 @@ button { cursor: pointer; }
   .news-ticker::before { font-size: .58rem; padding: 0 9px; }
 }
 
-/* ── Densité mobile et grilles alignées par 3 ──
-   Les cartes restent lisibles : on réduit les vides plutôt que l’information. */
-.process-grid, .news-grid, .tools-grid, .account-grid, .footer-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+/* ── Densité mobile et grilles alignées par 2 ──
+   Deux colonnes aérées : les cartes restent larges, lisibles et sans vide excessif. */
 @media (max-width: 1060px) {
   .expertise-grid, .portfolio-grid, .ai-modules, .process-grid,
   .news-grid, .tools-grid, .account-grid, .footer-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .process-grid, .news-grid, .tools-grid { gap: 12px; }
-  .footer-grid { gap: 20px; }
+  .process-grid, .news-grid, .tools-grid { gap: 16px; }
+  .footer-grid { gap: 22px; }
 }
 @media (max-width: 860px) {
   .hero { padding-top: 30px; }
@@ -771,8 +768,8 @@ button { cursor: pointer; }
   .section-head { margin-bottom: 22px; gap: 12px; }
   .offer-grid, .expertise-grid, .portfolio-grid, .ai-modules, .process-grid,
   .news-grid, .tools-grid, .proof-grid, .account-grid, .footer-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 }
 @media (max-width: 620px) {
@@ -795,24 +792,24 @@ button { cursor: pointer; }
   .toolbar { margin-bottom: 12px; gap: 8px; }
   .offer-grid, .expertise-grid, .portfolio-grid, .ai-modules, .process-grid,
   .news-grid, .tools-grid, .proof-grid, .account-grid, .footer-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
   .offer-cat-head { grid-column: 1 / -1; margin-top: 8px; padding: 8px 10px; }
   .offer-cat-head .subtle { white-space: normal; }
-  .offer-media { aspect-ratio: 4 / 3; padding: 6px; border-radius: 10px; }
-  .offer-body { padding: 9px; }
-  .offer-body h3 { margin: 5px 0; font-size: .84rem; line-height: 1.22; }
-  .offer-body > p, .offer-list { font-size: .76rem; line-height: 1.35; }
-  .offer-meta { margin: 7px 0; gap: 4px; }
-  .offer-meta span { padding: 3px 5px; font-size: .66rem; }
+  .offer-media { aspect-ratio: 4 / 3; padding: 8px; border-radius: 12px; }
+  .offer-body { padding: 11px; }
+  .offer-body h3 { margin: 7px 0; font-size: .9rem; line-height: 1.25; }
+  .offer-body > p, .offer-list { font-size: .8rem; line-height: 1.4; }
+  .offer-meta { margin: 9px 0; gap: 5px; }
+  .offer-meta span { padding: 4px 6px; font-size: .7rem; }
   .offer-foot { flex-direction: column; align-items: stretch; gap: 4px; padding-top: 8px; }
   .offer-price b { font-size: .95rem; }
   .square-btn { width: 32px; height: 32px; }
-  .expertise-card, .news-card, .tool-card, .ai-module, .process-card { padding: 10px; border-radius: 12px; }
-  .expertise-card .ico { width: 30px; height: 30px; border-radius: 9px; font-size: .85rem; }
-  .expertise-card h3, .news-card h3, .tool-card h3 { margin: 8px 0 5px; font-size: .84rem; }
-  .expertise-card p, .news-card p, .tool-card p { font-size: .76rem; line-height: 1.35; }
+  .expertise-card, .news-card, .tool-card, .ai-module, .process-card { padding: 12px; border-radius: 13px; }
+  .expertise-card .ico { width: 34px; height: 34px; border-radius: 10px; font-size: .9rem; }
+  .expertise-card h3, .news-card h3, .tool-card h3 { margin: 9px 0 6px; font-size: .9rem; }
+  .expertise-card p, .news-card p, .tool-card p { font-size: .8rem; line-height: 1.4; }
   .tool-card { flex-direction: column; gap: 8px; }
   .tool-ico { flex: 0 0 30px; width: 30px; height: 30px; }
   .tool-body ul { font-size: .74rem; padding-left: 14px; }
@@ -821,8 +818,8 @@ button { cursor: pointer; }
   .proof-item b { font-size: .95rem; }
   .proof-item span { font-size: .64rem; }
   .portfolio-card figcaption { left: 8px; right: 8px; bottom: 8px; }
-  .footer-grid { gap: 10px; }
-  .footer-grid p, .footer-grid a, .footer-grid span { font-size: .74rem; }
+  .footer-grid { gap: 14px; }
+  .footer-grid p, .footer-grid a, .footer-grid span { font-size: .78rem; }
   .news-toolbar { margin-bottom: 10px; }
 }
 @media (max-width: 400px) {
