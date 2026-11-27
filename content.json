@@ -243,7 +243,8 @@
           "Livrable : kit de communication complet"
         ],
         "video": "acad-design.mp4",
-        "poster": "acad-design.jpg"
+        "poster": "acad-design.jpg",
+        "img": "acad-design.webp"
       },
       {
         "id": "acad-video",
@@ -259,7 +260,8 @@
           "Livrable : 3 vidéos courtes publiables"
         ],
         "video": "acad-video.mp4",
-        "poster": "acad-video.jpg"
+        "poster": "acad-video.jpg",
+        "img": "acad-video.webp"
       },
       {
         "id": "acad-ia",
@@ -275,7 +277,8 @@
           "Livrable : plan de contenu sur 30 jours"
         ],
         "video": "acad-ia.mp4",
-        "poster": "acad-ia.jpg"
+        "poster": "acad-ia.jpg",
+        "img": "acad-ia.webp"
       },
       {
         "id": "acad-brand",
@@ -291,7 +294,8 @@
           "Livrable : guide de marque + 2 maquettes"
         ],
         "video": "acad-brand.mp4",
-        "poster": "acad-brand.jpg"
+        "poster": "acad-brand.jpg",
+        "img": "acad-brand.webp"
       },
       {
         "id": "acad-photo",
@@ -307,7 +311,8 @@
           "Livrable : 10 photos optimisées"
         ],
         "video": "acad-photo.mp4",
-        "poster": "acad-photo.jpg"
+        "poster": "acad-photo.jpg",
+        "img": "acad-photo.webp"
       },
       {
         "id": "acad-auto",
@@ -323,7 +328,8 @@
           "Livrable : flux de travail automatisé"
         ],
         "video": "acad-auto.mp4",
-        "poster": "acad-auto.jpg"
+        "poster": "acad-auto.jpg",
+        "img": "acad-auto.webp"
       },
       {
         "id": "acad-pack",
@@ -339,7 +345,8 @@
           "Attestation de formation Touch Unique"
         ],
         "video": "acad-pack.mp4",
-        "poster": "acad-pack.jpg"
+        "poster": "acad-pack.jpg",
+        "img": "acad-pack.webp"
       }
     ]
   },
@@ -517,6 +524,98 @@
       "video": "gestion-promo.mp4",
       "duration": "50 s",
       "level": "Démo"
+    }
+  ],
+  "spots": [
+    {
+      "id": "spot-anne-service",
+      "name": "Spot publicitaire — Anne Service",
+      "short": "Réalisation Touch Unique Studio · Anne Service.",
+      "poster": "spot-anne-service.jpg",
+      "video": "spot-anne-service.mp4",
+      "duration": "49 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-fevrier-2025",
+      "name": "Spot publicitaire — février 2025",
+      "short": "Réalisation Touch Unique Studio · Février 2025.",
+      "poster": "spot-fevrier-2025.jpg",
+      "video": "spot-fevrier-2025.mp4",
+      "duration": "39 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-aout-2025-1",
+      "name": "Spot publicitaire — août 2025 (1)",
+      "short": "Réalisation Touch Unique Studio · Août 2025 · 1.",
+      "poster": "spot-aout-2025-1.jpg",
+      "video": "spot-aout-2025-1.mp4",
+      "duration": "1 min 04 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-aout-2025-2",
+      "name": "Spot publicitaire — août 2025 (2)",
+      "short": "Réalisation Touch Unique Studio · Août 2025 · 2.",
+      "poster": "spot-aout-2025-2.jpg",
+      "video": "spot-aout-2025-2.mp4",
+      "duration": "1 min 04 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-decembre-2025-1",
+      "name": "Spot publicitaire — décembre 2025 (1)",
+      "short": "Réalisation Touch Unique Studio · Décembre 2025 · 1.",
+      "poster": "spot-decembre-2025-1.jpg",
+      "video": "spot-decembre-2025-1.mp4",
+      "duration": "53 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-decembre-2025-2",
+      "name": "Spot publicitaire — décembre 2025 (2)",
+      "short": "Réalisation Touch Unique Studio · Décembre 2025 · 2.",
+      "poster": "spot-decembre-2025-2.jpg",
+      "video": "spot-decembre-2025-2.mp4",
+      "duration": "44 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-decembre-2025-3",
+      "name": "Spot publicitaire — décembre 2025 (3)",
+      "short": "Réalisation Touch Unique Studio · Décembre 2025 · 3.",
+      "poster": "spot-decembre-2025-3.jpg",
+      "video": "spot-decembre-2025-3.mp4",
+      "duration": "44 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-naturo-therapie",
+      "name": "Spot publicitaire — Naturo Thérapie",
+      "short": "Réalisation Touch Unique Studio · Naturo Thérapie.",
+      "poster": "spot-naturo-therapie.jpg",
+      "video": "spot-naturo-therapie.mp4",
+      "duration": "43 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-net-et-propre",
+      "name": "Spot publicitaire — Net et Propre",
+      "short": "Réalisation Touch Unique Studio · Net et Propre.",
+      "poster": "spot-net-et-propre.jpg",
+      "video": "spot-net-et-propre.mp4",
+      "duration": "1 min 45 s",
+      "level": "Spot publicitaire"
+    },
+    {
+      "id": "spot-siogo",
+      "name": "Spot publicitaire — Siogo",
+      "short": "Réalisation Touch Unique Studio · Siogo.",
+      "poster": "spot-siogo.jpg",
+      "video": "spot-siogo.mp4",
+      "duration": "40 s",
+      "level": "Spot publicitaire"
     }
   ]
 }
