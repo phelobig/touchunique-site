@@ -344,6 +344,29 @@
     }).join('');
     observeReveals(root);
   }
+  function renderClientSpots() {
+    var root = $('#client-spots');
+    if (!root) return;
+    var list = CONTENT.spots || [];
+    root.innerHTML = list.map(function (t) {
+      return '<article class="video-card reveal">' +
+        '<button class="thumb" type="button" data-video="' + esc(t.id) + '" aria-label="Voir le spot : ' + esc(t.name) + '">' +
+        '<img src="' + esc(t.poster || '') + '" alt="" loading="lazy"><span class="vc-play" aria-hidden="true"><span>▶</span></span></button>' +
+        '<div class="video-card-body"><b>' + esc(t.name) + '</b><small>' + esc(t.duration || '') + ' · ' + esc(t.level || 'Spot publicitaire') + '</small></div></article>';
+    }).join('');
+    observeReveals(root);
+  }
+  function renderFormationCards() {
+    var root = $('#formation-grid');
+    if (!root) return;
+    var list = ((CONTENT.academy || {}).offerings || []).filter(function (t) { return t.img; });
+    root.innerHTML = list.map(function (t) {
+      return '<a class="formation-card reveal" href="https://wa.me/22655041530?text=' + encodeURIComponent('Bonjour Touch Unique, je veux découvrir ' + t.name) + '" target="_blank" rel="noopener">' +
+        '<img src="' + esc(t.img) + '" alt="Formation ' + esc(t.name) + '" loading="lazy">' +
+        '<span><b>' + esc(t.name) + '</b><small>' + esc(t.duration || '') + ' · ' + esc(t.level || '') + '</small></span></a>';
+    }).join('');
+    observeReveals(root);
+  }
   function renderAcademyVideos() {
     var root = $('#academy-videos');
     if (!root) return;
@@ -434,6 +457,10 @@
     var films = CONTENT.films || [];
     for (var f = 0; f < films.length; f++) {
       if (films[f].id === id) return films[f];
+    }
+    var spots = CONTENT.spots || [];
+    for (var s = 0; s < spots.length; s++) {
+      if (spots[s].id === id) return spots[s];
     }
     var offers = ((CONTENT.academy || {}).offerings || []);
     for (var i = 0; i < offers.length; i++) {
@@ -597,7 +624,7 @@
   function renderAll() {
     renderProof(); renderExpertises(); renderOfferFilters(); renderOffers();
     renderPortfolioFilters(); renderPortfolio(); renderProcess();
-    renderFeaturedVideos(); renderAcademy(); renderAcademyVideos(); renderAI(); renderFAQ(); renderCart(); syncPulse();
+    renderFeaturedVideos(); renderClientSpots(); renderAcademy(); renderFormationCards(); renderAcademyVideos(); renderAI(); renderFAQ(); renderCart(); syncPulse();
   }
   function catalogueUpdated() {
     window.dispatchEvent(new Event('tus:catalog-updated'));
