@@ -43,7 +43,9 @@
         "value": "24/7",
         "label": "assistant IA en veille"
       }
-    ]
+    ],
+    "video": "brand-film.mp4",
+    "poster": "brand-film.jpg"
   },
   "expertises": [
     {
@@ -239,7 +241,9 @@
           "Création d’un logo et d’une charte simple",
           "Cartes visuelles et supports réseaux",
           "Livrable : kit de communication complet"
-        ]
+        ],
+        "video": "acad-design.mp4",
+        "poster": "acad-design.jpg"
       },
       {
         "id": "acad-video",
@@ -253,7 +257,9 @@
           "Montage CapCut : rythme, textes, transitions",
           "Sous-titres et habillage de marque",
           "Livrable : 3 vidéos courtes publiables"
-        ]
+        ],
+        "video": "acad-video.mp4",
+        "poster": "acad-video.jpg"
       },
       {
         "id": "acad-ia",
@@ -267,7 +273,9 @@
           "Génération de textes, visuels et scripts",
           "Organisation d’un calendrier éditorial",
           "Livrable : plan de contenu sur 30 jours"
-        ]
+        ],
+        "video": "acad-ia.mp4",
+        "poster": "acad-ia.jpg"
       },
       {
         "id": "acad-brand",
@@ -281,7 +289,9 @@
           "Système visuel et typographie",
           "Packaging et maquettes imprimables",
           "Livrable : guide de marque + 2 maquettes"
-        ]
+        ],
+        "video": "acad-brand.mp4",
+        "poster": "acad-brand.jpg"
       },
       {
         "id": "acad-photo",
@@ -295,7 +305,9 @@
           "Retouche couleur et détourage",
           "Mise en scène produit et avant/après",
           "Livrable : 10 photos optimisées"
-        ]
+        ],
+        "video": "acad-photo.mp4",
+        "poster": "acad-photo.jpg"
       },
       {
         "id": "acad-auto",
@@ -309,7 +321,9 @@
           "Agents IA et missions collaboratives",
           "Publication contrôlée sur les réseaux",
           "Livrable : flux de travail automatisé"
-        ]
+        ],
+        "video": "acad-auto.mp4",
+        "poster": "acad-auto.jpg"
       },
       {
         "id": "acad-pack",
@@ -323,7 +337,9 @@
           "Projet fil rouge sur votre entreprise",
           "Sessions de correction individuelles",
           "Attestation de formation Touch Unique"
-        ]
+        ],
+        "video": "acad-pack.mp4",
+        "poster": "acad-pack.jpg"
       }
     ]
   },
@@ -490,6 +506,17 @@
       "title": "Une lumière propre vaut mieux qu’un matériel coûteux",
       "summary": "Bien placer une source de lumière et nettoyer le son suffisent souvent à donner un rendu professionnel.",
       "min": 4
+    }
+  ],
+  "films": [
+    {
+      "id": "gestion-promo",
+      "name": "Touch Unique Gestion — démonstration",
+      "short": "Toute votre entreprise dans une seule application : devis, commandes, factures, stocks et IA.",
+      "poster": "gestion-promo.jpg",
+      "video": "gestion-promo.mp4",
+      "duration": "50 s",
+      "level": "Démo"
     }
   ]
 }

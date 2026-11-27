@@ -12,7 +12,7 @@
   <meta property="og:image" content="portrait.jpg">
   <title>Touch Unique Studio — Identité, vidéo, contenus & IA</title>
   <link rel="icon" href="ic_launcher_192.png">
-  <link rel="stylesheet" href="styles.css?v=25">
+  <link rel="stylesheet" href="styles.css?v=26">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -81,6 +81,8 @@
           <div class="hero-cta reveal">
             <a class="btn btn-primary" href="#contact">Lancer mon projet <span aria-hidden="true">→</span></a>
             <a class="btn btn-ghost" href="#offres">Voir les offres</a>
+            <button class="btn btn-ghost" type="button" data-video="brand-film"><span aria-hidden="true">▶</span> Le studio en vidéo</button>
+            <button class="btn btn-ghost" type="button" data-video="gestion-promo"><span aria-hidden="true">▶</span> Démo Gestion</button>
           </div>
           <ul class="trust-row reveal" aria-label="Engagements">
             <li>Devis gratuit</li><li>Réponse sous 24 h</li><li>Paiement simple</li><li>Français</li>
@@ -103,6 +105,20 @@
           <span>DESIGN GRAPHIQUE</span><i>✦</i><span>IDENTITÉ VISUELLE</span><i>✦</i><span>FILMAGE & MONTAGE</span><i>✦</i><span>PACKAGING</span><i>✦</i><span>RÉSEAUX SOCIAUX</span><i>✦</i><span>ACADÉMIE</span><i>✦</i><span>AUTOMATISATION IA</span><i>✦</i>
           <span>DESIGN GRAPHIQUE</span><i>✦</i><span>IDENTITÉ VISUELLE</span><i>✦</i><span>FILMAGE & MONTAGE</span><i>✦</i><span>PACKAGING</span><i>✦</i><span>RÉSEAUX SOCIAUX</span><i>✦</i><span>ACADÉMIE</span><i>✦</i><span>AUTOMATISATION IA</span><i>✦</i>
         </div>
+      </div>
+    </section>
+
+    <!-- FILM À LA UNE -->
+    <section class="section section-tight" id="film-a-la-une">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Film à la une</div>
+            <h2>Un outil qui reprend <em>le contrôle de votre activité.</em></h2>
+          </div>
+          <p class="lead">Commandes, devis, factures, stocks et suivi temps réel : la démonstration en 50 secondes, avec voix off et musique originale.</p>
+        </div>
+        <div class="video-grid" id="featured-videos" aria-live="polite"></div>
       </div>
     </section>
 
@@ -228,6 +244,16 @@
           <a class="btn btn-primary" href="https://wa.me/22655041530?text=Bonjour%20Touch%20Unique%2C%20je%20veux%20m%27inscrire%20%C3%A0%20l%27Acad%C3%A9mie." target="_blank" rel="noopener">Découvrir les formations →</a>
         </div>
       </div>
+      <div class="wrap video-section">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Formations en vidéo</div>
+            <h2>Chaque programme, <em>en images.</em></h2>
+          </div>
+          <p class="lead">Voix off, motion design et effets sonores : découvrez le contenu et le niveau de chaque formation avant de vous inscrire.</p>
+        </div>
+        <div class="video-grid" id="academy-videos" aria-live="polite"></div>
+      </div>
     </section>
 
     <!-- AI -->
@@ -243,7 +269,7 @@
         <div class="ai-modules" id="ai-modules"></div>
         <div class="ai-foot">
           <p><span aria-hidden="true">🔒</span> L’IA est connectée à Internet via le serveur officiel : gratuite et sans limite. Les clés API restent côté serveur et ne sont jamais exposées ici. Aucune publication n’est effectuée sans votre validation.</p>
-          <a class="btn btn-ghost" href="https://wa.me/22655041530?text=Je%20souhaite%20recevoir%20l%27application%20Touch%20Unique%20Studio%20(Android%20ou%20Windows)" target="_blank" rel="noopener">Recevoir l’application →</a>
+          <a class="btn btn-ghost" href="#offres">Découvrir les offres →</a>
         </div>
       </div>
     </section>
@@ -377,6 +403,19 @@
     <button class="lightbox-close" id="lightbox-close" aria-label="Fermer">✕</button>
     <figure><img id="lightbox-img" src="" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
   </div>
+  <div class="video-modal" id="video-modal" hidden>
+    <div class="video-modal-box" role="dialog" aria-modal="true" aria-labelledby="video-modal-title">
+      <div class="video-modal-head">
+        <b id="video-modal-title">Touch Unique Studio</b>
+        <button class="video-modal-close" id="video-modal-close" type="button" aria-label="Fermer la vidéo">✕</button>
+      </div>
+      <video id="video-modal-player" controls playsinline preload="metadata"></video>
+      <div class="video-modal-foot">
+        <span>Film motion design · voix off · effets sonores</span>
+        <a href="https://wa.me/22655041530" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+      </div>
+    </div>
+  </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <!-- ASSISTANT PUBLIC -->
@@ -431,19 +470,19 @@
 
   <a class="mobile-cta" href="#contact">Parlons projet →</a>
 
-  <script src="sync.js?v=25"></script>
-  <script src="data.js?v=25"></script>
-  <script src="tus-secure.js?v=25"></script>
-  <script src="tus-cloud.js?v=25"></script>
-  <script src="tus-catalog.js?v=25"></script>
-  <script src="site.js?v=25"></script>
-  <script src="tus-language.js?v=25"></script>
-  <script src="tus-ai.js?v=25"></script>
-  <script src="tus-accounts.js?v=25"></script>
-  <script src="news.js?v=25"></script>
-  <script src="extras.js?v=25"></script>
-  <script src="tus-messages.js?v=25"></script>
-  <script src="tus-visits.js?v=25"></script>
-  <script src="messages.js?v=25"></script>
+  <script src="sync.js?v=26"></script>
+  <script src="data.js?v=26"></script>
+  <script src="tus-secure.js?v=26"></script>
+  <script src="tus-cloud.js?v=26"></script>
+  <script src="tus-catalog.js?v=26"></script>
+  <script src="site.js?v=26"></script>
+  <script src="tus-language.js?v=26"></script>
+  <script src="tus-ai.js?v=26"></script>
+  <script src="tus-accounts.js?v=26"></script>
+  <script src="news.js?v=26"></script>
+  <script src="extras.js?v=26"></script>
+  <script src="tus-messages.js?v=26"></script>
+  <script src="tus-visits.js?v=26"></script>
+  <script src="messages.js?v=26"></script>
 </body>
 </html>

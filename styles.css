@@ -830,3 +830,49 @@ button { cursor: pointer; }
   .hero-portrait-frame { width: min(54%, 190px); }
   .offer-body > p, .offer-list, .expertise-card p, .news-card p, .tool-card p { font-size: .72rem; }
 }
+
+/* ---------- Films motion design ---------- */
+.offer-media { position: relative; }
+.video-badge { position: absolute; left: 10px; bottom: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,.5); background: rgba(22,5,9,.74);
+  color: #fff; font: 700 .7rem/1 "Segoe UI", system-ui, sans-serif; letter-spacing: .05em; cursor: pointer;
+  backdrop-filter: blur(6px); transition: background .2s, transform .2s; }
+.video-badge:hover { background: var(--red); transform: translateY(-1px); }
+.video-section { margin-top: 48px; }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: 16px; }
+.video-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  box-shadow: 0 12px 30px rgba(120,20,35,.07); }
+.video-card .thumb { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #16070a; cursor: pointer; }
+.video-card .thumb img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; opacity: .95; transition: opacity .2s, transform .4s; }
+.video-card .thumb:hover img { opacity: 1; transform: scale(1.02); }
+.vc-play { position: absolute; inset: 0; display: grid; place-items: center; }
+.vc-play span { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; padding-left: 3px;
+  background: rgba(255,255,255,.94); color: var(--red); font-size: 1rem; box-shadow: 0 10px 26px rgba(0,0,0,.38); transition: transform .2s; }
+.video-card .thumb:hover .vc-play span { transform: scale(1.08); background: #fff; }
+.video-card-body { padding: 12px 14px 14px; display: grid; gap: 3px; }
+.video-card-body b { font-size: .9rem; line-height: 1.25; }
+.video-card-body small { color: var(--muted); font-size: .74rem; }
+
+.video-modal { position: fixed; z-index: 700; inset: 0; display: grid; place-items: center; padding: 20px;
+  background: rgba(18,4,7,.9); }
+.video-modal-box { width: min(100%, 880px); background: #120507; border: 1px solid rgba(255,255,255,.14);
+  border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.62); }
+.video-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; color: #fff; }
+.video-modal-head b { font-size: .92rem; }
+.video-modal-close { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.28);
+  background: rgba(255,255,255,.08); color: #fff; cursor: pointer; }
+.video-modal-close:hover { background: var(--red); border-color: var(--red); }
+.video-modal video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.video-modal-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
+  padding: 12px 16px 16px; color: #f3d9dd; font-size: .78rem; }
+.video-modal-foot a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .video-modal { padding: 8px; }
+  .video-modal-box { border-radius: 14px; }
+  .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .video-card-body { padding: 9px 10px 11px; }
+  .video-card-body b { font-size: .78rem; }
+  .video-card-body small { font-size: .68rem; }
+  .vc-play span { width: 38px; height: 38px; font-size: .8rem; }
+}

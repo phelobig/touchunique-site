@@ -278,6 +278,7 @@
       }
       return head + '<article class="offer-card reveal' + (p.popular ? ' is-popular' : '') + '" style="--d:' + (i % 6 * 40) + 'ms">' +
         '<div class="offer-media"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy">' +
+        (p.video ? '<button class="video-badge" type="button" data-video="' + esc(p.id) + '"><span aria-hidden="true">▶</span> Vidéo</button>' : '') +
         (p.badge ? '<span class="offer-badge ' + badgeClass + '">' + esc(p.badge) + '</span>' : '') + '</div>' +
         '<div class="offer-body">' +
         '<span class="offer-cat">' + esc(catLabel(p.category)) + '</span>' +
@@ -331,6 +332,30 @@
     if (!root) return;
     root.innerHTML = ((CONTENT.academy || {}).modules || []).map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('');
   }
+  function renderFeaturedVideos() {
+    var root = $('#featured-videos');
+    if (!root) return;
+    var list = CONTENT.films || [];
+    root.innerHTML = list.map(function (t) {
+      return '<article class="video-card reveal">' +
+        '<button class="thumb" type="button" data-video="' + esc(t.id) + '" aria-label="Voir la vidéo : ' + esc(t.name) + '">' +
+        '<img src="' + esc(t.poster || '') + '" alt="" loading="lazy"><span class="vc-play" aria-hidden="true"><span>▶</span></span></button>' +
+        '<div class="video-card-body"><b>' + esc(t.name) + '</b><small>' + esc(t.duration || '') + ' · ' + esc(t.level || 'Démo') + '</small></div></article>';
+    }).join('');
+    observeReveals(root);
+  }
+  function renderAcademyVideos() {
+    var root = $('#academy-videos');
+    if (!root) return;
+    var list = ((CONTENT.academy || {}).offerings || []).filter(function (t) { return t.video; });
+    root.innerHTML = list.map(function (t) {
+      return '<article class="video-card reveal">' +
+        '<button class="thumb" type="button" data-video="' + esc(t.id) + '" aria-label="Voir la vidéo : ' + esc(t.name) + '">' +
+        '<img src="' + esc(t.poster || '') + '" alt="" loading="lazy"><span class="vc-play" aria-hidden="true"><span>▶</span></span></button>' +
+        '<div class="video-card-body"><b>' + esc(t.name) + '</b><small>' + esc(t.duration) + ' · ' + esc(t.level) + '</small></div></article>';
+    }).join('');
+    observeReveals(root);
+  }
   function renderAI() {
     var root = $('#ai-modules');
     if (!root) return;
@@ -366,7 +391,9 @@
       '<div class="offer-meta"><span>⏱ ' + esc(p.delay) + '</span><span>' + esc(p.unit) + '</span><span>' + money(p.price) + '</span></div>' +
       '<b>Livrables</b><ul class="modal-list">' + (p.deliverables || []).map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul>' +
       ((p.ai || []).length ? '<b>Automatisations incluses</b><ul class="modal-list">' + p.ai.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul>' : '') +
-      '<div class="modal-actions"><button class="btn btn-primary" data-modal-add="' + esc(p.id) + '">Choisir cette offre</button>' +
+      '<div class="modal-actions">' +
+      (p.video ? '<button class="btn btn-ghost" type="button" data-video="' + esc(p.id) + '">▶ Voir la vidéo</button>' : '') +
+      '<button class="btn btn-primary" data-modal-add="' + esc(p.id) + '">Choisir cette offre</button>' +
       '<button class="btn btn-ghost" data-modal-close>Fermer</button></div></div></div>';
     root.hidden = false;
     document.body.classList.add('no-scroll');
@@ -394,6 +421,52 @@
     if (!box) return;
     box.hidden = true;
     if ($('#modal-root') && $('#modal-root').hidden) document.body.classList.remove('no-scroll');
+  }
+
+  /* ---------- Films motion design ---------- */
+  function videoItem(id) {
+    if (id === 'brand-film') {
+      var hero = CONTENT.hero || {};
+      return { id: 'brand-film', name: 'Touch Unique Studio', video: hero.video, poster: hero.poster };
+    }
+    var p = product(id);
+    if (p) return p;
+    var films = CONTENT.films || [];
+    for (var f = 0; f < films.length; f++) {
+      if (films[f].id === id) return films[f];
+    }
+    var offers = ((CONTENT.academy || {}).offerings || []);
+    for (var i = 0; i < offers.length; i++) {
+      if (offers[i].id === id) return offers[i];
+    }
+    return null;
+  }
+  function openVideo(id) {
+    var box = $('#video-modal'), player = $('#video-modal-player'), title = $('#video-modal-title');
+    if (!box || !player) return;
+    var v = videoItem(id);
+    if (!v || !v.video) { toast('Vidéo bientôt disponible.', true); return; }
+    if (title) title.textContent = v.name || 'Touch Unique Studio';
+    player.poster = v.poster || '';
+    player.src = v.video;
+    box.hidden = false;
+    document.body.classList.add('no-scroll');
+    try { var play = player.play(); if (play && play.catch) play.catch(function () { }); } catch (e) { }
+    var close = $('#video-modal-close');
+    if (close) close.focus();
+  }
+  function closeVideo() {
+    var box = $('#video-modal'), player = $('#video-modal-player');
+    if (!box) return;
+    if (player) {
+      try { player.pause(); } catch (e) { }
+      player.removeAttribute('src');
+      try { player.load(); } catch (e) { }
+    }
+    box.hidden = true;
+    if ($('#modal-root') && $('#modal-root').hidden && $('#lightbox') && $('#lightbox').hidden) {
+      document.body.classList.remove('no-scroll');
+    }
   }
 
   /* ---------- Motion ---------- */
@@ -524,7 +597,7 @@
   function renderAll() {
     renderProof(); renderExpertises(); renderOfferFilters(); renderOffers();
     renderPortfolioFilters(); renderPortfolio(); renderProcess();
-    renderAcademy(); renderAI(); renderFAQ(); renderCart(); syncPulse();
+    renderFeaturedVideos(); renderAcademy(); renderAcademyVideos(); renderAI(); renderFAQ(); renderCart(); syncPulse();
   }
   function catalogueUpdated() {
     window.dispatchEvent(new Event('tus:catalog-updated'));
@@ -631,6 +704,12 @@
     });
     $('#lightbox-close').addEventListener('click', closeLightbox);
     $('#lightbox').addEventListener('click', function (e) { if (e.target === e.currentTarget) closeLightbox(); });
+    if ($('#video-modal-close')) $('#video-modal-close').addEventListener('click', closeVideo);
+    if ($('#video-modal')) $('#video-modal').addEventListener('click', function (e) { if (e.target === e.currentTarget) closeVideo(); });
+    document.addEventListener('click', function (e) {
+      var v = e.target.closest('[data-video]');
+      if (v) { e.preventDefault(); openVideo(v.dataset.video); }
+    });
     $('#faq-list').addEventListener('click', function (e) {
       var q = e.target.closest('.faq-q'); if (!q) return;
       var item = q.closest('.faq-item');
@@ -655,7 +734,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Tab') { trapFocus(e); return; }
       if (e.key !== 'Escape') return;
-      closeModal(); closeLightbox(); closeCart(); setMobileNav(false);
+      closeModal(); closeLightbox(); closeVideo(); closeCart(); setMobileNav(false);
     });
     var year = $('#year'); if (year) year.textContent = String(new Date().getFullYear());
   }

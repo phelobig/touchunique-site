@@ -74,7 +74,9 @@
         "brief client structuré",
         "variantes de noms et slogans",
         "texte de présentation de marque"
-      ]
+      ],
+      "video": "identite-express.mp4",
+      "poster": "identite-express.jpg"
     },
     {
       "id": "identite-signature",
@@ -100,7 +102,9 @@
         "analyse de positionnement",
         "génération de déclinaisons",
         "plan de contenu 30 jours"
-      ]
+      ],
+      "video": "identite-signature.mp4",
+      "poster": "identite-signature.jpg"
     },
     {
       "id": "pack-visibility-pro",
@@ -126,7 +130,9 @@
         "script vidéo",
         "légendes réseaux",
         "planning de publication"
-      ]
+      ],
+      "video": "pack-visibility-pro.mp4",
+      "poster": "pack-visibility-pro.jpg"
     },
     {
       "id": "pack-marque-complete",
@@ -152,7 +158,9 @@
         "audit de marque",
         "génération de campagne",
         "assistant de contenus 30 jours"
-      ]
+      ],
+      "video": "pack-marque-complete.mp4",
+      "poster": "pack-marque-complete.jpg"
     },
     {
       "id": "video-impact",
@@ -176,7 +184,9 @@
         "script 60 s",
         "découpage plan par plan",
         "titres accrocheurs"
-      ]
+      ],
+      "video": "video-impact.mp4",
+      "poster": "video-impact.jpg"
     },
     {
       "id": "motion-logo",
@@ -199,7 +209,9 @@
         "suggestions de transitions",
         "rendu par lot des variantes",
         "histoire de marque en 3 phrases"
-      ]
+      ],
+      "video": "motion-logo.mp4",
+      "poster": "motion-logo.jpg"
     },
     {
       "id": "kit-visuels-20",
@@ -223,7 +235,9 @@
         "génération des légendes",
         "hashtags ciblés",
         "variantes A/B de textes"
-      ]
+      ],
+      "video": "kit-visuels-20.mp4",
+      "poster": "kit-visuels-20.jpg"
     },
     {
       "id": "banniere-pro",
@@ -245,7 +259,9 @@
         "titres alternatifs",
         "accroches",
         "description de profil"
-      ]
+      ],
+      "video": "banniere-pro.mp4",
+      "poster": "banniere-pro.jpg"
     },
     {
       "id": "affiche-evenement",
@@ -268,7 +284,9 @@
         "titre accrocheur",
         "texte court",
         "checklist d’impression"
-      ]
+      ],
+      "video": "affiche-evenement.mp4",
+      "poster": "affiche-evenement.jpg"
     },
     {
       "id": "packaging-produit",
@@ -291,7 +309,9 @@
         "argumentaire produit",
         "noms de variantes",
         "texte réglementaire simplifié"
-      ]
+      ],
+      "video": "packaging-produit.mp4",
+      "poster": "packaging-produit.jpg"
     },
     {
       "id": "plaquette-entreprise",
@@ -314,7 +334,9 @@
         "plan de plaquette",
         "réécriture des textes",
         "appels à l’action"
-      ]
+      ],
+      "video": "plaquette-entreprise.mp4",
+      "poster": "plaquette-entreprise.jpg"
     },
     {
       "id": "site-vitrine-one-page",
@@ -339,7 +361,9 @@
         "rédaction des sections",
         "suggestions d’offres",
         "plan de contenu post-lancement"
-      ]
+      ],
+      "video": "site-vitrine-one-page.mp4",
+      "poster": "site-vitrine-one-page.jpg"
     },
     {
       "id": "mini-site-portfolio",
@@ -362,7 +386,9 @@
         "bio professionnelle",
         "titres de projets",
         "mots-clés SEO"
-      ]
+      ],
+      "video": "mini-site-portfolio.mp4",
+      "poster": "mini-site-portfolio.jpg"
     },
     {
       "id": "formation-graphisme",
@@ -386,7 +412,9 @@
         "correction de briefs",
         "idées d’exercices",
         "feedback structuré"
-      ]
+      ],
+      "video": "formation-graphisme.mp4",
+      "poster": "formation-graphisme.jpg"
     },
     {
       "id": "formation-video-capcut",
@@ -410,7 +438,9 @@
         "scripts courts",
         "découpages",
         "tests de titres"
-      ]
+      ],
+      "video": "formation-video-capcut.mp4",
+      "poster": "formation-video-capcut.jpg"
     },
     {
       "id": "formation-ai-contenus",
@@ -434,7 +464,9 @@
         "prompts",
         "plan éditorial",
         "audit de contenu"
-      ]
+      ],
+      "video": "formation-ai-contenus.mp4",
+      "poster": "formation-ai-contenus.jpg"
     },
     {
       "id": "abonnement-ai-content",
@@ -459,7 +491,9 @@
         "génération quotidienne",
         "planification",
         "suggestions de relance"
-      ]
+      ],
+      "video": "abonnement-ai-content.mp4",
+      "poster": "abonnement-ai-content.jpg"
     },
     {
       "id": "autopilot-shop",
@@ -483,7 +517,9 @@
         "traitement des lead",
         "mise à jour catalogue",
         "relances clients"
-      ]
+      ],
+      "video": "autopilot-shop.mp4",
+      "poster": "autopilot-shop.jpg"
     },
     {
       "id": "audit-visibility",
@@ -506,7 +542,9 @@
         "lecture des contenus",
         "détection des angles morts",
         "génération du plan"
-      ]
+      ],
+      "video": "audit-visibility.mp4",
+      "poster": "audit-visibility.jpg"
     },
     {
       "id": "pack-cadeau-pro",
@@ -529,7 +567,9 @@
         "message personnalisé",
         "sélection d’articles",
         "texte de carte"
-      ]
+      ],
+      "video": "pack-cadeau-pro.mp4",
+      "poster": "pack-cadeau-pro.jpg"
     },
     {
       "id": "carte-visite-premium",
@@ -552,7 +592,9 @@
         "hiérarchie des informations",
         "variantes de mise en page",
         "QR code vCard"
-      ]
+      ],
+      "video": "carte-visite-premium.mp4",
+      "poster": "carte-visite-premium.jpg"
     },
     {
       "id": "session-strategie",
@@ -576,7 +618,9 @@
         "questions de diagnostic",
         "synthèse",
         "plan d’action"
-      ]
+      ],
+      "video": "session-strategie.mp4",
+      "poster": "session-strategie.jpg"
     },
     {
       "id": "outil-kit-publications",
@@ -601,7 +645,9 @@
       "ai": [
         "génération de variations",
         "suggestions de hashtags"
-      ]
+      ],
+      "video": "outil-kit-publications.mp4",
+      "poster": "outil-kit-publications.jpg"
     },
     {
       "id": "outil-charte-modele",
@@ -626,7 +672,9 @@
       "ai": [
         "suggestions de palette",
         "vérification de cohérence"
-      ]
+      ],
+      "video": "outil-charte-modele.mp4",
+      "poster": "outil-charte-modele.jpg"
     },
     {
       "id": "outil-automatisation-reseaux",
@@ -653,7 +701,9 @@
         "génération quotidienne",
         "publication via tokens sécurisés",
         "score de prospects"
-      ]
+      ],
+      "video": "outil-automatisation-reseaux.mp4",
+      "poster": "outil-automatisation-reseaux.jpg"
     },
     {
       "id": "outil-site-express",
@@ -679,7 +729,9 @@
       "ai": [
         "textes optimisés",
         "suggestions de contenu"
-      ]
+      ],
+      "video": "outil-site-express.mp4",
+      "poster": "outil-site-express.jpg"
     },
     {
       "id": "outil-formation-ia",
@@ -704,7 +756,9 @@
       "ai": [
         "prompts guidés",
         "mise en situation réelle"
-      ]
+      ],
+      "video": "outil-formation-ia.mp4",
+      "poster": "outil-formation-ia.jpg"
     },
     {
       "id": "outil-audit-digital",
@@ -729,7 +783,9 @@
       "ai": [
         "analyse des points faibles",
         "priorisation des actions"
-      ]
+      ],
+      "video": "outil-audit-digital.mp4",
+      "poster": "outil-audit-digital.jpg"
     }
   ]
 }

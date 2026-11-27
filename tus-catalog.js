@@ -15,6 +15,7 @@
   var MAX_IMAGES = 16;
   var ID_RE = /^[A-Za-z0-9_-]{1,80}$/;
   var REL_IMG_RE = /^(?:\.\/|\/)?[A-Za-z0-9_-]+(?:[A-Za-z0-9_\/-]*[A-Za-z0-9_-])?\.(?:webp|png|jpe?g|gif)$/i;
+  var REL_VIDEO_RE = /^(?:\.\/|\/)?[A-Za-z0-9_-]+(?:[A-Za-z0-9_\/-]*[A-Za-z0-9_-])?\.mp4$/i;
   var DATA_IMG_RE = /^data:image\/(?:jpeg|png|webp|gif);base64,[A-Za-z0-9+/=\s]+$/i;
   var PRODUCT_TEXT = ['name', 'title', 'description', 'category', 'type', 'short', 'badge', 'unit', 'level', 'duration', 'subtitle', 'tag'];
   var PRODUCT_NUM = ['price', 'oldPrice', 'stock', 'qty', 'durationMin'];
@@ -41,6 +42,21 @@
     }
     return '';
   }
+  /* Vidéo : fichier local .mp4 ou URL HTTPS, jamais de schéma exécutable. */
+  function safeVideo(value) {
+    var s = String(value == null ? '' : value);
+    if (!s || s.length > 400000) return '';
+    if (REL_VIDEO_RE.test(s) && s.indexOf('\\') < 0 && s.indexOf('://') < 0) return s;
+    if (/^https:\/\//i.test(s)) {
+      try {
+        var sec = root.TUSSecure || {};
+        var href = sec.safeHref ? sec.safeHref(s) : s;
+        var u = new URL(href);
+        if (u.protocol === 'https:' && u.hostname && !u.username && !u.password) return href;
+      } catch (e) { /* vidéo refusée */ }
+    }
+    return '';
+  }
   function sanitizeProduct(p, partial) {
     if (!plain(p)) return null;
     var out = {};
@@ -64,6 +80,16 @@
       if (!Array.isArray(p.images) || p.images.length > MAX_IMAGES) return null;
       out.images = p.images.map(safeImage);
       if (out.images.some(function (x) { return !x; })) return null;
+    }
+    if (p.video != null) {
+      var video = safeVideo(p.video);
+      if (!video) return null;
+      out.video = video;
+    }
+    if (p.poster != null) {
+      var poster = safeImage(p.poster);
+      if (!poster) return null;
+      out.poster = poster;
     }
     if (p.features != null) {
       if (!Array.isArray(p.features) || p.features.length > 30) return null;
