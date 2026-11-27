@@ -1,331 +1,522 @@
 {
-  "generatedAt": "2026-11-27T14:27:03",
+  "generatedAt": "2026-11-27T15:20:46",
   "width": 960,
   "height": 540,
   "fps": 24,
   "voice": "fr-FR-HenriNeural",
   "items": [
     {
-      "id": "identite-express",
-      "duration": 27.88,
-      "mp4": "identite-express.mp4",
-      "poster": "identite-express.jpg",
-      "bytes": 1355173
-    },
-    {
-      "id": "identite-signature",
-      "duration": 29.11,
-      "mp4": "identite-signature.mp4",
-      "poster": "identite-signature.jpg",
-      "bytes": 1440480
-    },
-    {
-      "id": "pack-visibility-pro",
-      "duration": 28.04,
-      "mp4": "pack-visibility-pro.mp4",
-      "poster": "pack-visibility-pro.jpg",
-      "bytes": 1378808
-    },
-    {
-      "id": "pack-marque-complete",
-      "duration": 28.27,
-      "mp4": "pack-marque-complete.mp4",
-      "poster": "pack-marque-complete.jpg",
-      "bytes": 1468338
-    },
-    {
-      "id": "video-impact",
-      "duration": 25.83,
-      "mp4": "video-impact.mp4",
-      "poster": "video-impact.jpg",
-      "bytes": 1310308
-    },
-    {
-      "id": "motion-logo",
-      "duration": 25.9,
-      "mp4": "motion-logo.mp4",
-      "poster": "motion-logo.jpg",
-      "bytes": 1310441
-    },
-    {
-      "id": "kit-visuels-20",
-      "duration": 27.58,
-      "mp4": "kit-visuels-20.mp4",
-      "poster": "kit-visuels-20.jpg",
-      "bytes": 1368808
-    },
-    {
-      "id": "banniere-pro",
-      "duration": 27.62,
-      "mp4": "banniere-pro.mp4",
-      "poster": "banniere-pro.jpg",
-      "bytes": 1369235
-    },
-    {
-      "id": "affiche-evenement",
-      "duration": 26.79,
-      "mp4": "affiche-evenement.mp4",
-      "poster": "affiche-evenement.jpg",
-      "bytes": 1343562
-    },
-    {
-      "id": "packaging-produit",
-      "duration": 27.36,
-      "mp4": "packaging-produit.mp4",
-      "poster": "packaging-produit.jpg",
-      "bytes": 1345957
-    },
-    {
-      "id": "plaquette-entreprise",
-      "duration": 27.53,
-      "mp4": "plaquette-entreprise.mp4",
-      "poster": "plaquette-entreprise.jpg",
-      "bytes": 1362214
-    },
-    {
-      "id": "site-vitrine-one-page",
-      "duration": 28.67,
-      "mp4": "site-vitrine-one-page.mp4",
-      "poster": "site-vitrine-one-page.jpg",
-      "bytes": 1392165
-    },
-    {
-      "id": "mini-site-portfolio",
-      "duration": 27.54,
-      "mp4": "mini-site-portfolio.mp4",
-      "poster": "mini-site-portfolio.jpg",
-      "bytes": 1346791
-    },
-    {
-      "id": "formation-graphisme",
-      "duration": 27.67,
-      "mp4": "formation-graphisme.mp4",
-      "poster": "formation-graphisme.jpg",
-      "bytes": 1368473
-    },
-    {
-      "id": "formation-video-capcut",
-      "duration": 26.69,
-      "mp4": "formation-video-capcut.mp4",
-      "poster": "formation-video-capcut.jpg",
-      "bytes": 1339904
-    },
-    {
-      "id": "formation-ai-contenus",
-      "duration": 26.9,
-      "mp4": "formation-ai-contenus.mp4",
-      "poster": "formation-ai-contenus.jpg",
-      "bytes": 1332709
-    },
-    {
       "id": "abonnement-ai-content",
-      "duration": 27.74,
+      "duration": 21.21,
       "mp4": "abonnement-ai-content.mp4",
       "poster": "abonnement-ai-content.jpg",
-      "bytes": 1367671
-    },
-    {
-      "id": "autopilot-shop",
-      "duration": 27.29,
-      "mp4": "autopilot-shop.mp4",
-      "poster": "autopilot-shop.jpg",
-      "bytes": 1359681
-    },
-    {
-      "id": "audit-visibility",
-      "duration": 28.63,
-      "mp4": "audit-visibility.mp4",
-      "poster": "audit-visibility.jpg",
-      "bytes": 1387326
-    },
-    {
-      "id": "pack-cadeau-pro",
-      "duration": 27.29,
-      "mp4": "pack-cadeau-pro.mp4",
-      "poster": "pack-cadeau-pro.jpg",
-      "bytes": 1363678
-    },
-    {
-      "id": "carte-visite-premium",
-      "duration": 26.96,
-      "mp4": "carte-visite-premium.mp4",
-      "poster": "carte-visite-premium.jpg",
-      "bytes": 1358488
-    },
-    {
-      "id": "session-strategie",
-      "duration": 27.19,
-      "mp4": "session-strategie.mp4",
-      "poster": "session-strategie.jpg",
-      "bytes": 1358378
-    },
-    {
-      "id": "outil-kit-publications",
-      "duration": 28.58,
-      "mp4": "outil-kit-publications.mp4",
-      "poster": "outil-kit-publications.jpg",
-      "bytes": 1463679
-    },
-    {
-      "id": "outil-charte-modele",
-      "duration": 28.63,
-      "mp4": "outil-charte-modele.mp4",
-      "poster": "outil-charte-modele.jpg",
-      "bytes": 1381350
-    },
-    {
-      "id": "outil-automatisation-reseaux",
-      "duration": 29.69,
-      "mp4": "outil-automatisation-reseaux.mp4",
-      "poster": "outil-automatisation-reseaux.jpg",
-      "bytes": 1484846
-    },
-    {
-      "id": "outil-site-express",
-      "duration": 29.38,
-      "mp4": "outil-site-express.mp4",
-      "poster": "outil-site-express.jpg",
-      "bytes": 1406439
-    },
-    {
-      "id": "outil-formation-ia",
-      "duration": 29.16,
-      "mp4": "outil-formation-ia.mp4",
-      "poster": "outil-formation-ia.jpg",
-      "bytes": 1435935
-    },
-    {
-      "id": "outil-audit-digital",
-      "duration": 28.33,
-      "mp4": "outil-audit-digital.mp4",
-      "poster": "outil-audit-digital.jpg",
-      "bytes": 1417738
-    },
-    {
-      "id": "acad-design",
-      "duration": 29.57,
-      "mp4": "acad-design.mp4",
-      "poster": "acad-design.jpg",
-      "bytes": 1466024
-    },
-    {
-      "id": "acad-video",
-      "duration": 30.25,
-      "mp4": "acad-video.mp4",
-      "poster": "acad-video.jpg",
-      "bytes": 1481919
-    },
-    {
-      "id": "acad-ia",
-      "duration": 27.79,
-      "mp4": "acad-ia.mp4",
-      "poster": "acad-ia.jpg",
-      "bytes": 1379592
-    },
-    {
-      "id": "acad-brand",
-      "duration": 26.65,
-      "mp4": "acad-brand.mp4",
-      "poster": "acad-brand.jpg",
-      "bytes": 1352333
-    },
-    {
-      "id": "acad-photo",
-      "duration": 25.03,
-      "mp4": "acad-photo.mp4",
-      "poster": "acad-photo.jpg",
-      "bytes": 1308369
+      "bytes": 887931,
+      "kind": "product",
+      "category": "technologie"
     },
     {
       "id": "acad-auto",
-      "duration": 27.65,
+      "duration": 30.96,
       "mp4": "acad-auto.mp4",
       "poster": "acad-auto.jpg",
-      "bytes": 1384594
+      "bytes": 2817341,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "acad-brand",
+      "duration": 30.11,
+      "mp4": "acad-brand.mp4",
+      "poster": "acad-brand.jpg",
+      "bytes": 2785610,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "acad-design",
+      "duration": 30.13,
+      "mp4": "acad-design.mp4",
+      "poster": "acad-design.jpg",
+      "bytes": 2817772,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "acad-ia",
+      "duration": 30.25,
+      "mp4": "acad-ia.mp4",
+      "poster": "acad-ia.jpg",
+      "bytes": 2852174,
+      "kind": "academy",
+      "category": "formation"
     },
     {
       "id": "acad-pack",
-      "duration": 25.79,
+      "duration": 29.94,
       "mp4": "acad-pack.mp4",
       "poster": "acad-pack.jpg",
-      "bytes": 1329026
+      "bytes": 2782903,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "acad-photo",
+      "duration": 28.5,
+      "mp4": "acad-photo.mp4",
+      "poster": "acad-photo.jpg",
+      "bytes": 2699854,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "acad-video",
+      "duration": 31.08,
+      "mp4": "acad-video.mp4",
+      "poster": "acad-video.jpg",
+      "bytes": 2863560,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "affiche-evenement",
+      "duration": 21.9,
+      "mp4": "affiche-evenement.mp4",
+      "poster": "affiche-evenement.jpg",
+      "bytes": 927744,
+      "kind": "product",
+      "category": "imprimerie"
+    },
+    {
+      "id": "audit-visibility",
+      "duration": 22.52,
+      "mp4": "audit-visibility.mp4",
+      "poster": "audit-visibility.jpg",
+      "bytes": 917150,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "autopilot-shop",
+      "duration": 21.37,
+      "mp4": "autopilot-shop.mp4",
+      "poster": "autopilot-shop.jpg",
+      "bytes": 884494,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "banniere-pro",
+      "duration": 21.2,
+      "mp4": "banniere-pro.mp4",
+      "poster": "banniere-pro.jpg",
+      "bytes": 1013751,
+      "kind": "product",
+      "category": "conception-graphique"
     },
     {
       "id": "brand-film",
-      "duration": 23.41,
+      "duration": 22.5,
       "mp4": "brand-film.mp4",
       "poster": "brand-film.jpg",
-      "bytes": 1281227
+      "bytes": 1105336,
+      "kind": "brand",
+      "category": "brand"
+    },
+    {
+      "id": "carte-visite-premium",
+      "duration": 22.25,
+      "mp4": "carte-visite-premium.mp4",
+      "poster": "carte-visite-premium.jpg",
+      "bytes": 938671,
+      "kind": "product",
+      "category": "imprimerie"
+    },
+    {
+      "id": "formation-ai-contenus",
+      "duration": 21.88,
+      "mp4": "formation-ai-contenus.mp4",
+      "poster": "formation-ai-contenus.jpg",
+      "bytes": 2133978,
+      "kind": "product",
+      "category": "formation"
+    },
+    {
+      "id": "formation-graphisme",
+      "duration": 23.04,
+      "mp4": "formation-graphisme.mp4",
+      "poster": "formation-graphisme.jpg",
+      "bytes": 2191820,
+      "kind": "product",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-alimentation-1",
+      "duration": 32.63,
+      "mp4": "formation-spot-alimentation-1.mp4",
+      "poster": "formation-spot-alimentation-1.jpg",
+      "bytes": 3036278,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-alimentation-2",
+      "duration": 32.65,
+      "mp4": "formation-spot-alimentation-2.mp4",
+      "poster": "formation-spot-alimentation-2.jpg",
+      "bytes": 3034327,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-bien-etre",
+      "duration": 32.24,
+      "mp4": "formation-spot-bien-etre.mp4",
+      "poster": "formation-spot-bien-etre.jpg",
+      "bytes": 2994095,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-commerce",
+      "duration": 32.08,
+      "mp4": "formation-spot-commerce.mp4",
+      "poster": "formation-spot-commerce.jpg",
+      "bytes": 3059332,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-evenement",
+      "duration": 31.98,
+      "mp4": "formation-spot-evenement.mp4",
+      "poster": "formation-spot-evenement.jpg",
+      "bytes": 3007980,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-naturo",
+      "duration": 32.12,
+      "mp4": "formation-spot-naturo.mp4",
+      "poster": "formation-spot-naturo.jpg",
+      "bytes": 3011577,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-proprete",
+      "duration": 32.38,
+      "mp4": "formation-spot-proprete.mp4",
+      "poster": "formation-spot-proprete.jpg",
+      "bytes": 3023659,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-restaurant-1",
+      "duration": 32.5,
+      "mp4": "formation-spot-restaurant-1.mp4",
+      "poster": "formation-spot-restaurant-1.jpg",
+      "bytes": 3026557,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-restaurant-2",
+      "duration": 32.5,
+      "mp4": "formation-spot-restaurant-2.mp4",
+      "poster": "formation-spot-restaurant-2.jpg",
+      "bytes": 3027904,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-spot-transactions",
+      "duration": 32.21,
+      "mp4": "formation-spot-transactions.mp4",
+      "poster": "formation-spot-transactions.jpg",
+      "bytes": 3017341,
+      "kind": "academy",
+      "category": "formation"
+    },
+    {
+      "id": "formation-video-capcut",
+      "duration": 22.16,
+      "mp4": "formation-video-capcut.mp4",
+      "poster": "formation-video-capcut.jpg",
+      "bytes": 2104831,
+      "kind": "product",
+      "category": "formation"
+    },
+    {
+      "id": "gestion-promo",
+      "duration": 50.0,
+      "mp4": "gestion-promo.mp4",
+      "poster": "gestion-promo.jpg",
+      "bytes": 2126669,
+      "kind": "demo",
+      "category": "technologie"
+    },
+    {
+      "id": "identite-express",
+      "duration": 21.5,
+      "mp4": "identite-express.mp4",
+      "poster": "identite-express.jpg",
+      "bytes": 1012610,
+      "kind": "product",
+      "category": "conception-graphique"
+    },
+    {
+      "id": "identite-signature",
+      "duration": 23.0,
+      "mp4": "identite-signature.mp4",
+      "poster": "identite-signature.jpg",
+      "bytes": 1043934,
+      "kind": "product",
+      "category": "conception-graphique"
+    },
+    {
+      "id": "kit-visuels-20",
+      "duration": 22.46,
+      "mp4": "kit-visuels-20.mp4",
+      "poster": "kit-visuels-20.jpg",
+      "bytes": 1153554,
+      "kind": "product",
+      "category": "boutique"
+    },
+    {
+      "id": "mini-site-portfolio",
+      "duration": 21.49,
+      "mp4": "mini-site-portfolio.mp4",
+      "poster": "mini-site-portfolio.jpg",
+      "bytes": 894019,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "motion-logo",
+      "duration": 19.52,
+      "mp4": "motion-logo.mp4",
+      "poster": "motion-logo.jpg",
+      "bytes": 1632724,
+      "kind": "product",
+      "category": "multi-media"
+    },
+    {
+      "id": "outil-audit-digital",
+      "duration": 22.5,
+      "mp4": "outil-audit-digital.mp4",
+      "poster": "outil-audit-digital.jpg",
+      "bytes": 913963,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "outil-automatisation-reseaux",
+      "duration": 23.92,
+      "mp4": "outil-automatisation-reseaux.mp4",
+      "poster": "outil-automatisation-reseaux.jpg",
+      "bytes": 976777,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "outil-charte-modele",
+      "duration": 23.12,
+      "mp4": "outil-charte-modele.mp4",
+      "poster": "outil-charte-modele.jpg",
+      "bytes": 1166226,
+      "kind": "product",
+      "category": "boutique"
+    },
+    {
+      "id": "outil-formation-ia",
+      "duration": 24.46,
+      "mp4": "outil-formation-ia.mp4",
+      "poster": "outil-formation-ia.jpg",
+      "bytes": 2356346,
+      "kind": "product",
+      "category": "formation"
+    },
+    {
+      "id": "outil-kit-publications",
+      "duration": 23.92,
+      "mp4": "outil-kit-publications.mp4",
+      "poster": "outil-kit-publications.jpg",
+      "bytes": 1196209,
+      "kind": "product",
+      "category": "boutique"
+    },
+    {
+      "id": "outil-site-express",
+      "duration": 24.04,
+      "mp4": "outil-site-express.mp4",
+      "poster": "outil-site-express.jpg",
+      "bytes": 971486,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "pack-cadeau-pro",
+      "duration": 21.75,
+      "mp4": "pack-cadeau-pro.mp4",
+      "poster": "pack-cadeau-pro.jpg",
+      "bytes": 1117411,
+      "kind": "product",
+      "category": "pack-promos"
+    },
+    {
+      "id": "pack-marque-complete",
+      "duration": 21.95,
+      "mp4": "pack-marque-complete.mp4",
+      "poster": "pack-marque-complete.jpg",
+      "bytes": 1132485,
+      "kind": "product",
+      "category": "pack-promos"
+    },
+    {
+      "id": "pack-visibility-pro",
+      "duration": 22.19,
+      "mp4": "pack-visibility-pro.mp4",
+      "poster": "pack-visibility-pro.jpg",
+      "bytes": 1139584,
+      "kind": "product",
+      "category": "pack-promos"
+    },
+    {
+      "id": "packaging-produit",
+      "duration": 22.74,
+      "mp4": "packaging-produit.mp4",
+      "poster": "packaging-produit.jpg",
+      "bytes": 988357,
+      "kind": "product",
+      "category": "imprimerie"
+    },
+    {
+      "id": "plaquette-entreprise",
+      "duration": 22.91,
+      "mp4": "plaquette-entreprise.mp4",
+      "poster": "plaquette-entreprise.jpg",
+      "bytes": 988562,
+      "kind": "product",
+      "category": "imprimerie"
+    },
+    {
+      "id": "session-strategie",
+      "duration": 21.63,
+      "mp4": "session-strategie.mp4",
+      "poster": "session-strategie.jpg",
+      "bytes": 890645,
+      "kind": "product",
+      "category": "technologie"
+    },
+    {
+      "id": "site-vitrine-one-page",
+      "duration": 22.98,
+      "mp4": "site-vitrine-one-page.mp4",
+      "poster": "site-vitrine-one-page.jpg",
+      "bytes": 921443,
+      "kind": "product",
+      "category": "technologie"
     },
     {
       "id": "spot-anne-service",
       "duration": 48.55,
       "mp4": "spot-anne-service.mp4",
       "poster": "spot-anne-service.jpg",
-      "bytes": 2852221
+      "bytes": 3450655,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-aout-2025-1",
       "duration": 64.25,
       "mp4": "spot-aout-2025-1.mp4",
       "poster": "spot-aout-2025-1.jpg",
-      "bytes": 3330182
+      "bytes": 4709956,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-aout-2025-2",
       "duration": 64.25,
       "mp4": "spot-aout-2025-2.mp4",
       "poster": "spot-aout-2025-2.jpg",
-      "bytes": 3761333
+      "bytes": 4664758,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-decembre-2025-1",
       "duration": 52.67,
       "mp4": "spot-decembre-2025-1.mp4",
       "poster": "spot-decembre-2025-1.jpg",
-      "bytes": 4378310
+      "bytes": 2277789,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-decembre-2025-2",
       "duration": 43.63,
       "mp4": "spot-decembre-2025-2.mp4",
       "poster": "spot-decembre-2025-2.jpg",
-      "bytes": 2296851
+      "bytes": 3310029,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-decembre-2025-3",
       "duration": 43.63,
       "mp4": "spot-decembre-2025-3.mp4",
       "poster": "spot-decembre-2025-3.jpg",
-      "bytes": 2028840
+      "bytes": 2973627,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-fevrier-2025",
       "duration": 38.63,
       "mp4": "spot-fevrier-2025.mp4",
       "poster": "spot-fevrier-2025.jpg",
-      "bytes": 1905370
+      "bytes": 2179580,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-naturo-therapie",
       "duration": 43.31,
       "mp4": "spot-naturo-therapie.mp4",
       "poster": "spot-naturo-therapie.jpg",
-      "bytes": 2158517
+      "bytes": 2810540,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-net-et-propre",
       "duration": 104.51,
       "mp4": "spot-net-et-propre.mp4",
       "poster": "spot-net-et-propre.jpg",
-      "bytes": 4778893
+      "bytes": 3895779,
+      "kind": "spot",
+      "category": "multi-media"
     },
     {
       "id": "spot-siogo",
       "duration": 39.96,
       "mp4": "spot-siogo.mp4",
       "poster": "spot-siogo.jpg",
-      "bytes": 1987306
+      "bytes": 2397580,
+      "kind": "spot",
+      "category": "multi-media"
+    },
+    {
+      "id": "video-impact",
+      "duration": 19.63,
+      "mp4": "video-impact.mp4",
+      "poster": "video-impact.jpg",
+      "bytes": 1621669,
+      "kind": "product",
+      "category": "multi-media"
     }
   ]
 }

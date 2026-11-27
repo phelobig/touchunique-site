@@ -1,4 +1,4 @@
-/* Touch Unique Studio — actualités, boutique outils, compte visiteur et assistant public. */
+/* Touch Unique Studio — actualités, boutique & modèles, compte visiteur et assistant public. */
 (function () {
   'use strict';
 
@@ -19,14 +19,14 @@
     }
   }
 
-  /* ---------- Boutique : outils & logiciels ---------- */
+  /* ---------- Boutique & modèles ---------- */
   function initTools() {
     var root = $('#tools-grid');
     if (!root) return;
     var cat = window.TUSCatalog && window.TUSCatalog.catalogue && window.TUSCatalog.catalogue();
     var all = (cat && cat.products && cat.products.length ? cat.products :
       (window.TU_CATALOGUE && window.TU_CATALOGUE.products)) || [];
-    var tools = all.filter(function (p) { return p && p.category === 'outils'; });
+    var tools = all.filter(function (p) { return p && p.category === 'boutique'; });
     if (!root.dataset.bound) {
       root.dataset.bound = '1';
       root.addEventListener('click', function (e) {
