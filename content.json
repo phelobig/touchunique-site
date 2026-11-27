@@ -32,7 +32,7 @@
         "label": "réalisations portfolio"
       },
       {
-        "value": "5",
+        "value": "6",
         "label": "expertités réunies"
       },
       {
@@ -88,73 +88,73 @@
   "portfolio": [
     {
       "title": "Identité visuelle",
-      "category": "identite",
+      "category": "conception-graphique",
       "img": "identite-01.webp",
       "desc": "Systèmes visuels complets, pensés pour la reconnaissance et l’usage réel."
     },
     {
       "title": "Déclinaison de marque",
-      "category": "identite",
+      "category": "conception-graphique",
       "img": "identite-02.webp",
       "desc": "Cartes, supports et applications cohérents autour d’une même signature."
     },
     {
       "title": "Packaging",
-      "category": "print",
+      "category": "imprimerie",
       "img": "packaging-01.webp",
       "desc": "Emballages et étiquettes qui racontent le produit dès le premier regard."
     },
     {
       "title": "Support entreprise",
-      "category": "print",
+      "category": "imprimerie",
       "img": "packaging-02.webp",
       "desc": "Plaquettes et documents de présentation clairs, structurés et imprimables."
     },
     {
       "title": "Visuel événementiel",
-      "category": "video",
+      "category": "multi-media",
       "img": "evenement-01.webp",
       "desc": "Affiches et annonces fortes pour les moments qui comptent."
     },
     {
       "title": "Campagne événement",
-      "category": "video",
+      "category": "multi-media",
       "img": "evenement-02.webp",
       "desc": "Déclinaisons multiples pour le print et les réseaux."
     },
     {
       "title": "Mise en scène",
-      "category": "video",
+      "category": "multi-media",
       "img": "evenement-03.webp",
       "desc": "Univers visuels immersifs et lumière maîtrisée."
     },
     {
       "title": "Conception libre",
-      "category": "contenu",
+      "category": "conception-graphique",
       "img": "evenement-04.webp",
       "desc": "Explorations graphiques et compositions sur mesure."
     },
     {
       "title": "Autres conceptions",
-      "category": "contenu",
+      "category": "conception-graphique",
       "img": "conception-01.webp",
       "desc": "Projets singuliers où la contrainte devient une idée."
     },
     {
       "title": "Direction artistique",
-      "category": "contenu",
+      "category": "conception-graphique",
       "img": "conception-02.webp",
       "desc": "Couleur, typographie et rythme au service du message."
     },
     {
       "title": "Projet personnel",
-      "category": "identite",
+      "category": "conception-graphique",
       "img": "projet-personnel-01.webp",
       "desc": "Recherches personnelles et expérimentations maîtrisées."
     },
     {
       "title": "Logo ARRAHMA",
-      "category": "identite",
+      "category": "conception-graphique",
       "img": "logo-arrahma.webp",
       "desc": "Identité de pharmacie : clarté, confiance et lisibilité."
     }
@@ -224,14 +224,18 @@
     "subtitle": "Des modules courts, concrets et adaptés aux réalités locales. Vous repartez avec des projets finis, pas seulement des théories.",
     "cta": "Découvrir les formations",
     "modules": [
-      "GraphismePro",
-      "Vidéo CapCut",
-      "IA & Contenus"
+      "Graphisme & identité",
+      "Vidéo & montage CapCut",
+      "IA & création de contenus",
+      "Branding & packaging",
+      "Photographie & retouche",
+      "Automatiser boutique & réseaux",
+      "Décryptage de spots publicitaires"
     ],
     "offerings": [
       {
         "id": "acad-design",
-        "name": "Design graphique & identité",
+        "name": "Graphisme & identité — atelier 3 jours",
         "price": 25000,
         "duration": "3 jours",
         "level": "Débutant",
@@ -244,11 +248,13 @@
         ],
         "video": "acad-design.mp4",
         "poster": "acad-design.jpg",
-        "img": "acad-design.webp"
+        "img": "acad-design.webp",
+        "category": "formation",
+        "type": "formation"
       },
       {
         "id": "acad-video",
-        "name": "Vidéo & montage CapCut Pro",
+        "name": "Vidéo & montage CapCut — atelier 4 jours",
         "price": 30000,
         "duration": "4 jours",
         "level": "Débutant",
@@ -261,11 +267,13 @@
         ],
         "video": "acad-video.mp4",
         "poster": "acad-video.jpg",
-        "img": "acad-video.webp"
+        "img": "acad-video.webp",
+        "category": "formation",
+        "type": "formation"
       },
       {
         "id": "acad-ia",
-        "name": "IA & création de contenus",
+        "name": "IA & contenus — atelier 5 jours",
         "price": 35000,
         "duration": "5 jours",
         "level": "Intermédiaire",
@@ -278,11 +286,13 @@
         ],
         "video": "acad-ia.mp4",
         "poster": "acad-ia.jpg",
-        "img": "acad-ia.webp"
+        "img": "acad-ia.webp",
+        "category": "formation",
+        "type": "formation"
       },
       {
         "id": "acad-brand",
-        "name": "Branding & packaging produit",
+        "name": "Branding & packaging — atelier 1 semaine",
         "price": 45000,
         "duration": "1 semaine",
         "level": "Intermédiaire",
@@ -295,7 +305,9 @@
         ],
         "video": "acad-brand.mp4",
         "poster": "acad-brand.jpg",
-        "img": "acad-brand.webp"
+        "img": "acad-brand.webp",
+        "category": "formation",
+        "type": "formation"
       },
       {
         "id": "acad-photo",
@@ -312,11 +324,13 @@
         ],
         "video": "acad-photo.mp4",
         "poster": "acad-photo.jpg",
-        "img": "acad-photo.webp"
+        "img": "acad-photo.webp",
+        "category": "formation",
+        "type": "formation"
       },
       {
         "id": "acad-auto",
-        "name": "Automatiser boutique & réseaux",
+        "name": "Automatiser boutique & réseaux — atelier 5 jours",
         "price": 40000,
         "duration": "5 jours",
         "level": "Avancé",
@@ -329,11 +343,13 @@
         ],
         "video": "acad-auto.mp4",
         "poster": "acad-auto.jpg",
-        "img": "acad-auto.webp"
+        "img": "acad-auto.webp",
+        "category": "formation",
+        "type": "formation"
       },
       {
         "id": "acad-pack",
-        "name": "Pack Académie complet",
+        "name": "Pack Académie complet (6 modules)",
         "price": 90000,
         "duration": "3 semaines",
         "level": "Tous niveaux",
@@ -346,14 +362,196 @@
         ],
         "video": "acad-pack.mp4",
         "poster": "acad-pack.jpg",
-        "img": "acad-pack.webp"
+        "img": "acad-pack.webp",
+        "category": "formation",
+        "type": "formation"
+      },
+      {
+        "id": "formation-spot-transactions",
+        "name": "Décryptage de spot — services transactions",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-transactions.webp",
+        "video": "formation-spot-transactions.mp4",
+        "poster": "formation-spot-transactions.jpg"
+      },
+      {
+        "id": "formation-spot-bien-etre",
+        "name": "Décryptage de spot — bien-être naturel",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-bien-etre.webp",
+        "video": "formation-spot-bien-etre.mp4",
+        "poster": "formation-spot-bien-etre.jpg"
+      },
+      {
+        "id": "formation-spot-restaurant-1",
+        "name": "Décryptage de spot — restaurant, montage 1",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-restaurant-1.webp",
+        "video": "formation-spot-restaurant-1.mp4",
+        "poster": "formation-spot-restaurant-1.jpg"
+      },
+      {
+        "id": "formation-spot-restaurant-2",
+        "name": "Décryptage de spot — restaurant, montage 2",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-restaurant-2.webp",
+        "video": "formation-spot-restaurant-2.mp4",
+        "poster": "formation-spot-restaurant-2.jpg"
+      },
+      {
+        "id": "formation-spot-evenement",
+        "name": "Décryptage de spot — offre de saison",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-evenement.webp",
+        "video": "formation-spot-evenement.mp4",
+        "poster": "formation-spot-evenement.jpg"
+      },
+      {
+        "id": "formation-spot-alimentation-1",
+        "name": "Décryptage de spot — alimentation, montage 1",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-alimentation-1.webp",
+        "video": "formation-spot-alimentation-1.mp4",
+        "poster": "formation-spot-alimentation-1.jpg"
+      },
+      {
+        "id": "formation-spot-alimentation-2",
+        "name": "Décryptage de spot — alimentation, montage 2",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-alimentation-2.webp",
+        "video": "formation-spot-alimentation-2.mp4",
+        "poster": "formation-spot-alimentation-2.jpg"
+      },
+      {
+        "id": "formation-spot-naturo",
+        "name": "Décryptage de spot — conseils naturels",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-naturo.webp",
+        "video": "formation-spot-naturo.mp4",
+        "poster": "formation-spot-naturo.jpg"
+      },
+      {
+        "id": "formation-spot-proprete",
+        "name": "Décryptage de spot — propreté & services",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-proprete.webp",
+        "video": "formation-spot-proprete.mp4",
+        "poster": "formation-spot-proprete.jpg"
+      },
+      {
+        "id": "formation-spot-commerce",
+        "name": "Décryptage de spot — commerce local",
+        "category": "formation",
+        "type": "formation",
+        "duration": "1 h",
+        "level": "Tous niveaux",
+        "price": 15000,
+        "short": "Apprenez à construire un spot court qui capte l’attention et convertit.",
+        "details": [
+          "Analyse des 3 premières secondes et du rythme",
+          "Script clair, appel à l’action et habillage Touch Unique",
+          "Montage kinetic, sous-titres et export réseaux"
+        ],
+        "img": "formation-spot-commerce.webp",
+        "video": "formation-spot-commerce.mp4",
+        "poster": "formation-spot-commerce.jpg"
       }
     ]
   },
   "faq": [
     {
       "q": "Comment démarrer un projet ?",
-      "a": "Cliquez sur « Lancer mon projet », choisissez une offre et envoyez le formulaire. Le demande arrive directement dans l’application Touch Unique et vous recevez une réponse sur WhatsApp."
+      "a": "Cliquez sur « Lancer mon projet », choisissez une offre et envoyez le formulaire. La demande arrive directement dans l’application Touch Unique et vous recevez une réponse sur WhatsApp."
     },
     {
       "q": "Les prix sont-ils fixes ?",
@@ -369,7 +567,7 @@
     },
     {
       "q": "Puis-je apprendre avec l’Académie ?",
-      "a": "Oui. Les modules sont progressifs et orientés projet : graphisme, vidéo et automatisation IA."
+      "a": "Oui. Les modules sont progressifs et orientés projet : graphisme, vidéo, IA, branding, photo et automatisation."
     }
   ],
   "contact": {
@@ -529,8 +727,8 @@
   "spots": [
     {
       "id": "spot-anne-service",
-      "name": "Spot publicitaire — Anne Service",
-      "short": "Réalisation Touch Unique Studio · Anne Service.",
+      "name": "Spot publicitaire — services transactions",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-anne-service.jpg",
       "video": "spot-anne-service.mp4",
       "duration": "49 s",
@@ -538,8 +736,8 @@
     },
     {
       "id": "spot-fevrier-2025",
-      "name": "Spot publicitaire — février 2025",
-      "short": "Réalisation Touch Unique Studio · Février 2025.",
+      "name": "Spot publicitaire — bien-être naturel",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-fevrier-2025.jpg",
       "video": "spot-fevrier-2025.mp4",
       "duration": "39 s",
@@ -547,8 +745,8 @@
     },
     {
       "id": "spot-aout-2025-1",
-      "name": "Spot publicitaire — août 2025 (1)",
-      "short": "Réalisation Touch Unique Studio · Août 2025 · 1.",
+      "name": "Spot publicitaire — restaurant (montage 1)",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-aout-2025-1.jpg",
       "video": "spot-aout-2025-1.mp4",
       "duration": "1 min 04 s",
@@ -556,8 +754,8 @@
     },
     {
       "id": "spot-aout-2025-2",
-      "name": "Spot publicitaire — août 2025 (2)",
-      "short": "Réalisation Touch Unique Studio · Août 2025 · 2.",
+      "name": "Spot publicitaire — restaurant (montage 2)",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-aout-2025-2.jpg",
       "video": "spot-aout-2025-2.mp4",
       "duration": "1 min 04 s",
@@ -565,8 +763,8 @@
     },
     {
       "id": "spot-decembre-2025-1",
-      "name": "Spot publicitaire — décembre 2025 (1)",
-      "short": "Réalisation Touch Unique Studio · Décembre 2025 · 1.",
+      "name": "Spot publicitaire — offre de saison",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-decembre-2025-1.jpg",
       "video": "spot-decembre-2025-1.mp4",
       "duration": "53 s",
@@ -574,8 +772,8 @@
     },
     {
       "id": "spot-decembre-2025-2",
-      "name": "Spot publicitaire — décembre 2025 (2)",
-      "short": "Réalisation Touch Unique Studio · Décembre 2025 · 2.",
+      "name": "Spot publicitaire — alimentation (montage 1)",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-decembre-2025-2.jpg",
       "video": "spot-decembre-2025-2.mp4",
       "duration": "44 s",
@@ -583,8 +781,8 @@
     },
     {
       "id": "spot-decembre-2025-3",
-      "name": "Spot publicitaire — décembre 2025 (3)",
-      "short": "Réalisation Touch Unique Studio · Décembre 2025 · 3.",
+      "name": "Spot publicitaire — alimentation (montage 2)",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-decembre-2025-3.jpg",
       "video": "spot-decembre-2025-3.mp4",
       "duration": "44 s",
@@ -592,8 +790,8 @@
     },
     {
       "id": "spot-naturo-therapie",
-      "name": "Spot publicitaire — Naturo Thérapie",
-      "short": "Réalisation Touch Unique Studio · Naturo Thérapie.",
+      "name": "Spot publicitaire — conseils naturels",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-naturo-therapie.jpg",
       "video": "spot-naturo-therapie.mp4",
       "duration": "43 s",
@@ -601,8 +799,8 @@
     },
     {
       "id": "spot-net-et-propre",
-      "name": "Spot publicitaire — Net et Propre",
-      "short": "Réalisation Touch Unique Studio · Net et Propre.",
+      "name": "Spot publicitaire — propreté & services",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-net-et-propre.jpg",
       "video": "spot-net-et-propre.mp4",
       "duration": "1 min 45 s",
@@ -610,8 +808,8 @@
     },
     {
       "id": "spot-siogo",
-      "name": "Spot publicitaire — Siogo",
-      "short": "Réalisation Touch Unique Studio · Siogo.",
+      "name": "Spot publicitaire — commerce local",
+      "short": "Exemple de réalisation Touch Unique Studio · montage et habillage.",
       "poster": "spot-siogo.jpg",
       "video": "spot-siogo.mp4",
       "duration": "40 s",
