@@ -865,7 +865,21 @@ button { cursor: pointer; }
 
 .cover-strip { padding: 26px 0 0; }
 .cover-frame { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #080409; box-shadow: var(--shadow); }
-.cover-frame img { width: 100%; height: auto; aspect-ratio: 1672 / 941; object-fit: cover; }
+.cover-frame img { display: block; width: 100%; height: auto; aspect-ratio: 1672 / 941; object-fit: cover; }
+
+@media (max-width: 720px) {
+  .cover-frame { border-radius: 24px; background: #fff9fa; }
+  .cover-frame img { aspect-ratio: auto; object-fit: contain; }
+}
+
+/* Bannière Académie : visuel portrait dédié, sans texte superposé. */
+@media (max-width: 720px) {
+  .academy-grid { gap: 16px; }
+  .academy-visual { border-radius: 24px; background: #fff9fa; }
+  .academy-visual picture { display: block; }
+  .academy-visual img { aspect-ratio: 720 / 860; object-fit: contain; opacity: 1; }
+  .academy-overlay { display: none; }
+}
 
 .video-modal { position: fixed; z-index: 700; inset: 0; display: grid; place-items: center; padding: 20px;
   background: rgba(18,4,7,.9); }

@@ -625,6 +625,10 @@
     renderProof(); renderExpertises(); renderOfferFilters(); renderOffers();
     renderPortfolioFilters(); renderPortfolio(); renderProcess();
     renderFeaturedVideos(); renderClientSpots(); renderAcademy(); renderFormationCards(); renderAcademyVideos(); renderAI(); renderFAQ(); renderCart(); syncPulse();
+    // Les rendus sont parfois rejoués après une synchronisation réseau : les
+    // nouveaux nœuds doivent être observés, sinon ils restent à opacity:0.
+    observeReveals(document);
+    observeCards(document);
   }
   function catalogueUpdated() {
     window.dispatchEvent(new Event('tus:catalog-updated'));
