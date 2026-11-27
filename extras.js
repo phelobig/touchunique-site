@@ -57,7 +57,6 @@
   function accountHTML() {
     var A = window.TUSAccounts;
     var u = A && A.current();
-    var tr = window.TUSAI ? window.TUSAI.trials() : { used: 0, limit: 2, remaining: 2 };
     if (!u) {
       return '<div class="account-grid">' +
         '<form id="account-register" class="account-form">' +
@@ -70,19 +69,19 @@
         '</form>' +
         '<form id="account-login" class="account-form">' +
           '<h3>Se connecter</h3>' +
-          '<p class="subtle small">Votre compte conserve vos préférences et vos essais IA sur cet appareil.</p>' +
+          '<p class="subtle small">Votre compte conserve vos préférences sur cet appareil.</p>' +
           '<label>E-mail<input name="email" type="email" required autocomplete="email"></label>' +
           '<label>Mot de passe<input name="password" type="password" required autocomplete="current-password"></label>' +
           '<button class="btn btn-ghost btn-sm" type="submit">Se connecter</button>' +
         '</form></div>' +
-        '<p class="account-status">Compte non connecté · <b>Jusqu’à ' + tr.remaining + ' essai(s) IA gratuit(s)</b> aujourd’hui (limite aussi vérifiée sur le serveur).</p>';
+        '<p class="account-status">Compte non connecté · <b>IA gratuite et illimitée, avec ou sans compte</b>.</p>';
     }
     return '<div class="account-ok"><div><b>' + esc(u.name) + '</b><span>' + esc(u.email) + '</span>' +
       '<small>Compte local sécurisé · sessions conservées sur cet appareil</small></div>' +
       '<div class="row"><button class="btn btn-ghost btn-sm" data-account="access">Accès IA complet</button>' +
       '<button class="btn btn-ghost btn-sm" data-account="logout">Se déconnecter</button></div></div>' +
-      '<p class="account-status">Essais IA temps réel : <b>' + tr.used + ' / ' + tr.limit + ' utilisés aujourd’hui</b>. ' +
-      'Le moteur local reste disponible sans limite.</p>';
+      '<p class="account-status"><b>IA connectée à Internet · gratuite et illimitée</b>. ' +
+      'Vos préférences sont conservées sur cet appareil.</p>';
   }
   function initAccount() {
     var root = $('#account-box');
@@ -132,8 +131,8 @@
         if (!s.configured) { box.innerHTML = ' Assistant local actif. Serveur non connecté.'; return; }
         if (!s.ok) { box.innerHTML = '<span class="dot bad"></span> Serveur injoignable : ' + esc(s.error || 'erreur') + ' — assistant local actif.'; return; }
         var chips = [];
-        (['openai', 'gemini', 'anthropic']).forEach(function (k) {
-          chips.push('<span class="chip ' + (s.ai && s.ai[k] ? 'green' : 'gray') + '">' + ({ openai: 'ChatGPT', gemini: 'Gemini', anthropic: 'Claude' })[k] + '</span>');
+        (['web', 'openai', 'gemini', 'anthropic']).forEach(function (k) {
+          chips.push('<span class="chip ' + (s.ai && s.ai[k] ? 'green' : 'gray') + '">' + ({ web: 'Internet', openai: 'ChatGPT', gemini: 'Gemini', anthropic: 'Claude' })[k] + '</span>');
         });
         (['facebook', 'instagram', 'linkedin']).forEach(function (k) {
           chips.push('<span class="chip ' + (s.social && s.social[k] ? 'green' : 'gray') + '">' + k + '</span>');
@@ -177,17 +176,18 @@
       if (open) input.focus();
     }
     function mode() {
+      if (!badge) return;
+      badge.textContent = 'IA locale · connexion en cours';
       AI.status().then(function (s) {
-        var t = AI.trials();
-        var ready = s.ok && Object.keys(s.ai || {}).some(function (k) { return s.ai[k]; });
-        badge.textContent = (ready && s.ai && s.ai.web)
-          ? 'IA temps réel · Internet illimité'
-          : ready
-            ? 'IA temps réel · ' + t.remaining + '/' + t.limit + ' essais'
-            : (s.ok && s.configured ? 'Assistant connecté · moteur local' : 'Assistant local inclus');
+        badge.textContent = (s.ok && s.ai && s.ai.web)
+          ? 'IA connectée à Internet · gratuite et illimitée'
+          : 'IA locale · connexion en cours';
       });
     }
-    push(box, 'bot', 'Bonjour, je suis l’assistant Touch Unique Studio. Je peux vous aider à trouver un service, un outil ou à préparer une publication, un visuel ou une prospection.');
+    var welcome = window.TUSLang && window.TUSLang.phrase
+      ? window.TUSLang.phrase('assistant_welcome', 'fr')
+      : 'Bonjour, je suis l’assistant Touch Unique Studio. Je peux vous aider à trouver un service, un outil ou à préparer une publication, un visuel ou une prospection.';
+    push(box, 'bot', welcome);
     $('#site-ai-suggestions').innerHTML = ['Trouver une offre vidéo', 'Quels outils IA ?', 'Créer une publication', 'Chercher des prospects']
       .map(function (s) { return '<button type="button">' + esc(s) + '</button>'; }).join('');
     $('#site-ai-suggestions').addEventListener('click', function (e) {
@@ -201,7 +201,8 @@
       push(box, 'user', text); input.value = '';
       var btn = $('button', form); btn.disabled = true;
       push(box, 'bot', 'Recherche en cours…');
-      AI.ask(text).then(function (r) {
+      var lang = window.TUSLang && window.TUSLang.detect ? window.TUSLang.detect(text) : 'fr';
+      AI.ask(text, { lang: lang }).then(function (r) {
         box.lastChild.remove();
         push(box, 'bot', r.text);
         mode();

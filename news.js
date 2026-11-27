@@ -3,6 +3,11 @@
   'use strict';
 
   var KEY = 'tus_news_interests_v1';
+  var REPLACEMENT = { id: 'n14', date: '2026-11-12', cat: 'IA', tag: 'Assistant',
+    title: 'IA gratuite et connectée à Internet',
+    summary: 'Le serveur officiel connecte le site et l’application à une IA en ligne, gratuite et sans limite. Les clés restent côté serveur et chaque réponse indique clairement son origine.', min: 3 };
+  /* Ancien article obsolète : retiré même s'il reste dans content.json. */
+  var OUTDATED = /essai/i;
 
   var FALLBACK = [
     { id: 'n01', date: '2026-11-25', cat: 'IA', tag: 'Automatisation', title: 'Les agents IA passent du texte à l’action', summary: 'Un agent ne se contente plus de répondre : il planifie, utilise des outils et rend un résultat vérifiable. Nous transformons cette logique en tâches simples pour votre studio.', min: 3 },
@@ -18,22 +23,24 @@
     { id: 'n11', date: '2026-11-15', cat: 'Outils', tag: 'Logiciels', title: 'Choisir un logiciel : louer ou acheter ?', summary: 'Pour un usage ponctuel, la location est souvent plus rentable. Pour un usage quotidien, une licence reste plus simple.', min: 5 },
     { id: 'n12', date: '2026-11-14', cat: 'Réseaux', tag: 'Publication', title: 'Publier au bon moment ne suffit pas', summary: 'La régularité et la qualité du contenu comptent davantage que l’heure exacte de mise en ligne.', min: 3 },
     { id: 'n13', date: '2026-11-13', cat: 'Web', tag: 'Boutique', title: 'Une boutique simple peut vendre sans plateforme complexe', summary: 'Catalogue clair, prix lisible et commande par WhatsApp : parfois c’est le chemin le plus court vers le client.', min: 4 },
-    { id: 'n14', date: '2026-11-12', cat: 'Sécurité', tag: 'Essais', title: 'Deux essais gratuits pour juger avant de payer', summary: 'Un outil sérieux doit pouvoir être testé sans engagement. La limite d’essais protège aussi la qualité du service.', min: 3 },
+    { id: 'n14', date: '2026-11-12', cat: 'IA', tag: 'Assistant', title: 'IA gratuite et connectée à Internet', summary: 'Le serveur officiel connecte le site et l’application à une IA en ligne, gratuite et sans limite. Les clés restent côté serveur et chaque réponse indique clairement son origine.', min: 3 },
     { id: 'n15', date: '2026-11-11', cat: 'Vidéo', tag: 'Studio', title: 'Une lumière propre vaut mieux qu’un matériel coûteux', summary: 'Bien placer une source de lumière et nettoyer le son suffisent souvent à donner un rendu professionnel.', min: 4 }
   ];
 
   var CATS = ['IA', 'Design', 'Vidéo', 'Outils', 'Réseaux', 'Sécurité', 'Web'];
   function items() {
-    var list = (root.TU_CONTENT && Array.isArray(root.TU_CONTENT.news) && root.TU_CONTENT.news.length)
-      ? root.TU_CONTENT.news.filter(function (n) {
-          return n && typeof n.title === 'string' && typeof n.summary === 'string' && typeof n.cat === 'string';
-        }).map(function (n, i) {
-          return { id: String(n.id || 'n' + i), date: String(n.date || ''), cat: String(n.cat),
-                   tag: String(n.tag || ''), title: String(n.title), summary: String(n.summary),
-                   min: Math.max(1, Math.min(15, Number(n.min) || 3)) };
-        })
-      : [];
-    return list.length ? list : FALLBACK;
+    var kept = [], removed = 0;
+    var source = (root.TU_CONTENT && Array.isArray(root.TU_CONTENT.news) && root.TU_CONTENT.news.length)
+      ? root.TU_CONTENT.news : [];
+    source.forEach(function (n, i) {
+      if (!n || typeof n.title !== 'string' || typeof n.summary !== 'string' || typeof n.cat !== 'string') return;
+      if (OUTDATED.test(n.title) || OUTDATED.test(n.summary)) { removed += 1; return; }
+      kept.push({ id: String(n.id || 'n' + i), date: String(n.date || ''), cat: String(n.cat),
+        tag: String(n.tag || ''), title: n.title, summary: n.summary,
+        min: Math.max(1, Math.min(15, Number(n.min) || 3)) });
+    });
+    if (removed) kept.push(REPLACEMENT);
+    return kept.length ? kept : FALLBACK;
   }
 
   function readInterests() {

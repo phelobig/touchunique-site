@@ -1,19 +1,33 @@
 /* Touch Unique Studio — couche IA partagée site ↔ application.
-   Mode local déterministe par défaut ; mode temps réel dès qu'un proxy est configuré. */
+   IA distante permanente, gratuite et sans compteur : fournisseur Web public en
+   priorité, repli serveur vers les autres modèles disponibles, puis réponse
+   locale honnête quand aucun modèle n'est joignable. Aucune clé n'est exposée. */
 (function (root) {
   'use strict';
 
   var URL_KEY = 'tus_proxy_url_v1';
   var KEY_KEY = 'tus_proxy_key_v1';
-  var TRIAL_KEY = 'tus_ai_trials_v1';
-  var LIMIT = 2;
   var PUBLIC_SERVER = 'https://touchunique-serveur.onrender.com';
+  var PROVIDER_ORDER = ['web', 'perplexity', 'openai', 'gemini', 'anthropic'];
+  var L = root.TUSLang || null;
 
-  function owner() {
-    try {
-      var a = root.TUSAccounts && root.TUSAccounts.current && root.TUSAccounts.current();
-      return a ? a.id : 'guest';
-    } catch (e) { return 'guest'; }
+  function lang() {
+    return {
+      detect: function (text) { return L && L.detect ? L.detect(text) : 'fr'; },
+      system: function (extra, code) { return L && L.system ? L.system(extra, code) : ''; },
+      phrase: function (key, code, vars) { return L && L.phrase ? L.phrase(key, code, vars) : String(key || ''); },
+      reply: function (text, code, ctx) { return L && L.reply ? L.reply(text, code, ctx) : String(text || ''); }
+    };
+  }
+  function code(value) {
+    var v = String(value == null ? '' : value).toLowerCase();
+    return v.indexOf('en') === 0 ? 'en' : 'fr';
+  }
+  /* Compatibilité avec les anciens appelants : aucun compteur, aucune limite. */
+  function trials() { return { used: 0, limit: 0, remaining: 0, unlimited: true }; }
+  function merge(obj, fields) {
+    for (var k in fields) if (Object.prototype.hasOwnProperty.call(fields, k)) obj[k] = fields[k];
+    return obj;
   }
 
   function sec() { return root.TUSSecure || {}; }
@@ -31,11 +45,17 @@
     })();
   }
   function networkOff() {
-    return !!(root.TUSNetwork && !root.TUSNetwork.enabled());
+    var N = root.TUSNetwork;
+    if (!N) return false;
+    if (N.enabled && !N.enabled()) return true;
+    try {
+      var s = N.status && N.status();
+      if (s && s.online === false && typeof navigator !== 'undefined' && navigator.onLine === false) return true;
+    } catch (e) { /* état réseau non bloquant */ }
+    return false;
   }
-  /* Le site public est préconnecté au serveur officiel. Aucune clé n’est exposée :
-     l’assistant local fonctionne toujours, et l’IA distante sera utilisée dès que
-     le serveur aura des fournisseurs configurés. */
+  /* Le site et l'application sont préconnectés au serveur officiel : aucune
+     clé n'est nécessaire côté client et l'IA reste disponible sans limite. */
   function ensureServer() {
     if (getURL()) return true;
     try { connect(PUBLIC_SERVER); } catch (e) { return false; }
@@ -43,73 +63,47 @@
   }
   function connect(url) {
     var clean = sec().serverURL ? sec().serverURL(url) : String(url || '').trim().replace(/\/$/, '');
-    root.localStorage.setItem(URL_KEY, clean);
+    try { root.localStorage.setItem(URL_KEY, clean); } catch (e) { /* stockage indisponible */ }
     return clean;
   }
   function setKey(key) {
-    if (sec().setSecret) sec().setSecret(key);
-    else root.localStorage.setItem(KEY_KEY, String(key || '').trim());
+    try {
+      if (sec().setSecret) sec().setSecret(key);
+      else root.localStorage.setItem(KEY_KEY, String(key || '').trim());
+    } catch (e) { /* secret jamais journalisé */ }
   }
   function disconnect() {
     try { root.localStorage.removeItem(URL_KEY); } catch (e) {}
-    if (sec().clearSecrets) sec().clearSecrets();
-  }
-
-  function readTrials() {
-    try {
-      var v = JSON.parse(root.localStorage.getItem(TRIAL_KEY) || '{}');
-      return v && typeof v === 'object' ? v : {};
-    } catch (e) { return {}; }
-  }
-  function writeTrials(all) {
-    try { root.localStorage.setItem(TRIAL_KEY, JSON.stringify(all)); } catch (e) {}
-  }
-  /* Les essais sont journaliers et propres au compte connecté (ou au visiteur). */
-  function trials() {
-    var all = readTrials(), id = owner();
-    var today = new Date().toISOString().slice(0, 10);
-    var v = all[id];
-    if (!v || v.day !== today) { v = { used: 0, day: today }; all[id] = v; writeTrials(all); }
-    return { used: v.used || 0, limit: LIMIT, remaining: Math.max(0, LIMIT - (v.used || 0)), day: today, owner: id };
-  }
-  function consume() {
-    var t = trials();
-    if (t.remaining <= 0) return false;
-    var all = readTrials();
-    all[t.owner] = { used: t.used + 1, day: t.day };
-    writeTrials(all);
-    return true;
-  }
-  function refund() {
-    var t = trials();
-    if (!t.used) return;
-    var all = readTrials();
-    all[t.owner] = { used: Math.max(0, t.used - 1), day: t.day };
-    writeTrials(all);
+    try { if (sec().clearSecrets) sec().clearSecrets(); } catch (e) {}
   }
 
   function status() {
     ensureServer();
     var url = getURL();
-    if (networkOff()) return Promise.resolve({ ok: false, configured: false, offline: true, error: 'Connexion réseau désactivée', ai: {}, social: {} });
-    if (!url) return Promise.resolve({ ok: false, configured: false, ai: { openai: false, gemini: false, anthropic: false }, social: { facebook: false, instagram: false, linkedin: false } });
+    if (networkOff()) return Promise.resolve({ ok: false, configured: false, offline: true,
+      error: lang().phrase('offline', 'fr'), ai: {}, social: {}, trials: trials() });
+    if (!url) return Promise.resolve({ ok: false, configured: false,
+      ai: { openai: false, gemini: false, anthropic: false }, social: { facebook: false, instagram: false, linkedin: false }, trials: trials() });
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, 6000) : null;
     var headers = {};
     var k = getKey();
-    if (k) headers['X-Tus-Key'] = k;
+    if (k) headers['X-Tus-Key'] = k; /* uniquement vers le serveur officiel */
     return http()(url + '/api/status', { headers: headers, signal: ctl ? ctl.signal : undefined })
       .then(function (r) { if (!r.ok) throw new Error('Statut ' + r.status); return r.json(); })
-      .then(function (j) { return Object.assign({ ok: true, configured: true }, j); })
-      .catch(function () { return { ok: false, configured: true, error: 'Proxy injoignable' }; })
+      .then(function (j) { return merge({ ok: true, configured: true, unlimited: true, trials: trials() }, j); })
+      .catch(function () { return { ok: false, configured: true, error: 'Proxy injoignable', ai: {}, social: {}, trials: trials() }; })
       .then(function (j) { if (timer) clearTimeout(timer); return j; });
   }
 
-  function proxyAsk(prompt, system, maxTokens) {
+  /* Un seul appel réseau par fournisseur, avec délai de 60 s et sans fuite
+     du contenu des erreurs (qui pourrait contenir des données sensibles). */
+  function proxyAsk(prompt, system, maxTokens, provider) {
     ensureServer();
     var url = getURL();
-    if (networkOff()) return Promise.reject(new Error('Connexion réseau désactivée dans l’application'));
-    if (!url) return Promise.reject(new Error('Proxy non configuré'));
+    if (networkOff()) return Promise.reject(new Error('Réseau désactivé'));
+    if (!url) return Promise.reject(new Error('Serveur non configuré'));
+    var chosen = PROVIDER_ORDER.indexOf(provider) >= 0 ? provider : 'web';
     var headers = { 'Content-Type': 'application/json' };
     var key = getKey();
     if (key) headers['X-Tus-Key'] = key;
@@ -117,19 +111,45 @@
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, 60000) : null;
     return http()(url + '/api/ai', {
       method: 'POST', headers: headers,
-      body: JSON.stringify({ provider: 'auto', prompt: prompt, system: system, maxTokens: maxTokens || 900 })
+      body: JSON.stringify({ provider: chosen, prompt: prompt, system: system, maxTokens: maxTokens || 900 })
     }).then(function (r) { return r.json().then(function (j) { return { statusCode: r.status, body: j }; }); })
       .then(function (res) {
         if (timer) clearTimeout(timer);
-        if (!res.body || !res.body.ok) throw new Error((res.body && res.body.error) || 'Erreur IA (' + res.statusCode + ')');
-        return { text: res.body.text, provider: res.body.provider, model: res.body.model,
-          sources: res.body.sources || [], live: true };
+        if (!res.body || !res.body.ok) throw new Error('Indisponible');
+        return { text: res.body.text || '', provider: res.body.provider || chosen,
+          model: res.body.model || '', sources: res.body.sources || [], live: true };
       })
-      .catch(function (e) { if (timer) clearTimeout(timer); throw e; });
+      .catch(function () { if (timer) clearTimeout(timer); throw new Error('Indisponible'); });
   }
 
-  function localSearch(query, catalogue) {
+  function available(s) {
+    var ai = (s && s.ai) || {};
+    return PROVIDER_ORDER.filter(function (p) { return !!ai[p]; });
+  }
+  function tryProviders(list, index, prompt, system, maxTokens) {
+    if (index >= list.length) return Promise.resolve(null);
+    return proxyAsk(prompt, system, maxTokens, list[index]).then(function (r) {
+      return merge(r, { provider: r.provider || list[index], unlimited: true });
+    }).catch(function () {
+      return tryProviders(list, index + 1, prompt, system, maxTokens);
+    });
+  }
+  /* Repli toujours honnête : la réponse locale dit clairement que les modèles
+     distants n'ont pas pu répondre, sans jamais simuler une action réussie. */
+  function localResult(text, c) {
+    var body = String(text || '');
+    var note = lang().phrase('offline', c);
+    if (body.indexOf(note) < 0 && body.indexOf('Remote AI unavailable') < 0) {
+      body += '\n\n(' + note + ')';
+    }
+    return { text: body, lang: c, live: false, provider: 'local', model: 'moteur-local',
+      offline: true, unlimited: true, trials: trials() };
+  }
+
+  /* Recherche dans le catalogue : seuls les prix réellement présents sont montrés. */
+  function localSearch(query, catalogue, forcedLang) {
     var q = String(query || '').toLowerCase().trim();
+    var c = code(forcedLang || lang().detect(q));
     var words = q.split(/\s+/).filter(function (w) { return w.length > 2; });
     var source = catalogue || root.TU_CATALOGUE || [];
     var items = Array.isArray(source) ? source : (Array.isArray(source.products) ? source.products : []);
@@ -141,120 +161,89 @@
       return { item: it, score: score };
     }).filter(function (x) { return x.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 5);
 
-    if (!scored.length) {
-      return 'Je n’ai pas trouvé de correspondance directe. Décrivez le résultat souhaité (identité, vidéo, site, formation, outil IA) et je vous proposerai la meilleure option.';
-    }
-    return 'Voici ce qui correspond le mieux à votre recherche :\n\n' + scored.map(function (x, i) {
+    if (!scored.length) return lang().reply(q, c, { kind: 'not_found', query: q });
+    var found = scored.map(function (x) {
       var it = x.item;
-      return (i + 1) + '. **' + (it.name || it.title) + '** — ' + (it.cat || it.category || 'service') + '\n' +
-        (it.desc || it.description || '').slice(0, 180) + '\n' +
-        (it.price ? 'Tarif : ' + it.price + '\n' : '');
-    }).join('\n');
+      return {
+        name: it.name || it.title,
+        cat: it.cat || it.category || '',
+        desc: it.desc || it.description || '',
+        price: it.price || '',
+        unit: it.unit || ''
+      };
+    });
+    return lang().reply(q, c, { kind: 'search', query: q, items: found });
   }
 
   function localGenerate(kind, ctx) {
     ctx = ctx || {};
-    var topic = String(ctx.topic || ctx.prompt || 'Touch Unique Studio')
-      .replace(/^(g[ée]n[èe]re|cr[ée]e|donne|fais|r[ée]dige|pr[ée]pare|trouve|cherche)\s+/i, '')
-      .trim() || 'Touch Unique Studio';
-    var day = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-    if (kind === 'publication') {
-      return '📅 ' + day + '\n\n' +
-        '1. « ' + topic + ' : ce qui change vraiment pour votre activité »\n' +
-        '   Texte court : un constat, une solution Touch Unique, un appel à l’action.\n\n' +
-        '2. « 3 erreurs à éviter avec ' + topic + ' »\n' +
-        '   Format carrousel : une erreur par diapositive, puis la correction.\n\n' +
-        '3. « Ce que nous avons appris cette semaine sur ' + topic + ' »\n' +
-        '   Ton : professionnel, direct, sans jargon.\n\n' +
-        'Visuel suggéré : fond rouge, titre blanc gras, logo discret en bas à droite.';
-    }
-    if (kind === 'design') {
-      return 'Brief de conception — ' + topic + '\n\n' +
-        '• Direction : identité rouge sur fond clair, texte anthracite très contrasté.\n' +
-        '• Format : carré réseaux sociaux + déclinaison story.\n' +
-        '• Hiérarchie : titre court, sous-titre d’une ligne, offre en un coup d’œil.\n' +
-        '• Éléments à éviter : cercles flous, pastilles flottantes, textes transparents.\n' +
-        '• Livrable attendu : 2 propositions, puis 3 déclinaisons après validation.';
-    }
-    if (kind === 'prospect') {
-      return 'Pistes de prospection — ' + topic + '\n\n' +
-        '1. Commerces locaux avec une identité vieillissante : proposer une mini-charte.\n' +
-        '2. Créateurs qui publient sans régularité : proposer un calendrier éditorial.\n' +
-        '3. Petites structures qui ont une boutique en ligne lente : proposer une refonte claire.\n\n' +
-        'Approche : message court, observation précise, une seule proposition, puis devis gratuit.';
-    }
-    if (kind === 'recherche') return localSearch(topic);
-    return 'Bonjour, je suis l’assistant Touch Unique Studio. Je peux vous aider à trouver un service, un outil, ou à préparer une publication, un visuel ou une liste de prospects.';
-  }
-
-  var SYSTEM = 'Tu es l’assistant officiel de Touch Unique Studio, studio créatif au Burkina-Faso. ' +
-    'Réponds en français, de façon utile et concise. Domaines : identité visuelle, vidéo, réseaux sociaux, ' +
-    'print, académie, automatisation IA, outils et logiciels informatiques, prospection. ' +
-    'Ne promets jamais une publication ou un paiement que tu n’as pas réellement effectué. Si tu ne sais pas, dis-le.';
-
-  function liveReady(s) {
-    return !!(s && s.ok && s.configured && Object.keys(s.ai || {}).some(function (k) { return s.ai[k]; }));
-  }
-  /* Le fournisseur Web est public et sans clé : accès Internet illimité.
-     Les autres modèles restent limités à LIMIT essais/jour pour le visiteur. */
-  function openWeb(s) { return !!(s && s.ai && s.ai.web); }
-  function ask(prompt, options) {
-    options = options || {};
-    var text = String(prompt || '').trim();
-    if (!text) return Promise.resolve({ text: 'Posez-moi une question sur nos services, outils ou projets.', live: false, trials: trials() });
-
-    var isSearch = /trouver|recherche|cherche|quel service|quel outil|disponible|prix|tarif|offre/i.test(text);
-    var local = isSearch ? localSearch(text) : localGenerate(renderKind(text), { topic: text });
-
-    return status().then(function (s) {
-      if (!liveReady(s)) return { text: local, live: false, trials: trials() };
-      var free = openWeb(s);
-      if (!free && options.countTrial !== false && !consume()) {
-        return {
-          text: 'L’accès Internet illimité est momentanément indisponible. Vos ' + LIMIT +
-            ' essais locaux du jour sont utilisés. Réessayez dans un instant ou écrivez-nous sur WhatsApp : https://wa.me/22655041530',
-          live: false, limit: true, trials: trials()
-        };
-      }
-      return proxyAsk(text, SYSTEM, 900).then(function (r) {
-        return Object.assign(r, { trials: trials(), unlimited: free });
-      }).catch(function (e) {
-        if (!free && options.countTrial !== false) refund();
-        return { text: local + '\n\n(IA distante indisponible : ' + e.message + ')', live: false, trials: trials(), unlimited: free };
-      });
-    });
-  }
-
-  /* Utilisé par les robots : sans consommation des essais visiteurs. */
-  function generate(kind, ctx, options) {
-    options = options || {};
-    var topic = String((ctx && (ctx.topic || ctx.prompt)) || '').trim();
-    var prompt = kind === 'publication'
-      ? 'Rédige 3 publications courtes et prêtes à publier pour Touch Unique Studio sur le thème : ' + topic + '. Inclus un titre, un texte et 3 hashtags par publication. Ton professionnel et direct.'
-      : kind === 'design'
-        ? 'Rédige un brief de conception précis (direction artistique, format, hiérarchie, livrables) pour : ' + topic + '.'
-        : kind === 'prospect'
-          ? 'Propose 5 prospects potentiels avec une approche personnalisée pour Touch Unique Studio autour de : ' + topic + '. Précise le type de structure et le service suggéré.'
-          : 'Fais une veille concise sur : ' + topic + '. Donne 5 points concrets utiles à un studio créatif.';
-    return status().then(function (s) {
-      if (!liveReady(s)) return Promise.resolve({ text: localGenerate(kind, ctx || {}), live: false, model: 'moteur-local' });
-      return proxyAsk(prompt, SYSTEM, 1100).then(function (r) {
-        return { text: r.text, live: true, model: r.model };
-      }).catch(function (e) {
-        return { text: localGenerate(kind, ctx || {}) + '\n\n(IA distante indisponible : ' + e.message + ')', live: false, model: 'moteur-local' };
-      });
-    });
+    var c = code(ctx.lang);
+    var topic = String(ctx.topic || ctx.prompt || '')
+      .replace(/^(generate|create|give|make|write|prepare|find|search|g[ée]n[èe]re|cr[ée]e|donne|fais|r[ée]dige|pr[ée]pare|trouve|cherche)\s+/i, '')
+      .trim() || lang().phrase('services', c);
+    if (kind === 'recherche' || kind === 'search') return localSearch(topic, ctx.catalogue, c);
+    var k = kind === 'publication' || kind === 'design' || kind === 'prospect' || kind === 'veille' ? kind : 'help';
+    return lang().reply(topic, c, { kind: k, topic: topic, offline: !!ctx.offline,
+      items: ctx.items, query: ctx.query || topic, count: ctx.count || 0 });
   }
 
   function renderKind(text) {
-    if (/publication|post|texte|contenu|article/i.test(text)) return 'publication';
-    if (/visuel|design|logo|conception|affiche|identité/i.test(text)) return 'design';
-    if (/prospect|client|trouver des|piste/i.test(text)) return 'prospect';
+    var q = String(text || '');
+    if (/publication|post|texte|contenu|article|publish|caption/i.test(q)) return 'publication';
+    if (/visuel|design|logo|conception|affiche|identit[ée]|mockup/i.test(q)) return 'design';
+    if (/prospect|client|trouver des|piste|lead/i.test(q)) return 'prospect';
+    if (/veille|actualit[ée]|tendance|news|research/i.test(q)) return 'veille';
     return 'recherche';
   }
 
+  function ask(prompt, options) {
+    options = options || {};
+    var text = String(prompt || '').trim();
+    var c = code(options.lang || lang().detect(text));
+    if (!text) return Promise.resolve(localResult(lang().phrase('ask_prompt', c), c));
+    var conversational = ['greeting', 'help', 'price', 'contact', 'whatsapp', 'account', 'update',
+      'privacy', 'visit', 'message', 'file', 'language', 'thanks', 'goodbye', 'demo_removed'];
+    var detected = L && L.intent ? L.intent(text) : '';
+    var local = conversational.indexOf(detected) >= 0
+      ? lang().reply(text, c, { kind: detected, topic: text })
+      : localGenerate(renderKind(text), { topic: text, lang: c });
+
+    return status().then(function (s) {
+      if (networkOff() || !s.ok || !s.configured) return localResult(local, c);
+      var list = available(s);
+      if (!list.length) return localResult(local, c);
+      return tryProviders(list, 0, text, lang().system('', c), 900).then(function (r) {
+        if (!r) return localResult(local, c);
+        return merge(r, { lang: c, trials: trials() });
+      });
+    }).catch(function () { return localResult(local, c); });
+  }
+
+  function generate(kind, ctx, options) {
+    options = options || {};
+    ctx = ctx || {};
+    var topic = String(ctx.topic || ctx.prompt || '').trim();
+    var c = code(options.lang || ctx.lang || lang().detect(topic));
+    var key = kind === 'publication' ? 'gen_publication' : kind === 'design' ? 'gen_design' :
+      kind === 'prospect' ? 'gen_prospect' : 'gen_veille';
+    var prompt = lang().phrase(key, c, { topic: topic || lang().phrase('services', c) });
+    var local = localGenerate(kind, merge(merge({}, ctx), { lang: c }));
+
+    return status().then(function (s) {
+      if (networkOff() || !s.ok || !s.configured) return localResult(local, c);
+      var list = available(s);
+      if (!list.length) return localResult(local, c);
+      return tryProviders(list, 0, prompt, lang().system('', c), 1100).then(function (r) {
+        if (!r) return localResult(local, c);
+        return merge(r, { lang: c, trials: trials() });
+      });
+    }).catch(function () { return localResult(local, c); });
+  }
+
+  function openWeb(s) { return !!(s && s.ai && s.ai.web); }
+
   root.TUSAI = {
-    LIMIT: LIMIT,
+    LIMIT: 0,
     getURL: getURL,
     connect: connect,
     setKey: setKey,
@@ -268,8 +257,8 @@
     localGenerate: localGenerate,
     publish: function (network, text, imageUrl) {
       var url = getURL();
-      if (networkOff()) return Promise.reject(new Error('Connexion réseau désactivée dans l’application'));
-      if (!url) return Promise.reject(new Error('Proxy non configuré'));
+      if (networkOff()) return Promise.reject(new Error('Réseau désactivé'));
+      if (!url) return Promise.reject(new Error('Serveur non configuré'));
       var headers = { 'Content-Type': 'application/json' };
       var key = getKey();
       if (key) headers['X-Tus-Key'] = key;

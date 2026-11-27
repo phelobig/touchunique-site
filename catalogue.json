@@ -579,32 +579,6 @@
       ]
     },
     {
-      "id": "outil-assistant-ia",
-      "name": "Assistant IA Pro",
-      "category": "outils",
-      "type": "subscription",
-      "price": 15000,
-      "unit": "mois",
-      "badge": "2 essais offerts",
-      "popular": true,
-      "delay": "Immédiat",
-      "icon": "✺",
-      "img": "outils.svg",
-      "short": "ChatGPT, Gemini et Claude dans votre espace Touch Unique, avec 2 essais gratuits par jour.",
-      "desc": "Accès mensuel à l’assistant temps réel intégré au site et à l’application : recherche de services et de produits, rédaction de publications, briefs de conception et prospection. Les clés restent sur un serveur sécurisé.",
-      "deliverables": [
-        "IA temps réel (ChatGPT / Gemini / Claude)",
-        "Recherche services & produits",
-        "2 essais gratuits par jour",
-        "Génération de contenus et de briefs"
-      ],
-      "ai": [
-        "recherche intelligente",
-        "publications automatiques",
-        "briefs de conception"
-      ]
-    },
-    {
       "id": "outil-kit-publications",
       "name": "Kit 30 publications",
       "category": "outils",
